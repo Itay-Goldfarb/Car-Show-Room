@@ -11,9 +11,11 @@ app.use(express.static("public"));
 
 app.get("/cars", (req, res) => {
   
+  let year = req.query.year;
+  let make = req.query.make;
   let model = req.query.model;
   
-  let modelUrl = `${baseUrl}?limit=2&model=${model}`;
+  let modelUrl = `${baseUrl}?limit=2&year=${year}&make=${make}&model=${model}`;
   
   axios.get(modelUrl, {
     headers: {

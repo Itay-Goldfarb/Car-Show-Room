@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>CARROOM</title>
-        <h1>ENTER MODEL</h1>
+        <h1>ENTER CAR DETAILS</h1>
         <style>
             table {
                 border-collapse: collapse; 
@@ -16,9 +16,16 @@
         </style>
     </head>
     <body>
+        <label for="year-input">Year:</label>
+        <input type="text" id="year-input">
+
+        <label for="make-input">Make:</label>
+        <input type="text" id="make-input">
+
         <label for="model-input">Model:</label>
         <input type="text" id="model-input">
-        <button id="searchButton">Get Model</button>
+
+        <button id="searchButton">Get Car</button>
         <p id="error-message" style="color:red;"></p>
         
     
@@ -39,7 +46,10 @@
             
             
             carButton.addEventListener("click", () => {
+                yearInput = document.getElementById("year-input").value;
+                makeInput = document.getElementById("make-input").value;
                 modelInput = document.getElementById("model-input").value;
+
                 errorMessageElement = document.getElementById("error-message");
                 tableBodyElement = document.getElementById("car-table-body");
     
@@ -48,7 +58,7 @@
                 }
                 errorMessageElement.textContent = "";
     
-                fetch(`/cars?model=${modelInput}`)
+                fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
                         if(response.ok) {
                             return response.json();
