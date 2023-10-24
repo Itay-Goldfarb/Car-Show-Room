@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CARROOM</title>
+        <h1>ENTER MODEL</h1>
+        <style>
+            table {
+                border-collapse: collapse; 
+                margin-top: 20px;          
+            }
+    
+            table td, table th {
+                border: 1px solid black;
+                padding: 8px;            
+            }
+        </style>
+    </head>
+    <body>
+        <label for="model-input">Model:</label>
+        <input type="text" id="model-input">
+        <button id="searchButton">Get Model</button>
+        <p id="error-message" style="color:red;"></p>
+        
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody id="car-table-body">
+            </tbody>
+        </table>
+    
+        <script>
+            let carButton = document.getElementById("searchButton");
+            
+            
+            carButton.addEventListener("click", () => {
+                modelInput = document.getElementById("model-input").value;
+                errorMessageElement = document.getElementById("error-message");
+                tableBodyElement = document.getElementById("car-table-body");
+    
+                while(tableBodyElement.firstChild) {
+                    tableBodyElement.removeChild(tableBodyElement.firstChild);
+                }
+                errorMessageElement.textContent = "";
+    
+                fetch(`/cars?model=${modelInput}`)
+                    .then(response => {
+                        if(response.ok) {
+                            return response.json();
+                        } else {
+                            if(response.status === 404) {
+                                throw { message: "Car not found" };
+                            }
+                            return response.json().then(error => { throw error });
+                        }
+                    })
+                    .then(data => {
+                        data.forEach(cars => {
+                            row = document.createElement("tr");
+    
+                            makeCell = document.createElement("td");
+                            makeCell.textContent = cars.make;
+                            row.appendChild(makeCell);
+    
+                            modelCell = document.createElement("td");
+                            modelCell.textContent = cars.model;
+                            row.appendChild(modelCell);
+    
+                            yearCell = document.createElement("td");
+                            yearCell.textContent = cars.year;
+                            row.appendChild(yearCell);
+    
+                            tableBodyElement.appendChild(row);
+                        });
+                    })
+                    .catch(error => {
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the forecast.';
+                    });
+            })
+            
+        
+        </script>
+    </body>
+</html>
