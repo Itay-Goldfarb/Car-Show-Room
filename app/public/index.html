@@ -35,6 +35,14 @@
                     <th>Make</th>
                     <th>Model</th>
                     <th>Year</th>
+                    <th>Fuel Type</th>
+                    <th>Drivetrain</th>
+                    <th>Cylinders</th>
+                    <th>Transmission</th>
+                    <th>City MPG</th>
+                    <th>Highway MPG</th>
+                    <th>Combination MPG</th>
+                    
                 </tr>
             </thead>
             <tbody id="car-table-body">
@@ -84,6 +92,36 @@
                             yearCell = document.createElement("td");
                             yearCell.textContent = cars.year;
                             row.appendChild(yearCell);
+
+                            fuelTypeCell = document.createElement("td");
+                            fuelTypeCell.textContent = cars.fuel_type;
+                            row.appendChild(fuelTypeCell);
+
+                            driveCell = document.createElement("td");
+                            driveCell.textContent = cars.drive;
+                            row.appendChild(driveCell);
+
+                            cylinderCell = document.createElement("td");
+                            cylinderCell.textContent = cars.cylinders;
+                            row.appendChild(cylinderCell);
+
+
+                            transCell = document.createElement("td");
+                            transCell.textContent = cars.transmission;
+                            row.appendChild(transCell);
+
+                            cityMPGCell = document.createElement("td");
+                            cityMPGCell.textContent = cars.city_mpg;
+                            row.appendChild(cityMPGCell);
+
+                            hwyMPGCell = document.createElement("td");
+                            hwyMPGCell.textContent = cars.highway_mpg;
+                            row.appendChild(hwyMPGCell);
+
+                            combMPGCell = document.createElement("td");
+                            combMPGCell.textContent = cars.combination_mpg;
+                            row.appendChild(combMPGCell);
+
     
                             tableBodyElement.appendChild(row);
                         });
