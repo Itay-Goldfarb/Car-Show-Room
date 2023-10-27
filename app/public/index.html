@@ -35,9 +35,30 @@
                     <th>Make</th>
                     <th>Model</th>
                     <th>Year</th>
+                    <th>Class</th>
+                    <th>Fuel Type</th>
+                    <th>Drivetrain</th>
+                    <th>Cylinders</th>
+                    <th>Transmission</th>
+                    <th>City MPG</th>
+                    <th>Highway MPG</th>
+                    <th>Combination MPG</th>
+                    
+                    
                 </tr>
             </thead>
             <tbody id="car-table-body">
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Price Data</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="price-table-body">
             </tbody>
         </table>
     
@@ -72,6 +93,7 @@
                     .then(data => {
                         data.forEach(cars => {
                             row = document.createElement("tr");
+                            
     
                             makeCell = document.createElement("td");
                             makeCell.textContent = cars.make;
@@ -84,6 +106,41 @@
                             yearCell = document.createElement("td");
                             yearCell.textContent = cars.year;
                             row.appendChild(yearCell);
+
+                            classCell = document.createElement("td");
+                            classCell.textContent = cars.class;
+                            row.appendChild(classCell);
+
+                            fuelTypeCell = document.createElement("td");
+                            fuelTypeCell.textContent = cars.fuel_type;
+                            row.appendChild(fuelTypeCell);
+
+                            driveCell = document.createElement("td");
+                            driveCell.textContent = cars.drive;
+                            row.appendChild(driveCell);
+
+                            cylinderCell = document.createElement("td");
+                            cylinderCell.textContent = cars.cylinders;
+                            row.appendChild(cylinderCell);
+
+
+                            transCell = document.createElement("td");
+                            transCell.textContent = cars.transmission;
+                            row.appendChild(transCell);
+
+                            cityMPGCell = document.createElement("td");
+                            cityMPGCell.textContent = cars.city_mpg;
+                            row.appendChild(cityMPGCell);
+
+                            hwyMPGCell = document.createElement("td");
+                            hwyMPGCell.textContent = cars.highway_mpg;
+                            row.appendChild(hwyMPGCell);
+
+                            combMPGCell = document.createElement("td");
+                            combMPGCell.textContent = cars.combination_mpg;
+                            row.appendChild(combMPGCell);
+                            
+                            
     
                             tableBodyElement.appendChild(row);
                         });
@@ -91,6 +148,49 @@
                     .catch(error => {
                         errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
                     });
+
+
+
+                
+                priceTableBodyElement = document.getElementById("price-table-body");
+    
+                while(priceTableBodyElement.firstChild) {
+                    priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
+                }
+
+                fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+                .then(response => {
+                
+
+                    if(response.ok) {
+                        return response.json();
+                    } else {
+                        if(response.status === 404) {
+                            throw { message: "Price data not found" };
+                        }
+                        return response.json().then(error => { throw error });
+                    }
+                })
+                .then(data => {
+                    
+                    row = document.createElement("tr");
+                        
+                    priceCell = document.createElement("td");
+                    priceCell.textContent = data.data;
+                    row.appendChild(priceCell);
+
+                    priceTableBodyElement.appendChild(row);
+                        
+                    
+                })
+                .catch(error => {
+                    errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
+                    
+                });
+
+
+
+
             })
             
         
