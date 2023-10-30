@@ -2,32 +2,29 @@
 <html>
     <head>
         <title>CARROOM</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
         <h1>ENTER CAR DETAILS</h1>
-        <style>
-            table {
-                border-collapse: collapse; 
-                margin-top: 20px;          
-            }
-    
-            table td, table th {
-                border: 1px solid black;
-                padding: 8px;            
-            }
-        </style>
     </head>
     <body>
-        <label for="year-input">Year:</label>
-        <input type="text" id="year-input">
+        <div class="container">      
+            <label for="year-input">Year:</label>
+            <input type="text" id="year-input">
+        </div>
 
-        <label for="make-input">Make:</label>
-        <input type="text" id="make-input">
+        <div class="container">
+            <label for="make-input">Make:</label>
+            <input type="text" id="make-input">
+        </div>
 
-        <label for="model-input">Model:</label>
-        <input type="text" id="model-input">
+        <div class="container">      
+            <label for="model-input">Model:</label>
+            <input type="text" id="model-input">
+        </div>
 
-        <button id="searchButton">Get Car</button>
-        <p id="error-message" style="color:red;"></p>
-        
+        <div class="container">      
+            <button id="searchButton">Get Car</button>
+            <p id="error-message" style="color:red;"></p>
+        </div>
     
         <table>
             <thead>

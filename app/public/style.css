@@ -1,0 +1,45 @@
+table {
+    border-collapse: collapse; 
+    margin-top: 20px;          
+}
+
+table td, table th {
+    border: 1px solid black;
+    padding: 8px;            
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    font-size: 24px;
+    color: #0078d4;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    background-color: #0078d4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005a9e;
+}
+
+.container {
+    text-align: center;
+}
+
+.home-page {
+    background-image: url('.\app\public\ville-kaisla-HNCSCpWrVJA-unsplash.jpg');
+}
