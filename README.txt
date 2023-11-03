@@ -10,5 +10,5 @@ HOW TO LOAD WEBSITE
 
 5) Cd into the CARROOM directory and run "npm i".
 
-6) Run "npm run start" and then visit localhost:3000 on the browser
+6) Run "npm run start" and then visit localhost:3000/home.html on the browser
 

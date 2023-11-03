@@ -1,8 +1,10 @@
 .home-page {
     background-image: url('ville-kaisla-HNCSCpWrVJA-unsplash.jpg');
     background-size: cover; 
+    background-position: center;
     background-color: #aa3131;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 h1 {
@@ -21,7 +23,16 @@ h1 {
     border-radius: 4px; /* Rounded corners */
     cursor: pointer;
     font-size: 16px;
+
+}
+
+.center-button{
+    position: absolute;
+    top: calc(50% + 150px);
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
+    width: 100%;
 }
 
 .button:hover {
