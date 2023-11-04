@@ -58,6 +58,17 @@
             <tbody id="price-table-body">
             </tbody>
         </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Car Images</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="image-table-body">
+            </tbody>
+        </table>
     
         <script>
             let carButton = document.getElementById("searchButton");
@@ -185,6 +196,57 @@
                     
                 });
 
+
+
+
+                imageTableBodyElement = document.getElementById("image-table-body");
+    
+                while(imageTableBodyElement.firstChild) {
+                    imageTableBodyElement.removeChild(imageTableBodyElement.firstChild);
+                }
+                
+                
+                fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=20`)
+                .then(response => {
+                
+
+                    if(response.ok) {
+                        return response.json();
+                    } else {
+                        if(response.status === 404) {
+                            throw { message: "Car image data not found" };
+                        }
+                        return response.json().then(error => { throw error });
+                    }
+                })
+                .then(data => {
+                    data.photos.forEach(photo => {
+                    
+                    
+                    
+                    
+                        let row = document.createElement("tr");
+                        let imageCell = document.createElement("td");
+                        let imageElement = document.createElement("img");
+
+                        imageElement.src = photo.src.medium;
+                        imageElement.alt = photo.alt;
+                        
+                        imageCell.appendChild(imageElement);
+                        row.appendChild(imageCell);
+                        
+                        imageTableBodyElement.appendChild(row);
+                        
+                    });
+                
+                    
+                })
+                .catch(error => {
+                    console.error("Error:", error.message);
+                    
+                });
+                
+            
 
 
 
