@@ -2,8 +2,10 @@ let axios = require("axios");
 let express = require("express");
 let app = express();
 let apiFile = require("../env.json");
-let apiKey = apiFile["api_key"]; 
+let apiKey1 = apiFile["api_key1"]; 
+let apiKey2 = apiFile["api_key2"]; 
 let carsUrl = apiFile["api_cars_url"]; 
+let carImagesUrl = apiFile["api_car_images"];
 let webscraperUrl = apiFile["api_webscrape_url"]; 
 let port = 3000;
 let hostname = "localhost";
@@ -22,7 +24,7 @@ app.get("/cars", (req, res) => {
   
   axios.get(modelUrl, {
     headers: {
-      'X-Api-Key': `${apiKey}`
+      'X-Api-Key': `${apiKey1}`
     }
   })
   .then(response => {
@@ -58,7 +60,7 @@ app.get("/webscraper", (req, res) => {
   
   axios.get(scrapeUrl, {
     headers: {
-      'X-Api-Key': `${apiKey}`
+      'X-Api-Key': `${apiKey1}`
     }
   })
   .then(response => {
@@ -74,6 +76,40 @@ app.get("/webscraper", (req, res) => {
     }else{
       res.status(500).json({ "error": "Internal Server Error" });
       
+    }
+  });
+  
+});
+
+
+
+app.get("/search", (req, res) => {
+  
+  let year = req.query.year;
+  let make = req.query.make;
+  let model = req.query.model;
+  
+  let imagesUrl = `${carImagesUrl}?query=${make}+${model}+${year}&per_page=20`;
+  
+  axios.get(imagesUrl, {
+    headers: {
+      'Authorization': `${apiKey2}`
+    }
+  })
+  .then(response => {
+    if (response.data){
+      res.status(200).json(response.data);
+      console.log("Requesting:", imagesUrl);
+      console.log("Response:", response.data);
+      
+    }
+    
+  })
+  .catch(error => {
+    if (error.response) {
+      res.status(404).json({ "error": "car images not found" });
+    }else{
+      res.status(500).json({ "error": "Internal Server Error" });
     }
   });
   
