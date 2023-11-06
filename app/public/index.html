@@ -166,6 +166,14 @@
                     priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
                 }
 
+                function extractPrices(text){
+                    // Look for patterns like $XX,XXX.XX or $XX.XX or $XXXX
+                    let priceRegex = /\$\d{1,3}(,\d{3})*(\.\d{0,2})?/g;
+                    let prices = text.match(priceRegex);
+                    // Return first 3 prices
+                    return prices ? prices.slice(0,3) : [];
+                }
+
                 fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                 .then(response => {
                 
@@ -180,11 +188,15 @@
                     }
                 })
                 .then(data => {
+
+                    let textData = data.data;
+                    let prices = extractPrices(textData);
+                    console.log(prices);
                     
                     row = document.createElement("tr");
                         
                     priceCell = document.createElement("td");
-                    priceCell.textContent = data.data;
+                    priceCell.textContent = prices;
                     row.appendChild(priceCell);
 
                     priceTableBodyElement.appendChild(row);
@@ -206,7 +218,7 @@
                 }
                 
                 
-                fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=20`)
+                fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
                 .then(response => {
                 
 
