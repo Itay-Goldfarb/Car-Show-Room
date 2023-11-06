@@ -89,7 +89,7 @@ app.get("/search", (req, res) => {
   let make = req.query.make;
   let model = req.query.model;
   
-  let imagesUrl = `${carImagesUrl}?query=${make}+${model}+${year}&per_page=20`;
+  let imagesUrl = `${carImagesUrl}?query=${make}+${model}+${year}&per_page=3`;
   
   axios.get(imagesUrl, {
     headers: {
