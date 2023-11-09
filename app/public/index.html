@@ -79,13 +79,22 @@
                 makeInput = document.getElementById("make-input").value;
                 modelInput = document.getElementById("model-input").value;
 
+                
+
                 errorMessageElement = document.getElementById("error-message");
                 tableBodyElement = document.getElementById("car-table-body");
     
                 while(tableBodyElement.firstChild) {
                     tableBodyElement.removeChild(tableBodyElement.firstChild);
                 }
+
+                if (!yearInput || !makeInput || !modelInput){
+                    errorMessageElement.textContent = "Please enter Year, Make, and Model";
+                    return;
+                }
                 errorMessageElement.textContent = "";
+
+                
     
                 fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
@@ -262,7 +271,7 @@
 
 
 
-            })
+            }) //end of button click
             
         
         </script>
