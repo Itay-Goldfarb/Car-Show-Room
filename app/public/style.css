@@ -20,6 +20,12 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-size: 24px;
+    color: #0078d4;
+    text-align: center;
+}
+
 label {
     font-weight: bold;
 }

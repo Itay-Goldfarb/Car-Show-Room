@@ -3,7 +3,7 @@
     <head>
         <title>CARROOM</title>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <h1>ENTER CAR DETAILS</h1>
+        <h1>Enter Car Details</h1>
     </head>
     <body>
         <div class="container">      
@@ -59,16 +59,11 @@
             </tbody>
         </table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Car Images</th>
-                    
-                </tr>
-            </thead>
-            <tbody id="image-table-body">
-            </tbody>
-        </table>
+        
+
+        <h2 id="car-images-header" style="position: center">Car Images</h2>
+        <div id="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        </div>
     
         <script>
             let carButton = document.getElementById("searchButton");
@@ -220,10 +215,10 @@
 
 
 
-                imageTableBodyElement = document.getElementById("image-table-body");
+                let imageContainer = document.getElementById("image-container");
     
-                while(imageTableBodyElement.firstChild) {
-                    imageTableBodyElement.removeChild(imageTableBodyElement.firstChild);
+                while(imageContainer.firstChild) {
+                    imageContainer.removeChild(imageContainer.firstChild);
                 }
                 
                 
@@ -241,22 +236,18 @@
                     }
                 })
                 .then(data => {
+                    
+                    
                     data.photos.forEach(photo => {
-                    
-                    
-                    
-                    
-                        let row = document.createElement("tr");
-                        let imageCell = document.createElement("td");
-                        let imageElement = document.createElement("img");
 
+                    
+                        let imageElement = document.createElement("img");
                         imageElement.src = photo.src.medium;
                         imageElement.alt = photo.alt;
+                        imageElement.style.width = "auto";
+                        imageElement.style.height = "auto";
                         
-                        imageCell.appendChild(imageElement);
-                        row.appendChild(imageCell);
-                        
-                        imageTableBodyElement.appendChild(row);
+                        imageContainer.appendChild(imageElement);
                         
                     });
                 
