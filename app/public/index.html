@@ -61,7 +61,7 @@
 
         
 
-        <h2 id="car-images-header" style="position: center">Car Images</h2>
+        <h2 id="car-images-header">Car Images</h2>
         <div id="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
         </div>
     
@@ -170,12 +170,37 @@
                     priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
                 }
 
-                function extractPrices(text){
+                function getPriceBounds(year) {
+                    let currentYear = new Date().getFullYear();
+                    let age = currentYear - year;
+
+                    if (age < 5) {
+                        return { lowerBound: 20000, upperBound: 2000000 }; // Newer used cars
+                    } else if (age < 10) {
+                        return { lowerBound: 7000, upperBound: 200000 }; // Moderately old cars
+                    } else {
+                        return { lowerBound: 2000, upperBound: 150000 }; // Older used cars
+                    }
+                }
+
+                function extractPrices(text, year){
+                    let bounds = getPriceBounds(year);
                     // Look for patterns like $XX,XXX.XX or $XX.XX or $XXXX
-                    let priceRegex = /\$\d{1,3}(,\d{3})*(\.\d{0,2})?/g;
-                    let prices = text.match(priceRegex);
+                    let priceRegex = /\$\d{1,3}(,\d{3})*(\.\d{2})?/g;
+                    let matches = text.match(priceRegex);
+                    let prices = matches ? matches.map(match => match.replace(/[\$,]/g, '')) : [];
+                    let filteredPrices = [];
+                    let price;
+
+                    for (price of prices){
+                        let numericPrice = parseFloat(price);
+                        if (numericPrice >= bounds.lowerBound && numericPrice <= bounds.upperBound){
+                            filteredPrices.push(matches[prices.indexOf(price)]);
+                            if (filteredPrices.length >= 3) break;
+                        }
+                    }
                     // Return first 3 prices
-                    return prices ? prices.slice(0,3) : [];
+                    return filteredPrices;
                 }
 
                 fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
@@ -192,9 +217,9 @@
                     }
                 })
                 .then(data => {
-
+                    
                     let textData = data.data;
-                    let prices = extractPrices(textData);
+                    let prices = extractPrices(textData, yearInput);
                     console.log(prices);
                     
                     row = document.createElement("tr");
