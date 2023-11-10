@@ -13,9 +13,27 @@ table {
     text-align: center;
 }
 
-#car-spec-table{
-    margin-left: auto;
-    margin-right: auto;
+.specs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.spec-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: start;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(20% - 10px); /* Adjust width for card row */
+    font-size: 16px;
+}
+
+.spec-card div {
+    margin-bottom: 8px; 
 }
 
 #price-container{
