@@ -26,7 +26,7 @@
             <p id="error-message" style="color:red;"></p>
         </div>
     
-        <table>
+        <table id="car-spec-table">
             <thead>
                 <tr>
                     <th>Make</th>
@@ -48,20 +48,15 @@
             </tbody>
         </table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Price Data</th>
-                    
-                </tr>
-            </thead>
-            <tbody id="price-table-body">
-            </tbody>
-        </table>
+        <h2 id="prices-header">Estimated Prices</h2>
+        <div id="price-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        </div>
 
         
 
-        <h2 id="car-images-header">Car Images</h2>
+        
+
+        <h3 id="car-images-header">Car Images</h2>
         <div id="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
         </div>
     
@@ -81,16 +76,18 @@
                 errorMessageElement = document.getElementById("error-message");
 
                 tableBodyElement = document.getElementById("car-table-body");
-                imageContainer = document.getElementById("image-container");
-                priceTableBodyElement = document.getElementById("price-table-body");
+                imageContainer = document.getElementById("image-container"); 
+                priceContainer = document.getElementById("price-container");
     
                 while(tableBodyElement.firstChild) {
                     tableBodyElement.removeChild(tableBodyElement.firstChild);
                 }
                 
-                while(priceTableBodyElement.firstChild) {
-                    priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
+                while(priceContainer.firstChild) {
+                    priceContainer.removeChild(priceContainer.firstChild);
                 }
+
+                
 
                 while(imageContainer.firstChild) {
                     imageContainer.removeChild(imageContainer.firstChild);
@@ -107,10 +104,7 @@
 
                 
                 let invalidCar = false;
-
                 try{ 
-
-                
                     let carSpecResponse = await fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`);
                         
                         if(!carSpecResponse.ok) {
@@ -182,12 +176,7 @@
                             
 
                             tableBodyElement.appendChild(row);
-                        }); 
-                
-                        
-
-                        
-                    
+                        });   
                 }catch(error) {
                         errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
                  };
@@ -235,8 +224,6 @@
                     
                     await fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
-                    
-
                         if(response.ok) {
                             return response.json();
                         } else {
@@ -247,24 +234,19 @@
                         }
                     })
                     .then(data => {
-                        
                         let textData = data.data;
                         let prices = extractPrices(textData, yearInput);
                         console.log(prices);
-                        
-                        row = document.createElement("tr");
-                            
-                        priceCell = document.createElement("td");
-                        priceCell.textContent = prices;
-                        row.appendChild(priceCell);
 
-                        priceTableBodyElement.appendChild(row);
-                            
-                        
+                        prices.forEach(price => {
+                            let priceCard = document.createElement("div");
+                            priceCard.classList.add("price-card");
+                            priceCard.textContent = `${price}`;
+                            priceContainer.appendChild(priceCard);
+                        });   
                     })
                     .catch(error => {
                         errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
-                        
                     });
 
 
@@ -275,8 +257,6 @@
                     
                     await fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
                     .then(response => {
-                    
-
                         if(response.ok) {
                             return response.json();
                         } else {
@@ -287,11 +267,7 @@
                         }
                     })
                     .then(data => {
-                        
-                        
                         data.photos.forEach(photo => {
-
-                        
                             let imageElement = document.createElement("img");
                             imageElement.src = photo.src.medium;
                             imageElement.alt = photo.alt;
@@ -299,23 +275,15 @@
                             imageElement.style.height = "auto";
                             
                             imageContainer.appendChild(imageElement);
-                            
-                        });
-                    
-                        
+                        }); 
                     })
                     .catch(error => {
                         console.error("Error:", error.message);
-                        
                     });
                 }else{
                     throw { message: "Car not found" };
                 }
-
-                
-                
-
-                
+   
             }) //end of button click
             
              
