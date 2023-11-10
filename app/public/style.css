@@ -3,6 +3,10 @@ table {
     margin-top: 20px;       
 }
 
+.hidden {
+    display: none;
+}
+
 #car-spec-table{
     margin-left: auto;
     margin-right: auto;
