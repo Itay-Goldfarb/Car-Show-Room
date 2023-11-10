@@ -69,7 +69,9 @@
             let carButton = document.getElementById("searchButton");
             
             
-            carButton.addEventListener("click", () => {
+            
+            carButton.addEventListener("click", async () => {
+                
                 yearInput = document.getElementById("year-input").value;
                 makeInput = document.getElementById("make-input").value;
                 modelInput = document.getElementById("model-input").value;
@@ -77,11 +79,25 @@
                 
 
                 errorMessageElement = document.getElementById("error-message");
+
                 tableBodyElement = document.getElementById("car-table-body");
+                imageContainer = document.getElementById("image-container");
+                priceTableBodyElement = document.getElementById("price-table-body");
     
                 while(tableBodyElement.firstChild) {
                     tableBodyElement.removeChild(tableBodyElement.firstChild);
                 }
+                
+                while(priceTableBodyElement.firstChild) {
+                    priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
+                }
+
+                while(imageContainer.firstChild) {
+                    imageContainer.removeChild(imageContainer.firstChild);
+                }
+
+
+
 
                 if (!yearInput || !makeInput || !modelInput){
                     errorMessageElement.textContent = "Please enter Year, Make, and Model";
@@ -90,31 +106,42 @@
                 errorMessageElement.textContent = "";
 
                 
-    
-                fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
-                    .then(response => {
-                        if(response.ok) {
-                            return response.json();
-                        } else {
-                            if(response.status === 404) {
-                                throw { message: "Car not found" };
+                let invalidCar = false;
+
+                try{ 
+
+                
+                    let carSpecResponse = await fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`);
+                        
+                        if(!carSpecResponse.ok) {
+                            if (carSpecResponse.status === 404){
+                                throw new Error("Car not found");
                             }
-                            return response.json().then(error => { throw error });
+                            let errorData = await carSpecResponse.json();
+                            throw new Error(errorData.message || 'An error occurred while fetching the car.');
+                            
+                        } 
+                        let carsData = await carSpecResponse.json();
+
+                        if (carsData.length === 0){
+                            invalidCar = true;
+                            throw new Error("Car not found");
                         }
-                    })
-                    .then(data => {
-                        data.forEach(cars => {
+                        
+                                
+                        carsData.forEach(cars => {
+                        
                             row = document.createElement("tr");
                             
-    
+
                             makeCell = document.createElement("td");
                             makeCell.textContent = cars.make;
                             row.appendChild(makeCell);
-    
+
                             modelCell = document.createElement("td");
                             modelCell.textContent = cars.model;
                             row.appendChild(modelCell);
-    
+
                             yearCell = document.createElement("td");
                             yearCell.textContent = cars.year;
                             row.appendChild(yearCell);
@@ -153,22 +180,23 @@
                             row.appendChild(combMPGCell);
                             
                             
-    
-                            tableBodyElement.appendChild(row);
-                        });
-                    })
-                    .catch(error => {
-                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
-                    });
 
+                            tableBodyElement.appendChild(row);
+                        }); 
+                
+                        
+
+                        
+                    
+                }catch(error) {
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
+                 };
 
 
                 
-                priceTableBodyElement = document.getElementById("price-table-body");
-    
-                while(priceTableBodyElement.firstChild) {
-                    priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
-                }
+                
+
+                
 
                 function getPriceBounds(year) {
                     let currentYear = new Date().getFullYear();
@@ -203,91 +231,101 @@
                     return filteredPrices;
                 }
 
-                fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
-                .then(response => {
-                
+                if (!invalidCar){
+                    
+                    await fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+                    .then(response => {
+                    
 
-                    if(response.ok) {
-                        return response.json();
-                    } else {
-                        if(response.status === 404) {
-                            throw { message: "Price data not found" };
+                        if(response.ok) {
+                            return response.json();
+                        } else {
+                            if(response.status === 404) {
+                                throw { message: "Price data not found" };
+                            }
+                            return response.json().then(error => { throw error });
                         }
-                        return response.json().then(error => { throw error });
-                    }
-                })
-                .then(data => {
-                    
-                    let textData = data.data;
-                    let prices = extractPrices(textData, yearInput);
-                    console.log(prices);
-                    
-                    row = document.createElement("tr");
+                    })
+                    .then(data => {
                         
-                    priceCell = document.createElement("td");
-                    priceCell.textContent = prices;
-                    row.appendChild(priceCell);
-
-                    priceTableBodyElement.appendChild(row);
+                        let textData = data.data;
+                        let prices = extractPrices(textData, yearInput);
+                        console.log(prices);
                         
-                    
-                })
-                .catch(error => {
-                    errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
-                    
-                });
+                        row = document.createElement("tr");
+                            
+                        priceCell = document.createElement("td");
+                        priceCell.textContent = prices;
+                        row.appendChild(priceCell);
 
-
-
-
-                let imageContainer = document.getElementById("image-container");
-    
-                while(imageContainer.firstChild) {
-                    imageContainer.removeChild(imageContainer.firstChild);
-                }
-                
-                
-                fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
-                .then(response => {
-                
-
-                    if(response.ok) {
-                        return response.json();
-                    } else {
-                        if(response.status === 404) {
-                            throw { message: "Car image data not found" };
-                        }
-                        return response.json().then(error => { throw error });
-                    }
-                })
-                .then(data => {
-                    
-                    
-                    data.photos.forEach(photo => {
-
-                    
-                        let imageElement = document.createElement("img");
-                        imageElement.src = photo.src.medium;
-                        imageElement.alt = photo.alt;
-                        imageElement.style.width = "auto";
-                        imageElement.style.height = "auto";
+                        priceTableBodyElement.appendChild(row);
+                            
                         
-                        imageContainer.appendChild(imageElement);
+                    })
+                    .catch(error => {
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
                         
                     });
+
+
+
+
+                    
+                    
+                    
+                    await fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
+                    .then(response => {
+                    
+
+                        if(response.ok) {
+                            return response.json();
+                        } else {
+                            if(response.status === 404) {
+                                throw { message: "Car image data not found" };
+                            }
+                            return response.json().then(error => { throw error });
+                        }
+                    })
+                    .then(data => {
+                        
+                        
+                        data.photos.forEach(photo => {
+
+                        
+                            let imageElement = document.createElement("img");
+                            imageElement.src = photo.src.medium;
+                            imageElement.alt = photo.alt;
+                            imageElement.style.width = "auto";
+                            imageElement.style.height = "auto";
+                            
+                            imageContainer.appendChild(imageElement);
+                            
+                        });
+                    
+                        
+                    })
+                    .catch(error => {
+                        console.error("Error:", error.message);
+                        
+                    });
+                }else{
+                    throw { message: "Car not found" };
+                }
+
                 
-                    
-                })
-                .catch(error => {
-                    console.error("Error:", error.message);
-                    
-                });
+                
+
+                
+            }) //end of button click
+            
+             
+            
                 
             
 
 
 
-            }) //end of button click
+             
             
         
         </script>
