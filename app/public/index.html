@@ -41,7 +41,7 @@
 
         
 
-        <h3 id="car-images-header" class="hidden">Car Images</h2>
+        <h3 id="car-images-header" class="hidden">Car Image</h2>
         <div id="image-container" class="hidden" style="display: flex; flex-wrap: wrap; gap: 10px;">
         </div>
     
@@ -228,7 +228,7 @@
                     // Return first 3 prices
                     return filteredPrices;
                 }
-
+                // If car specs were found
                 if (!invalidCar){
                     
                     await fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
@@ -267,48 +267,51 @@
                     
                     
                     
-                    await fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
+                    await fetch(`/GetImageUrl?searchTerm=&year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
                         if(response.ok) {
-                            return response.json();
+                            return response.text();
                         } else {
-                            if(response.status === 404) {
-                                document.getElementById("loadingMessage").classList.add("hidden");
-                                throw { message: "Car image data not found" };
-                            }
+
                             document.getElementById("loadingMessage").classList.add("hidden");
-                            return response.json().then(error => { throw error });
+                            throw new Error("Car image data not found");
                         }
                     })
-                    .then(data => {
-                        data.photos.forEach(photo => {
-                            let imageElement = document.createElement("img");
-                            imageElement.src = photo.src.medium;
-                            imageElement.alt = photo.alt;
-                            imageElement.style.width = "auto";
-                            imageElement.style.height = "auto";
-                            
-                            imageContainer.appendChild(imageElement);
-                        }); 
+                    .then(str => {
+                        let parser = new DOMParser();
+                        let xml = parser.parseFromString(str, "application/xml");
+                        let imageUrl = xml.getElementsByTagName("string")[0].textContent;
+                        console.log(imageUrl);
+
+                        let imageElement = document.createElement("img");
+                        imageElement.src = imageUrl;
+                        imageElement.className = 'car-image';
+                        
+                        imageContainer.appendChild(imageElement);
+                         
                     })
                     .catch(error => {
                         document.getElementById("loadingMessage").classList.add("hidden");
-                        console.error("Error:", error.message);
+                        console.error("Error:", error);
                     });
+
+
                 }else{
                     document.getElementById("loadingMessage").classList.add("hidden");
                     throw { message: "Car not found" };
                 }
 
-                document.getElementById("loadingMessage").classList.add("hidden");
 
+                // Hide Searching Message
+                document.getElementById("loadingMessage").classList.add("hidden");
+                // Show Specs
                 document.getElementById("car-specs-container").classList.remove("hidden");
 
-                
+                // Show Prices
                 document.getElementById("prices-header").classList.remove("hidden");
                 document.getElementById("price-container").classList.remove("hidden");
 
-                
+                // Show Images
                 document.getElementById("car-images-header").classList.remove("hidden");
                 document.getElementById("image-container").classList.remove("hidden");
    

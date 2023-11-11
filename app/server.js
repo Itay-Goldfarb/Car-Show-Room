@@ -3,7 +3,6 @@ let express = require("express");
 let app = express();
 let apiFile = require("../env.json");
 let apiKey1 = apiFile["api_key1"]; 
-let apiKey2 = apiFile["api_key2"]; 
 let carsUrl = apiFile["api_cars_url"]; 
 let carImagesUrl = apiFile["api_car_images"];
 let webscraperUrl = apiFile["api_webscrape_url"]; 
@@ -58,7 +57,7 @@ app.get("/webscraper", (req, res) => {
   
   let scrapeUrl = `${webscraperUrl}?url=${site}&text_only=true`
   
-  
+
   axios.get(scrapeUrl, {
     headers: {
       'X-Api-Key': `${apiKey1}`
@@ -84,34 +83,30 @@ app.get("/webscraper", (req, res) => {
 
 
 
-app.get("/search", (req, res) => {
+app.get("/GetImageUrl", (req, res) => {
   
   let year = req.query.year;
   let make = req.query.make;
   let model = req.query.model;
   
-  let imagesUrl = `${carImagesUrl}?query=${make}+${model}+${year}&per_page=3`;
+  let imagesUrl = `${carImagesUrl}?searchTerm=${year}+${make}+${model}`;
   
-  axios.get(imagesUrl, {
-    headers: {
-      'Authorization': `${apiKey2}`
-    }
-  })
+
+  axios.get(imagesUrl)
   .then(response => {
-    if (response.data){
-      res.status(200).json(response.data);
-      console.log("Requesting:", imagesUrl);
-      console.log("Response:", response.data);
+    console.log("Status code:", response.status);
+    console.log("Response:", response.data);
+    
+    console.log("Requesting:", imagesUrl);
       
-    }
+    res.type('xml').send(response.data);
+      
+    
     
   })
   .catch(error => {
-    if (error.response) {
-      res.status(404).json({ "error": "car images not found" });
-    }else{
-      res.status(500).json({ "error": "Internal Server Error" });
-    }
+      console.error("Error during axios request:", error);
+      res.status(500).send("Internal Server Error");
   });
   
 });
