@@ -3,46 +3,52 @@
     <head>
         <title>CARROOM</title>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <h1>Enter Car Details</h1>
+        
     </head>
     <body>
-        <div class="container">      
+        <div id="form-container">
+            <h1>Enter Car Details</h1>
+            
+            <div class="input-container">      
             <label for="year-input">Year:</label>
             <input type="text" id="year-input">
-        </div>
+            </div>
 
-        <div class="container">
-            <label for="make-input">Make:</label>
-            <input type="text" id="make-input">
-        </div>
+            <div class="input-container">
+                <label for="make-input">Make:</label>
+                <input type="text" id="make-input">
+            </div>
 
-        <div class="container">      
-            <label for="model-input">Model:</label>
-            <input type="text" id="model-input">
-        </div>
+            <div class="input-container">      
+                <label for="model-input">Model:</label>
+                <input type="text" id="model-input">
+            </div>
 
-        <div class="container">      
-            <button id="searchButton">Get Car</button>
-            <p id="error-message" style="color:red;"></p>
+            <div class="input-container">      
+                <button id="searchButton">Get Car</button>
+                <p id="error-message"></p>
+            </div>
         </div>
+        
 
         <p id="loadingMessage" class="hidden">Searching...</p>
     
-        <div id="car-specs-container" class="specs-container" class="hidden">
+        <h2 id="car-specs-header" class="hidden">Specs</h2>
+        <div id="car-specs-container" class="hidden">
         </div>
 
         
 
-        <h2 id="prices-header" class="hidden">Estimated Prices</h2>
-        <div id="price-container" class="hidden" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <h3 id="prices-header" class="hidden">Estimated Prices</h3>
+        <div id="price-container" class="hidden">
         </div>
 
         
 
         
 
-        <h3 id="car-images-header" class="hidden">Car Image</h2>
-        <div id="image-container" class="hidden" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <h4 id="car-images-header" class="hidden">Car Image</h4>
+        <div id="image-container" class="hidden">
         </div>
     
         <script>
@@ -54,6 +60,7 @@
                 
                 
                 document.getElementById("car-specs-container").classList.add("hidden");
+                document.getElementById("car-specs-header").classList.add("hidden");
                 document.getElementById("prices-header").classList.add("hidden");
                 document.getElementById("car-images-header").classList.add("hidden");
 
@@ -305,15 +312,19 @@
                 // Hide Searching Message
                 document.getElementById("loadingMessage").classList.add("hidden");
                 // Show Specs
+                document.getElementById("car-specs-header").classList.remove("hidden");
                 document.getElementById("car-specs-container").classList.remove("hidden");
+                
 
                 // Show Prices
                 document.getElementById("prices-header").classList.remove("hidden");
                 document.getElementById("price-container").classList.remove("hidden");
+                
 
                 // Show Images
                 document.getElementById("car-images-header").classList.remove("hidden");
                 document.getElementById("image-container").classList.remove("hidden");
+                
    
             }) //end of button click
             
