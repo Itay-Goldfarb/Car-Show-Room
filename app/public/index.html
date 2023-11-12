@@ -208,7 +208,7 @@
                     let age = currentYear - year;
 
                     if (age < 5) {
-                        return { lowerBound: 20000, upperBound: 2000000 }; // Newer used cars
+                        return { lowerBound: 20000, upperBound: 5000000 }; // Newer used cars
                     } else if (age < 10) {
                         return { lowerBound: 7000, upperBound: 200000 }; // Moderately old cars
                     } else {
@@ -324,6 +324,10 @@
                 // Show Images
                 document.getElementById("car-images-header").classList.remove("hidden");
                 document.getElementById("image-container").classList.remove("hidden");
+                
+                // Auto scroll down to specs 
+                document.getElementById('car-specs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
                 
    
             }) //end of button click
