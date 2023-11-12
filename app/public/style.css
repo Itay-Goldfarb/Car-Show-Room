@@ -16,7 +16,8 @@
 
 #car-specs-container,
 #price-container,
-#image-container {
+#image-container, 
+#ratings-container{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -53,13 +54,31 @@
     margin-bottom: 8px; 
 }
 
+.rating-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px); 
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+}
+
+.rating-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
 
 .car-image {
-    max-width: 1000px;
+    max-width: 500px;
     max-height: 100%; 
     width: auto;
     height: auto;
-    display: block; 
+    display: block;
     margin: 0 auto;
 }
 
@@ -76,7 +95,7 @@ body {
     color: #333;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
     font-size: 24px;
     color: #0078d4;
     text-align: center;

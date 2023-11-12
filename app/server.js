@@ -6,6 +6,7 @@ let apiKey1 = apiFile["api_key1"];
 let carsUrl = apiFile["api_cars_url"]; 
 let carImagesUrl = apiFile["api_car_images"];
 let webscraperUrl = apiFile["api_webscrape_url"]; 
+let safetyRatingsUrl = apiFile["api_nhtsa_ratings"];
 let port = 3000;
 let hostname = "localhost";
 app.use(express.static("public"));
@@ -112,6 +113,66 @@ app.get("/GetImageUrl", (req, res) => {
 });
 
 
+
+
+
+// For vehicleId
+app.get("/SafetyRatings", (req, res) => {
+  
+  let year = req.query.year;
+  let make = req.query.make;
+  let model = req.query.model;
+  
+  let ratingsUrl = `${safetyRatingsUrl}/modelyear/${year}/make/${make}/model/${model}`;
+  
+  console.log(ratingsUrl);
+
+  axios.get(ratingsUrl)
+  .then(response => {
+    console.log("Status code:", response.status);
+    console.log("Response:", response.data);
+    
+    console.log("Requesting:", ratingsUrl);
+      
+    res.status(200).json(response.data);
+      
+    
+    
+  })
+  .catch(error => {
+      console.error("Error during axios request:", error);
+      res.status(500).send("Internal Server Error");
+  });
+  
+});
+
+
+// For detailed safety ratings
+app.get("/SafetyRatings/VehicleId/:vehicleId", (req, res) => {
+  let vehicleId = req.params.vehicleId;
+  
+  let detailedRatingsUrl = `${safetyRatingsUrl}/VehicleId/${vehicleId}`;
+  
+  console.log(detailedRatingsUrl);
+
+  axios.get(detailedRatingsUrl)
+  .then(response => {
+    console.log("Status code:", response.status);
+    console.log("Response:", response.data);
+    
+    console.log("Requesting:", detailedRatingsUrl);
+      
+    res.status(200).json(response.data);
+      
+    
+    
+  })
+  .catch(error => {
+      console.error("Error during axios request:", error);
+      res.status(500).send("Internal Server Error");
+  });
+  
+});
 
 
 

@@ -47,8 +47,13 @@
 
         
 
-        <h4 id="car-images-header" class="hidden">Car Image</h4>
+        <h4 id="car-images-header" class="hidden">Car Images</h4>
         <div id="image-container" class="hidden">
+        </div>
+
+
+        <h5 id="car-ratings-header" class="hidden">Ratings</h5>
+        <div id="ratings-container" class="hidden">
         </div>
     
         <script>
@@ -59,10 +64,11 @@
             carButton.addEventListener("click", async () => {
                 
                 
-                document.getElementById("car-specs-container").classList.add("hidden");
+                
                 document.getElementById("car-specs-header").classList.add("hidden");
                 document.getElementById("prices-header").classList.add("hidden");
                 document.getElementById("car-images-header").classList.add("hidden");
+                document.getElementById("car-ratings-header").classList.add("hidden");
 
                 document.getElementById("loadingMessage").classList.remove("hidden");
                 
@@ -77,6 +83,7 @@
                 specsContainer = document.getElementById("car-specs-container");
                 imageContainer = document.getElementById("image-container"); 
                 priceContainer = document.getElementById("price-container");
+                ratingsContainer = document.getElementById("ratings-container");
 
                 while(specsContainer.firstChild) {
                     specsContainer.removeChild(specsContainer.firstChild);
@@ -93,6 +100,10 @@
                     imageContainer.removeChild(imageContainer.firstChild);
                 }
 
+                while(ratingsContainer.firstChild) {
+                    ratingsContainer.removeChild(ratingsContainer.firstChild);
+                }
+
 
 
 
@@ -106,6 +117,7 @@
                 
                 let invalidCar = false;
                 try{ 
+                    // Car Specs
                     let carSpecResponse = await fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`);
                         
                         if(!carSpecResponse.ok) {
@@ -238,6 +250,7 @@
                 // If car specs were found
                 if (!invalidCar){
                     
+                    // Car Prices
                     await fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
                         if(response.ok) {
@@ -273,7 +286,7 @@
 
                     
                     
-                    
+                    // Car Image
                     await fetch(`/GetImageUrl?searchTerm=&year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
                         if(response.ok) {
@@ -302,6 +315,108 @@
                         console.error("Error:", error);
                     });
 
+                    
+
+                    // Safety Ratings
+                    await fetch(`/SafetyRatings?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+                    .then(response => {
+                        if(response.ok) {
+                            return response.json();
+
+                        } else {
+                            if(response.status === 404) {
+                                document.getElementById("loadingMessage").classList.add("hidden");
+                                throw { message: "Safety ratings data not found" };
+                            }
+                            document.getElementById("loadingMessage").classList.add("hidden");
+                            return response.json().then(error => { throw error });
+                        }
+                        
+                    })
+                    .then(data => {
+                        let vehicleIds = data.Results.map(result => result.VehicleId);
+                        return Promise.all(vehicleIds.map(vehicleId => {
+                            return fetch(`/SafetyRatings/VehicleId/${vehicleId}`)
+                            .then(response => {
+                                if (!response.ok){
+                                    throw new Error('Vehicle safety rating data not found');
+                                }
+                                return response.json();
+                            });
+                        }));
+                    })
+                    .then(allRatings => {
+                        let imageAppended = false;
+
+                        allRatings.forEach(ratingData => {
+                            let rating = ratingData.Results[0];
+                            let card = document.createElement("div");
+                            card.classList.add("rating-card");
+
+
+                            // description
+                            let descriptionDiv = document.createElement("div");
+                            descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                            card.appendChild(descriptionDiv);
+
+                            // year
+                            let yearDiv = document.createElement("div");
+                            yearDiv.textContent = `Year: ${rating.ModelYear}`;
+                            card.appendChild(yearDiv);
+
+                            // make
+                            let makeDiv = document.createElement("div");
+                            makeDiv.textContent = `Make: ${rating.Make}`;
+                            card.appendChild(makeDiv);
+
+                            // model
+                            let modelDiv = document.createElement("div");
+                            modelDiv.textContent = `Model: ${rating.Model}`;
+                            card.appendChild(modelDiv);
+
+                            // investigation count
+                            let investigationDiv = document.createElement("div");
+                            investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                            card.appendChild(investigationDiv);
+                            
+                            // recalls count
+                            let recallsDiv = document.createElement("div");
+                            recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                            card.appendChild(recallsDiv);
+
+                            // complaints count
+                            let complaintsDiv = document.createElement("div");
+                            complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                            card.appendChild(complaintsDiv);
+                            
+
+                            // Add more ratings details from response here
+                            
+                            ratingsContainer.appendChild(card);
+
+
+                            if (!imageAppended && imageContainer.children.length === 1) {
+                            
+                                // image
+                                let img = document.createElement("img");
+                                img.src = rating.VehiclePicture;
+                                img.className = 'car-image';
+                                img.alt = "Vehicle Safety Rating Picture";
+                                imageContainer.appendChild(img);
+                                imageAppended = true; 
+                                
+                            }
+                        });
+
+                    
+                    })
+                    .catch(error => {
+                        document.getElementById("loadingMessage").classList.add("hidden");
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the ratings data.';
+                    });
+
+                    //put recalls etc here..
+
 
                 }else{
                     document.getElementById("loadingMessage").classList.add("hidden");
@@ -311,6 +426,7 @@
 
                 // Hide Searching Message
                 document.getElementById("loadingMessage").classList.add("hidden");
+                
                 // Show Specs
                 document.getElementById("car-specs-header").classList.remove("hidden");
                 document.getElementById("car-specs-container").classList.remove("hidden");
@@ -324,6 +440,10 @@
                 // Show Images
                 document.getElementById("car-images-header").classList.remove("hidden");
                 document.getElementById("image-container").classList.remove("hidden");
+
+                // Show Ratings
+                document.getElementById("car-ratings-header").classList.remove("hidden");
+                document.getElementById("ratings-container").classList.remove("hidden");
                 
                 // Auto scroll down to specs 
                 document.getElementById('car-specs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
