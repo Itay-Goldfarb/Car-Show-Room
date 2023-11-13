@@ -50,7 +50,7 @@
     max-width: 200px;
 }
 
-.spec-card div, .price-card div {
+.spec-card div, .price-card div,  .rating-card div {
     margin-bottom: 8px; 
 }
 
