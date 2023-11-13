@@ -39,7 +39,7 @@
 
         
 
-        <h3 id="prices-header" class="hidden">Estimated Prices</h3>
+        <h3 id="prices-header" class="hidden">Estimated Price Range</h3>
         <div id="price-container" class="hidden">
         </div>
 
@@ -222,7 +222,7 @@
                     if (age < 5) {
                         return { lowerBound: 20000, upperBound: 5000000 }; // Newer used cars
                     } else if (age < 10) {
-                        return { lowerBound: 7000, upperBound: 200000 }; // Moderately old cars
+                        return { lowerBound: 7000, upperBound: 2000000 }; // Moderately old cars
                     } else {
                         return { lowerBound: 2000, upperBound: 150000 }; // Older used cars
                     }
@@ -269,12 +269,28 @@
                         let prices = extractPrices(textData, yearInput);
                         console.log(prices);
 
-                        prices.forEach(price => {
+                        let numericPrices = prices.map(price => parseFloat(price.replace(/[\$,]/g, '')));
+                        let minValue = Math.min(...numericPrices);
+                        let maxValue = Math.max(...numericPrices);
+
+                        let formattedMinValue = prices.find(price => parseFloat(price.replace(/[\$,]/g, '')) === minValue);
+                        let formattedMaxValue = prices.find(price => parseFloat(price.replace(/[\$,]/g, '')) === maxValue);
+
+                        
+                        
+                        let priceCard = document.createElement("div");
+                        priceCard.classList.add("price-card");
+                        priceCard.textContent = `${formattedMinValue} - ${formattedMaxValue}`;
+                        priceContainer.appendChild(priceCard);
+
+                        
+
+                        /*prices.forEach(price => {
                             let priceCard = document.createElement("div");
                             priceCard.classList.add("price-card");
                             priceCard.textContent = `${price}`;
                             priceContainer.appendChild(priceCard);
-                        });   
+                        });   */
                     })
                     .catch(error => {
                         document.getElementById("loadingMessage").classList.add("hidden");
@@ -347,152 +363,180 @@
                     })
                     .then(allRatings => {
                         let imageAppended = false;
+                        let ratingsFound = false;
 
                         allRatings.forEach(ratingData => {
-                            let rating = ratingData.Results[0];
-                            let card = document.createElement("div");
                             
-                            card.classList.add("rating-card");
-
-
-                            // description
-                            let descriptionDiv = document.createElement("div");
-                            descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
-                            card.appendChild(descriptionDiv);
-
-                            // investigation count
-                            let investigationDiv = document.createElement("div");
-                            investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
-                            card.appendChild(investigationDiv);
-                            
-                            // recalls count
-                            let recallsDiv = document.createElement("div");
-                            recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
-                            card.appendChild(recallsDiv);
-
-                            // complaints count
-                            let complaintsDiv = document.createElement("div");
-                            complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
-                            card.appendChild(complaintsDiv);
-
-                            // lane departure warning
-                            let laneDepDiv = document.createElement("div");
-                            laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
-                            card.appendChild(laneDepDiv);
-
-                            // forward collision warning
-                            let forwColDiv = document.createElement("div");
-                            forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
-                            card.appendChild(forwColDiv);
-
-                            // electronic stability control
-                            let elecStabDiv = document.createElement("div");
-                            elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
-                            card.appendChild(elecStabDiv);
-
-                            // Side Pole Video
-
-                            // Side Pole Picture
-                            if (rating.SidePolePicture){
-                                let imgSP = document.createElement("img");
-                                imgSP.src = rating.SidePolePicture;
-                                //imgSP.className = '';
-                                imgSP.alt = "Side Pole Picture";
-                                ratingsContainer.appendChild(imgSP);
-                            }
-
-                            // side pole crash rating
-                            let spRatingDiv = document.createElement("div");
-                            spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
-                            card.appendChild(spRatingDiv);
-
-                            // rollover possibility
-                            let rolloverPosDiv = document.createElement("div");
-                            rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
-                            card.appendChild(rolloverPosDiv);
-
-                            // rollover rating
-                            let rolloverRatingDiv = document.createElement("div");
-                            rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
-                            card.appendChild(rolloverRatingDiv);
-
-                            // Side Crash Video
-
-                            // Side Crash Picture
-                            if (rating.SideCrashPicture){
-                                let imgSC = document.createElement("img");
-                                imgSC.src = rating.SideCrashPicture;
-                                //imgSC.className = '';
-                                imgSC.alt = "Side Crash Picture";
-                                ratingsContainer.appendChild(imgSC);
-                            }
-                            
-
-                            // side crash passenger side rating
-                            let sideCPSDiv = document.createElement("div");
-                            sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
-                            card.appendChild(sideCPSDiv);
-
-                            // side crash driver side rating
-                            let sideCDSDiv = document.createElement("div");
-                            sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
-                            card.appendChild(sideCDSDiv);
-
-                            // overall side crash rating
-                            let overallSCRDiv = document.createElement("div");
-                            overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
-                            card.appendChild(overallSCRDiv);
-                            
-                            // Front Crash Video
-
-                            // Front Crash Picture
-                            if (rating.FrontCrashPicture){
-                                let imgFC = document.createElement("img");
-                                imgFC.src = rating.FrontCrashPicture;
-                                //imgFC.className = '';
-                                imgFC.alt = "Front Crash Picture";
-                                ratingsContainer.appendChild(imgFC);
-                            }
-
-                            // front crash passenger side rating
-                            let frontCPSDiv = document.createElement("div");
-                            frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
-                            card.appendChild(frontCPSDiv);
-
-                            // front crash driver side rating
-                            let frontCDSDiv = document.createElement("div");
-                            frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
-                            card.appendChild(frontCDSDiv);
-
-                            // overall front crash rating
-                            let overallFCRDiv = document.createElement("div");
-                            overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
-                            card.appendChild(overallFCRDiv);
-
-                            // overall rating
-                            let overallRDiv = document.createElement("div");
-                            overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
-                            card.appendChild(overallRDiv);
-
-                            // Add more ratings details from response here
-                            
-                            ratingsContainer.appendChild(card);
-
-
-                            if (!imageAppended && imageContainer.children.length <= 1) {
-                            
-                                // image
-                                if (rating.VehiclePicture){
-                                    let img = document.createElement("img");
-                                    img.src = rating.VehiclePicture;
-                                    img.className = 'car-image';
-                                    img.alt = "Vehicle Safety Rating Picture";
-                                    imageContainer.appendChild(img);
-                                    imageAppended = true; 
-                                }
+                            if (ratingData.Results.length !== 0){
+                                ratingsFound = true;
                                 
-                            }
+                                let rating = ratingData.Results[0];
+                                let card = document.createElement("div");
+                                
+                                card.classList.add("rating-card");
+
+
+                                // description
+                                let descriptionDiv = document.createElement("div");
+                                descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                                card.appendChild(descriptionDiv);
+
+                                // investigation count
+                                let investigationDiv = document.createElement("div");
+                                investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                                card.appendChild(investigationDiv);
+                                
+                                // recalls count
+                                let recallsDiv = document.createElement("div");
+                                recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                                card.appendChild(recallsDiv);
+
+                                // complaints count
+                                let complaintsDiv = document.createElement("div");
+                                complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                                card.appendChild(complaintsDiv);
+
+                                // lane departure warning
+                                let laneDepDiv = document.createElement("div");
+                                laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
+                                card.appendChild(laneDepDiv);
+
+                                // forward collision warning
+                                let forwColDiv = document.createElement("div");
+                                forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
+                                card.appendChild(forwColDiv);
+
+                                // electronic stability control
+                                let elecStabDiv = document.createElement("div");
+                                elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
+                                card.appendChild(elecStabDiv);
+
+                                // side pole crash rating
+                                let spRatingDiv = document.createElement("div");
+                                spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
+                                card.appendChild(spRatingDiv);
+
+                                // rollover possibility
+                                let rolloverPosDiv = document.createElement("div");
+                                rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
+                                card.appendChild(rolloverPosDiv);
+
+                                // rollover rating
+                                let rolloverRatingDiv = document.createElement("div");
+                                rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
+                                card.appendChild(rolloverRatingDiv);
+
+                                // side crash passenger side rating
+                                let sideCPSDiv = document.createElement("div");
+                                sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
+                                card.appendChild(sideCPSDiv);
+
+                                // side crash driver side rating
+                                let sideCDSDiv = document.createElement("div");
+                                sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
+                                card.appendChild(sideCDSDiv);
+
+                                // overall side crash rating
+                                let overallSCRDiv = document.createElement("div");
+                                overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
+                                card.appendChild(overallSCRDiv);
+
+                                // front crash passenger side rating
+                                let frontCPSDiv = document.createElement("div");
+                                frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
+                                card.appendChild(frontCPSDiv);
+
+                                // front crash driver side rating
+                                let frontCDSDiv = document.createElement("div");
+                                frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
+                                card.appendChild(frontCDSDiv);
+
+                                // overall front crash rating
+                                let overallFCRDiv = document.createElement("div");
+                                overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
+                                card.appendChild(overallFCRDiv);
+
+                                // overall rating
+                                let overallRDiv = document.createElement("div");
+                                overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
+                                card.appendChild(overallRDiv);
+
+                                // Side Pole Picture
+                                if (rating.SidePolePicture){
+                                    let imgSP = document.createElement("img");
+                                    imgSP.src = rating.SidePolePicture;
+                                    //imgSP.className = '';
+                                    imgSP.alt = "Side Pole Picture";
+                                    card.appendChild(imgSP);
+                                }
+
+                                // Side Crash Picture
+                                if (rating.SideCrashPicture){
+                                    let imgSC = document.createElement("img");
+                                    imgSC.src = rating.SideCrashPicture;
+                                    //imgSC.className = '';
+                                    imgSC.alt = "Side Crash Picture";
+                                    card.appendChild(imgSC);
+                                }
+
+                                // Front Crash Picture
+                                if (rating.FrontCrashPicture){
+                                    let imgFC = document.createElement("img");
+                                    imgFC.src = rating.FrontCrashPicture;
+                                    //imgFC.className = '';
+                                    imgFC.alt = "Front Crash Picture";
+                                    card.appendChild(imgFC);
+                                }
+
+                                
+
+                                // create and append download links to crash videos
+                                function appendDownloadLink(videoUrl, description) {
+                                    if (videoUrl) {
+                                        let downloadLink = document.createElement('a');
+                                        downloadLink.href = videoUrl;
+                                        downloadLink.textContent = `Download ${description}`;
+                                        downloadLink.className = 'download-video-link';
+                                        downloadLink.download = ""; // suggest download on click
+                                        card.appendChild(downloadLink); 
+                                    }
+                                }
+
+                                
+                                appendDownloadLink(rating.FrontCrashVideo, "Front Crash Video");
+                                appendDownloadLink(rating.SideCrashVideo, "Side Crash Video");
+                                appendDownloadLink(rating.SidePoleVideo, "Side Pole Video");
+                                
+                                
+                                ratingsContainer.appendChild(card);
+
+                                if (!imageAppended && imageContainer.children.length <= 1) {
+                                
+                                    // image
+                                    if (rating.VehiclePicture){
+                                        let img = document.createElement("img");
+                                        img.src = rating.VehiclePicture;
+                                        img.className = 'car-image';
+                                        img.alt = "Vehicle Safety Rating Picture";
+                                        imageContainer.appendChild(img);
+                                        imageAppended = true; 
+                                    }
+                                    
+                                }
+
+                            } 
+                            
                         });
+                        
+                        if (!ratingsFound){
+                            let noRatingsCard = document.createElement("div");
+                            noRatingsCard.classList.add("rating-card");
+
+
+                            // No ratings results
+                            noRatingsCard.textContent = `No Safety Ratings Results From NHTSA`;
+                            ratingsContainer.appendChild(noRatingsCard);
+                        }
 
                     
                     })
