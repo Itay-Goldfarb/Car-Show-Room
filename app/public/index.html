@@ -3,266 +3,593 @@
     <head>
         <title>CARROOM</title>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <h1>ENTER CAR DETAILS</h1>
+        
     </head>
     <body>
-        <div class="container">      
+        <div id="form-container">
+            <h1>Enter Car Details</h1>
+            
+            <div class="input-container">      
             <label for="year-input">Year:</label>
             <input type="text" id="year-input">
-        </div>
+            </div>
 
-        <div class="container">
-            <label for="make-input">Make:</label>
-            <input type="text" id="make-input">
-        </div>
+            <div class="input-container">
+                <label for="make-input">Make:</label>
+                <input type="text" id="make-input">
+            </div>
 
-        <div class="container">      
-            <label for="model-input">Model:</label>
-            <input type="text" id="model-input">
-        </div>
+            <div class="input-container">      
+                <label for="model-input">Model:</label>
+                <input type="text" id="model-input">
+            </div>
 
-        <div class="container">      
-            <button id="searchButton">Get Car</button>
-            <p id="error-message" style="color:red;"></p>
+            <div class="input-container">      
+                <button id="searchButton">Get Car</button>
+                <p id="error-message"></p>
+            </div>
         </div>
+        
+
+        <p id="loadingMessage" class="hidden">Searching...</p>
     
-        <table>
-            <thead>
-                <tr>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Class</th>
-                    <th>Fuel Type</th>
-                    <th>Drivetrain</th>
-                    <th>Cylinders</th>
-                    <th>Transmission</th>
-                    <th>City MPG</th>
-                    <th>Highway MPG</th>
-                    <th>Combination MPG</th>
-                    
-                    
-                </tr>
-            </thead>
-            <tbody id="car-table-body">
-            </tbody>
-        </table>
+        <h2 id="car-specs-header" class="hidden">Specs</h2>
+        <div id="car-specs-container" class="hidden">
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Price Data</th>
-                    
-                </tr>
-            </thead>
-            <tbody id="price-table-body">
-            </tbody>
-        </table>
+        
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Car Images</th>
-                    
-                </tr>
-            </thead>
-            <tbody id="image-table-body">
-            </tbody>
-        </table>
+        <h3 id="prices-header" class="hidden">Estimated Price Range</h3>
+        <div id="price-container" class="hidden">
+        </div>
+
+        
+
+        
+
+        <h4 id="car-images-header" class="hidden">Car Images</h4>
+        <div id="image-container" class="hidden">
+        </div>
+
+
+        <h5 id="car-ratings-header" class="hidden">Ratings</h5>
+        <div id="ratings-container" class="hidden">
+        </div>
     
         <script>
             let carButton = document.getElementById("searchButton");
             
             
-            carButton.addEventListener("click", () => {
+            
+            carButton.addEventListener("click", async () => {
+                
+                
+                
+                document.getElementById("car-specs-header").classList.add("hidden");
+                document.getElementById("prices-header").classList.add("hidden");
+                document.getElementById("car-images-header").classList.add("hidden");
+                document.getElementById("car-ratings-header").classList.add("hidden");
+
+                document.getElementById("loadingMessage").classList.remove("hidden");
+                
                 yearInput = document.getElementById("year-input").value;
                 makeInput = document.getElementById("make-input").value;
                 modelInput = document.getElementById("model-input").value;
 
+                
+
                 errorMessageElement = document.getElementById("error-message");
-                tableBodyElement = document.getElementById("car-table-body");
-    
-                while(tableBodyElement.firstChild) {
-                    tableBodyElement.removeChild(tableBodyElement.firstChild);
+
+                specsContainer = document.getElementById("car-specs-container");
+                imageContainer = document.getElementById("image-container"); 
+                priceContainer = document.getElementById("price-container");
+                ratingsContainer = document.getElementById("ratings-container");
+
+                while(specsContainer.firstChild) {
+                    specsContainer.removeChild(specsContainer.firstChild);
+                }
+                
+                
+                while(priceContainer.firstChild) {
+                    priceContainer.removeChild(priceContainer.firstChild);
+                }
+
+                
+
+                while(imageContainer.firstChild) {
+                    imageContainer.removeChild(imageContainer.firstChild);
+                }
+
+                while(ratingsContainer.firstChild) {
+                    ratingsContainer.removeChild(ratingsContainer.firstChild);
+                }
+
+
+
+
+                if (!yearInput || !makeInput || !modelInput){
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    errorMessageElement.textContent = "Please enter Year, Make, and Model";
+                    return;
                 }
                 errorMessageElement.textContent = "";
-    
-                fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+
+                
+                let invalidCar = false;
+                try{ 
+                    // Car Specs
+                    let carSpecResponse = await fetch(`/cars?year=${yearInput}&make=${makeInput}&model=${modelInput}`);
+                        
+                        if(!carSpecResponse.ok) {
+                            if (carSpecResponse.status === 404){
+                                document.getElementById("loadingMessage").classList.add("hidden");
+                                throw new Error("Car not found");
+                            }
+                            let errorData = await carSpecResponse.json();
+                            document.getElementById("loadingMessage").classList.add("hidden");
+                            throw new Error(errorData.message || 'An error occurred while fetching the car.');
+                            
+                        } 
+                        let carsData = await carSpecResponse.json();
+
+                        if (carsData.length === 0){
+                            invalidCar = true;
+                            document.getElementById("loadingMessage").classList.add("hidden");
+                            throw new Error("Car not found");
+                        }
+
+                        
+                        
+                                
+                        carsData.forEach(car => {
+                        
+                            let card = document.createElement("div");
+                            card.classList.add("spec-card");
+
+                            // Add make
+                            let makeDiv = document.createElement("div");
+                            makeDiv.textContent = `Make: ${car.make}`;
+                            card.appendChild(makeDiv);
+
+                            // Add model
+                            let modelDiv = document.createElement("div");
+                            modelDiv.textContent = `Model: ${car.model}`;
+                            card.appendChild(modelDiv);
+
+                            // Add year
+                            let yearDiv = document.createElement("div");
+                            yearDiv.textContent = `Year: ${car.year}`;
+                            card.appendChild(yearDiv);
+
+                            // Add class
+                            let classDiv = document.createElement("div");
+                            classDiv.textContent = `Class: ${car.class}`;
+                            card.appendChild(classDiv);
+
+                            // Add fuel type
+                            let fuelTypeDiv = document.createElement("div");
+                            fuelTypeDiv.textContent = `Fuel Type: ${car.fuel_type}`;
+                            card.appendChild(fuelTypeDiv);
+
+                            // Add drivetrain
+                            let driveDiv = document.createElement("div");
+                            driveDiv.textContent = `Drivetrain: ${car.drive}`;
+                            card.appendChild(driveDiv);
+
+                            // Add cylinders
+                            let cylinderDiv = document.createElement("div");
+                            cylinderDiv.textContent = `Cylinders: ${car.cylinders}`;
+                            card.appendChild(cylinderDiv);
+
+                            // Add transmission
+                            let transDiv = document.createElement("div");
+                            transDiv.textContent = `Transmission: ${car.transmission}`;
+                            card.appendChild(transDiv);
+
+                            // Add city MPG
+                            let cityMPGDiv = document.createElement("div");
+                            cityMPGDiv.textContent = `City MPG: ${car.city_mpg}`;
+                            card.appendChild(cityMPGDiv);
+
+                            // Add highway MPG
+                            let hwyMPGDiv = document.createElement("div");
+                            hwyMPGDiv.textContent = `Highway MPG: ${car.highway_mpg}`;
+                            card.appendChild(hwyMPGDiv);
+
+                            // Add combination MPG
+                            let combMPGDiv = document.createElement("div");
+                            combMPGDiv.textContent = `Combination MPG: ${car.combination_mpg}`;
+                            card.appendChild(combMPGDiv);
+
+                            // Append the card to the container
+                            specsContainer.appendChild(card);
+                        });   
+                }catch(error) {
+                        document.getElementById("loadingMessage").classList.add("hidden");
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
+                };
+
+
+                
+                
+
+                
+
+                function getPriceBounds(year) {
+                    let currentYear = new Date().getFullYear();
+                    let age = currentYear - year;
+
+                    if (age < 5) {
+                        return { lowerBound: 20000, upperBound: 5000000 }; // Newer used cars
+                    } else if (age < 10) {
+                        return { lowerBound: 7000, upperBound: 2000000 }; // Moderately old cars
+                    } else {
+                        return { lowerBound: 2000, upperBound: 150000 }; // Older used cars
+                    }
+                }
+
+                function extractPrices(text, year){
+                    let bounds = getPriceBounds(year);
+                    // Look for patterns like $XX,XXX.XX or $XX.XX or $XXXX
+                    let priceRegex = /\$\d{1,3}(,\d{3})*(\.\d{2})?/g;
+                    let matches = text.match(priceRegex);
+                    let prices = matches ? matches.map(match => match.replace(/[\$,]/g, '')) : [];
+                    let filteredPrices = [];
+                    let price;
+
+                    for (price of prices){
+                        let numericPrice = parseFloat(price);
+                        if (numericPrice >= bounds.lowerBound && numericPrice <= bounds.upperBound){
+                            filteredPrices.push(matches[prices.indexOf(price)]);
+                            if (filteredPrices.length >= 3) break;
+                        }
+                    }
+                    // Return first 3 prices
+                    return filteredPrices;
+                }
+                // If car specs were found
+                if (!invalidCar){
+                    
+                    // Car Prices
+                    await fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
                     .then(response => {
                         if(response.ok) {
                             return response.json();
                         } else {
                             if(response.status === 404) {
-                                throw { message: "Car not found" };
+                                document.getElementById("loadingMessage").classList.add("hidden");
+                                throw { message: "Price data not found" };
                             }
+                            document.getElementById("loadingMessage").classList.add("hidden");
                             return response.json().then(error => { throw error });
                         }
                     })
                     .then(data => {
-                        data.forEach(cars => {
-                            row = document.createElement("tr");
-                            
-    
-                            makeCell = document.createElement("td");
-                            makeCell.textContent = cars.make;
-                            row.appendChild(makeCell);
-    
-                            modelCell = document.createElement("td");
-                            modelCell.textContent = cars.model;
-                            row.appendChild(modelCell);
-    
-                            yearCell = document.createElement("td");
-                            yearCell.textContent = cars.year;
-                            row.appendChild(yearCell);
+                        let textData = data.data;
+                        let prices = extractPrices(textData, yearInput);
+                        console.log(prices);
 
-                            classCell = document.createElement("td");
-                            classCell.textContent = cars.class;
-                            row.appendChild(classCell);
+                        let numericPrices = prices.map(price => parseFloat(price.replace(/[\$,]/g, '')));
+                        let minValue = Math.min(...numericPrices);
+                        let maxValue = Math.max(...numericPrices);
 
-                            fuelTypeCell = document.createElement("td");
-                            fuelTypeCell.textContent = cars.fuel_type;
-                            row.appendChild(fuelTypeCell);
+                        let formattedMinValue = prices.find(price => parseFloat(price.replace(/[\$,]/g, '')) === minValue);
+                        let formattedMaxValue = prices.find(price => parseFloat(price.replace(/[\$,]/g, '')) === maxValue);
 
-                            driveCell = document.createElement("td");
-                            driveCell.textContent = cars.drive;
-                            row.appendChild(driveCell);
+                        
+                        
+                        let priceCard = document.createElement("div");
+                        priceCard.classList.add("price-card");
+                        priceCard.textContent = `${formattedMinValue} - ${formattedMaxValue}`;
+                        priceContainer.appendChild(priceCard);
 
-                            cylinderCell = document.createElement("td");
-                            cylinderCell.textContent = cars.cylinders;
-                            row.appendChild(cylinderCell);
+                        
 
-
-                            transCell = document.createElement("td");
-                            transCell.textContent = cars.transmission;
-                            row.appendChild(transCell);
-
-                            cityMPGCell = document.createElement("td");
-                            cityMPGCell.textContent = cars.city_mpg;
-                            row.appendChild(cityMPGCell);
-
-                            hwyMPGCell = document.createElement("td");
-                            hwyMPGCell.textContent = cars.highway_mpg;
-                            row.appendChild(hwyMPGCell);
-
-                            combMPGCell = document.createElement("td");
-                            combMPGCell.textContent = cars.combination_mpg;
-                            row.appendChild(combMPGCell);
-                            
-                            
-    
-                            tableBodyElement.appendChild(row);
-                        });
+                        /*prices.forEach(price => {
+                            let priceCard = document.createElement("div");
+                            priceCard.classList.add("price-card");
+                            priceCard.textContent = `${price}`;
+                            priceContainer.appendChild(priceCard);
+                        });   */
                     })
                     .catch(error => {
-                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the car.';
+                        document.getElementById("loadingMessage").classList.add("hidden");
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
                     });
 
 
 
-                
-                priceTableBodyElement = document.getElementById("price-table-body");
-    
-                while(priceTableBodyElement.firstChild) {
-                    priceTableBodyElement.removeChild(priceTableBodyElement.firstChild);
-                }
 
-                function extractPrices(text){
-                    // Look for patterns like $XX,XXX.XX or $XX.XX or $XXXX
-                    let priceRegex = /\$\d{1,3}(,\d{3})*(\.\d{0,2})?/g;
-                    let prices = text.match(priceRegex);
-                    // Return first 3 prices
-                    return prices ? prices.slice(0,3) : [];
-                }
+                    
+                    
+                    // Car Image
+                    await fetch(`/GetImageUrl?searchTerm=&year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+                    .then(response => {
+                        if(response.ok) {
+                            return response.text();
+                        } else {
 
-                fetch(`/webscraper?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
-                .then(response => {
-                
-
-                    if(response.ok) {
-                        return response.json();
-                    } else {
-                        if(response.status === 404) {
-                            throw { message: "Price data not found" };
+                            document.getElementById("loadingMessage").classList.add("hidden");
+                            throw new Error("Car image data not found");
                         }
-                        return response.json().then(error => { throw error });
-                    }
-                })
-                .then(data => {
+                    })
+                    .then(str => {
+                        let parser = new DOMParser();
+                        let xml = parser.parseFromString(str, "application/xml");
+                        let imageUrl = xml.getElementsByTagName("string")[0].textContent;
+                        console.log(imageUrl);
 
-                    let textData = data.data;
-                    let prices = extractPrices(textData);
-                    console.log(prices);
-                    
-                    row = document.createElement("tr");
-                        
-                    priceCell = document.createElement("td");
-                    priceCell.textContent = prices;
-                    row.appendChild(priceCell);
-
-                    priceTableBodyElement.appendChild(row);
-                        
-                    
-                })
-                .catch(error => {
-                    errorMessageElement.textContent = error.message || 'An error occurred while fetching the price data.';
-                    
-                });
-
-
-
-
-                imageTableBodyElement = document.getElementById("image-table-body");
-    
-                while(imageTableBodyElement.firstChild) {
-                    imageTableBodyElement.removeChild(imageTableBodyElement.firstChild);
-                }
-                
-                
-                fetch(`/search?query=&make=${makeInput}&model=${modelInput}&year=${yearInput}&per_page=3`)
-                .then(response => {
-                
-
-                    if(response.ok) {
-                        return response.json();
-                    } else {
-                        if(response.status === 404) {
-                            throw { message: "Car image data not found" };
-                        }
-                        return response.json().then(error => { throw error });
-                    }
-                })
-                .then(data => {
-                    data.photos.forEach(photo => {
-                    
-                    
-                    
-                    
-                        let row = document.createElement("tr");
-                        let imageCell = document.createElement("td");
                         let imageElement = document.createElement("img");
-
-                        imageElement.src = photo.src.medium;
-                        imageElement.alt = photo.alt;
+                        imageElement.src = imageUrl;
+                        imageElement.className = 'car-image';
                         
-                        imageCell.appendChild(imageElement);
-                        row.appendChild(imageCell);
-                        
-                        imageTableBodyElement.appendChild(row);
-                        
+                        imageContainer.appendChild(imageElement);
+                         
+                    })
+                    .catch(error => {
+                        document.getElementById("loadingMessage").classList.add("hidden");
+                        console.error("Error:", error);
                     });
+
+                    
+
+                    // Safety Ratings
+                    await fetch(`/SafetyRatings?year=${yearInput}&make=${makeInput}&model=${modelInput}`)
+                    .then(response => {
+                        if(response.ok) {
+                            return response.json();
+
+                        } else {
+                            if(response.status === 404) {
+                                document.getElementById("loadingMessage").classList.add("hidden");
+                                throw { message: "Safety ratings data not found" };
+                            }
+                            document.getElementById("loadingMessage").classList.add("hidden");
+                            return response.json().then(error => { throw error });
+                        }
+                        
+                    })
+                    .then(data => {
+                        let vehicleIds = data.Results.map(result => result.VehicleId);
+                        return Promise.all(vehicleIds.map(vehicleId => {
+                            return fetch(`/SafetyRatings/VehicleId/${vehicleId}`)
+                            .then(response => {
+                                if (!response.ok){
+                                    throw new Error('Vehicle safety rating data not found');
+                                }
+                                return response.json();
+                            });
+                        }));
+                    })
+                    .then(allRatings => {
+                        let imageAppended = false;
+                        let ratingsFound = false;
+
+                        allRatings.forEach(ratingData => {
+                            
+                            if (ratingData.Results.length !== 0){
+                                ratingsFound = true;
+                                
+                                let rating = ratingData.Results[0];
+                                let card = document.createElement("div");
+                                
+                                card.classList.add("rating-card");
+
+
+                                // description
+                                let descriptionDiv = document.createElement("div");
+                                descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                                card.appendChild(descriptionDiv);
+
+                                // investigation count
+                                let investigationDiv = document.createElement("div");
+                                investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                                card.appendChild(investigationDiv);
+                                
+                                // recalls count
+                                let recallsDiv = document.createElement("div");
+                                recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                                card.appendChild(recallsDiv);
+
+                                // complaints count
+                                let complaintsDiv = document.createElement("div");
+                                complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                                card.appendChild(complaintsDiv);
+
+                                // lane departure warning
+                                let laneDepDiv = document.createElement("div");
+                                laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
+                                card.appendChild(laneDepDiv);
+
+                                // forward collision warning
+                                let forwColDiv = document.createElement("div");
+                                forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
+                                card.appendChild(forwColDiv);
+
+                                // electronic stability control
+                                let elecStabDiv = document.createElement("div");
+                                elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
+                                card.appendChild(elecStabDiv);
+
+                                // side pole crash rating
+                                let spRatingDiv = document.createElement("div");
+                                spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
+                                card.appendChild(spRatingDiv);
+
+                                // rollover possibility
+                                let rolloverPosDiv = document.createElement("div");
+                                rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
+                                card.appendChild(rolloverPosDiv);
+
+                                // rollover rating
+                                let rolloverRatingDiv = document.createElement("div");
+                                rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
+                                card.appendChild(rolloverRatingDiv);
+
+                                // side crash passenger side rating
+                                let sideCPSDiv = document.createElement("div");
+                                sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
+                                card.appendChild(sideCPSDiv);
+
+                                // side crash driver side rating
+                                let sideCDSDiv = document.createElement("div");
+                                sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
+                                card.appendChild(sideCDSDiv);
+
+                                // overall side crash rating
+                                let overallSCRDiv = document.createElement("div");
+                                overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
+                                card.appendChild(overallSCRDiv);
+
+                                // front crash passenger side rating
+                                let frontCPSDiv = document.createElement("div");
+                                frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
+                                card.appendChild(frontCPSDiv);
+
+                                // front crash driver side rating
+                                let frontCDSDiv = document.createElement("div");
+                                frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
+                                card.appendChild(frontCDSDiv);
+
+                                // overall front crash rating
+                                let overallFCRDiv = document.createElement("div");
+                                overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
+                                card.appendChild(overallFCRDiv);
+
+                                // overall rating
+                                let overallRDiv = document.createElement("div");
+                                overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
+                                card.appendChild(overallRDiv);
+
+                                // Side Pole Picture
+                                if (rating.SidePolePicture){
+                                    let imgSP = document.createElement("img");
+                                    imgSP.src = rating.SidePolePicture;
+                                    //imgSP.className = '';
+                                    imgSP.alt = "Side Pole Picture";
+                                    card.appendChild(imgSP);
+                                }
+
+                                // Side Crash Picture
+                                if (rating.SideCrashPicture){
+                                    let imgSC = document.createElement("img");
+                                    imgSC.src = rating.SideCrashPicture;
+                                    //imgSC.className = '';
+                                    imgSC.alt = "Side Crash Picture";
+                                    card.appendChild(imgSC);
+                                }
+
+                                // Front Crash Picture
+                                if (rating.FrontCrashPicture){
+                                    let imgFC = document.createElement("img");
+                                    imgFC.src = rating.FrontCrashPicture;
+                                    //imgFC.className = '';
+                                    imgFC.alt = "Front Crash Picture";
+                                    card.appendChild(imgFC);
+                                }
+
+                                
+
+                                // create and append download links to crash videos
+                                function appendDownloadLink(videoUrl, description) {
+                                    if (videoUrl) {
+                                        let downloadLink = document.createElement('a');
+                                        downloadLink.href = videoUrl;
+                                        downloadLink.textContent = `Download ${description}`;
+                                        downloadLink.className = 'download-video-link';
+                                        downloadLink.download = ""; // suggest download on click
+                                        card.appendChild(downloadLink); 
+                                    }
+                                }
+
+                                
+                                appendDownloadLink(rating.FrontCrashVideo, "Front Crash Video");
+                                appendDownloadLink(rating.SideCrashVideo, "Side Crash Video");
+                                appendDownloadLink(rating.SidePoleVideo, "Side Pole Video");
+                                
+                                
+                                ratingsContainer.appendChild(card);
+
+                                if (!imageAppended && imageContainer.children.length <= 1) {
+                                
+                                    // image
+                                    if (rating.VehiclePicture){
+                                        let img = document.createElement("img");
+                                        img.src = rating.VehiclePicture;
+                                        img.className = 'car-image';
+                                        img.alt = "Vehicle Safety Rating Picture";
+                                        imageContainer.appendChild(img);
+                                        imageAppended = true; 
+                                    }
+                                    
+                                }
+
+                            } 
+                            
+                        });
+                        
+                        if (!ratingsFound){
+                            let noRatingsCard = document.createElement("div");
+                            noRatingsCard.classList.add("rating-card");
+
+
+                            // No ratings results
+                            noRatingsCard.textContent = `No Safety Ratings Results From NHTSA`;
+                            ratingsContainer.appendChild(noRatingsCard);
+                        }
+
+                    
+                    })
+                    .catch(error => {
+                        document.getElementById("loadingMessage").classList.add("hidden");
+                        errorMessageElement.textContent = error.message || 'An error occurred while fetching the ratings data.';
+                    });
+
+                    //put recalls etc here..
+
+
+                }else{
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Car not found" };
+                }
+
+
+                // Hide Searching Message
+                document.getElementById("loadingMessage").classList.add("hidden");
                 
-                    
-                })
-                .catch(error => {
-                    console.error("Error:", error.message);
-                    
-                });
+                // Show Specs
+                document.getElementById("car-specs-header").classList.remove("hidden");
+                document.getElementById("car-specs-container").classList.remove("hidden");
+                
+
+                // Show Prices
+                document.getElementById("prices-header").classList.remove("hidden");
+                document.getElementById("price-container").classList.remove("hidden");
+                
+
+                // Show Images
+                document.getElementById("car-images-header").classList.remove("hidden");
+                document.getElementById("image-container").classList.remove("hidden");
+
+                // Show Ratings
+                document.getElementById("car-ratings-header").classList.remove("hidden");
+                document.getElementById("ratings-container").classList.remove("hidden");
+                
+                // Auto scroll down to specs 
+                document.getElementById('car-specs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                
+   
+            }) //end of button click
+            
+             
+            
                 
             
 
 
 
-            })
+             
             
         
         </script>
