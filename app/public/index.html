@@ -6,7 +6,65 @@
         
     </head>
     <body>
-        <div id="form-container">
+        
+        <button id="compareCarsButton">Compare Two Cars</button>
+
+        <div id="comparisonForms" style="display: none;">
+            <div id="car1Form" class="car-form">
+                <h1>Enter Car 1 Details</h1>
+                <div class="input-container">      
+                <label for="year-input">Year:</label>
+                <input type="text" id="year-input1">
+                </div>
+    
+                <div class="input-container">
+                    <label for="make-input">Make:</label>
+                    <input type="text" id="make-input1">
+                </div>
+    
+                <div class="input-container">      
+                    <label for="model-input">Model:</label>
+                    <input type="text" id="model-input1">
+                </div>
+    
+                <div class="input-container">      
+                    
+                    <p id="error-message"></p>
+                </div>
+            </div>
+            
+            
+            <div id="car2Form" class="car-form">
+                <h1>Enter Car 2 Details</h1>
+                <div class="input-container">      
+                <label for="year-input">Year:</label>
+                <input type="text" id="year-input2">
+                </div>
+    
+                <div class="input-container">
+                    <label for="make-input">Make:</label>
+                    <input type="text" id="make-input2">
+                </div>
+    
+                <div class="input-container">      
+                    <label for="model-input">Model:</label>
+                    <input type="text" id="model-input2">
+                </div>
+    
+                <div class="input-container">      
+                    
+                    <p id="error-message"></p>
+                </div>
+            </div>
+            
+        </div>
+
+        <button id="compareButton" class="hidden">Compare</button>
+
+        
+        
+        
+        <div id="form-container" style="display: block;">
             <h1>Enter Car Details</h1>
             
             <div class="input-container">      
@@ -55,8 +113,87 @@
         <h5 id="car-ratings-header" class="hidden">Ratings</h5>
         <div id="ratings-container" class="hidden">
         </div>
+
+        <div id="comparisonResults" style="display: none;">
+            <!-- Results will be displayed here -->
+          </div>
     
+        
+        
         <script>
+            let specsContainer = document.getElementById("car-specs-container");
+            let imageContainer = document.getElementById("image-container"); 
+            let priceContainer = document.getElementById("price-container");
+            let ratingsContainer = document.getElementById("ratings-container");
+
+
+            let compareCarsButton = document.getElementById("compareCarsButton");
+            let compareButton = document.getElementById("compareButton");
+            let formContainer = document.getElementById("form-container");
+            let comparisonForms = document.getElementById("comparisonForms");
+            let comparisonResults = document.getElementById("comparisonResults");
+            let isComparingTwoCars = false; // State flag
+
+            compareCarsButton.addEventListener("click", async () => {
+                
+                isComparingTwoCars = !isComparingTwoCars;
+
+                if(isComparingTwoCars) {
+                    document.getElementById("car-specs-header").classList.add("hidden");
+                    document.getElementById("prices-header").classList.add("hidden");
+                    document.getElementById("car-images-header").classList.add("hidden");
+                    document.getElementById("car-ratings-header").classList.add("hidden");
+
+
+                    while(specsContainer.firstChild) {
+                        specsContainer.removeChild(specsContainer.firstChild);
+                    }
+                    
+                    
+                    while(priceContainer.firstChild) {
+                        priceContainer.removeChild(priceContainer.firstChild);
+                    }
+
+                    
+
+                    while(imageContainer.firstChild) {
+                        imageContainer.removeChild(imageContainer.firstChild);
+                    }
+
+                    while(ratingsContainer.firstChild) {
+                        ratingsContainer.removeChild(ratingsContainer.firstChild);
+                    }
+
+                    
+                    // If currently searching for one car, switch to compare two cars
+                    compareCarsButton.textContent = "Search For One Car";
+                    formContainer.style.display = "none"; // Hide the single car search form
+                    comparisonForms.style.display = "flex"; // Show the comparison forms
+                    compareButton.classList.remove("hidden");
+                    
+                } else {
+                    // If currently comparing two cars, switch to search for one car
+                    compareCarsButton.textContent = "Compare Two Cars";
+                    formContainer.style.display = "block"; // Show the single car search form
+                    comparisonForms.style.display = "none"; // Hide the comparison forms
+                    comparisonResults.style.display = "none"; // Hide the comparison results
+                    compareButton.classList.add("hidden");
+                    
+                }
+
+            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             let carButton = document.getElementById("searchButton");
             
             
@@ -80,10 +217,7 @@
 
                 errorMessageElement = document.getElementById("error-message");
 
-                specsContainer = document.getElementById("car-specs-container");
-                imageContainer = document.getElementById("image-container"); 
-                priceContainer = document.getElementById("price-container");
-                ratingsContainer = document.getElementById("ratings-container");
+                
 
                 while(specsContainer.firstChild) {
                     specsContainer.removeChild(specsContainer.firstChild);
