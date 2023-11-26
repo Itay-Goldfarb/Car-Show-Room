@@ -8,11 +8,21 @@
     text-align: center;
 }
 
-#error-message {
+#error-message, #error-message1, #error-message2 {
     color: red;
     margin-top: 20px;
 }
 
+#comparisonResults {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+  
+.car-data {
+    flex-basis: 48%; /* Adjust the width to fit side by side */
+    max-width: 48%; /* set a max-width if needed */
+}
 
 #car-specs-container,
 #price-container,
@@ -123,6 +133,12 @@ h1, h2, h3, h4, h5 {
     text-align: center;
 }
 
+h6 {
+    font-size: 24px;
+    color: black;
+    text-align: center;
+}
+
 
 
 label {
@@ -139,6 +155,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
     
+}
+
+#compareButton {
+    margin-bottom: 20px;
 }
 
 
