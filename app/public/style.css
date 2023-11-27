@@ -17,11 +17,17 @@
     display: flex;
     justify-content: space-around;
     gap: 20px;
+    /*align-items: center;*/
+    align-items: flex-start;
 }
   
 .car-data {
     flex-basis: 48%; /* Adjust the width to fit side by side */
-    max-width: 48%; /* set a max-width if needed */
+    max-width: 58%; /* set a max-width if needed */
+    padding: 10px; /* Adjust padding as needed */
+    margin: 10px;
+    border-radius: 8px;
+    
 }
 
 #car-specs-container,
@@ -59,6 +65,19 @@
 }
 
 
+.spec-card-compare {
+    text-align: start;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(10% - 10px); /* Adjust width for card row */
+    margin-bottom: 20px;
+    margin: 0 auto;
+    max-width: 300px;
+    font-size: 16px;
+}
 
 .spec-card, .price-card {
     border: 1px solid #ddd;
@@ -79,6 +98,7 @@
     text-align: center;
     padding: 10px;
     max-width: 200px;
+    margin: 0 auto; 
 }
 
 .spec-card div, .price-card div,  .rating-card div {
@@ -95,6 +115,7 @@
     width: calc(33% - 20px); 
     flex-basis: calc(20% - 20px); 
     text-align: left;
+    margin: 0 auto;
 }
 
 .rating-card img {

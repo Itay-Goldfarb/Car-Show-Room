@@ -11,7 +11,7 @@
 
         <div id="comparisonForms" style="display: none;">
             <div id="car1Form" class="car-form">
-                <h1>Enter Car 1 Details</h1>
+                <h1>Add First Car</h1>
                 <div class="input-container">      
                 <label for="year-input">Year:</label>
                 <input type="text" id="year-input1">
@@ -35,7 +35,7 @@
             
             
             <div id="car2Form" class="car-form">
-                <h1>Enter Car 2 Details</h1>
+                <h1>Add Second Car</h1>
                 <div class="input-container">      
                 <label for="year-input">Year:</label>
                 <input type="text" id="year-input2">
@@ -65,7 +65,7 @@
         
         
         <div id="form-container" style="display: block;">
-            <h1>Enter Car Details</h1>
+            <h1>Search Car</h1>
             
             <div class="input-container">      
             <label for="year-input">Year:</label>
@@ -117,10 +117,11 @@
         <h6 id="comparison-header" class="hidden">CAR 1 & CAR 2</h6>
 
         <div id="comparisonResults">
+            
             <div id="car1Data" class="car-data">
 
             </div>
-
+            
             <div id="car2Data" class="car-data">
 
             </div>
@@ -142,6 +143,7 @@
 
             let car1SpecsContainer = document.getElementById("car1Data");
             let car2SpecsContainer = document.getElementById("car2Data");
+            
             
             let compareCarsButton = document.getElementById("compareCarsButton");
             let formContainer = document.getElementById("form-container");
@@ -185,6 +187,7 @@
                     compareCarsButton.textContent = "Search For One Car";
                     formContainer.style.display = "none"; // Hide the single car search form
                     comparisonForms.style.display = "flex"; // Show the comparison forms
+                    comparisonResults.style.display = "flex"; // Show the comparison results
                     compareButton.classList.remove("hidden");
                     
                 } else {
@@ -239,8 +242,8 @@
                 
 
                 while(car1SpecsContainer.firstChild) {
-                        car1SpecsContainer.removeChild(car1SpecsContainer.firstChild);
-                    }
+                    car1SpecsContainer.removeChild(car1SpecsContainer.firstChild);
+                }
 
                 while(car2SpecsContainer.firstChild) {
                     car2SpecsContainer.removeChild(car2SpecsContainer.firstChild);
@@ -300,7 +303,7 @@
                         carsData.forEach(car => {
                         
                             let card = document.createElement("div");
-                            card.classList.add("spec-card");
+                            card.classList.add("spec-card-compare");
 
                             // Add make
                             let makeDiv = document.createElement("div");
@@ -390,8 +393,8 @@
                         if (carsData.length === 0){
                             invalidCar2 = true;
                             if (!invalidCar1){
-                                while(specsContainer.firstChild) {
-                                    specsContainer.removeChild(specsContainer.firstChild);
+                                while(car1SpecsContainer.firstChild) {
+                                    car1SpecsContainer.removeChild(car1SpecsContainer.firstChild);
                                 }
                             }
                             document.getElementById("loadingMessage").classList.add("hidden");
@@ -408,7 +411,7 @@
                         carsData.forEach(car => {
                         
                             let card = document.createElement("div");
-                            card.classList.add("spec-card");
+                            card.classList.add("spec-card-compare");
 
                             // Add make
                             let makeDiv = document.createElement("div");
@@ -516,7 +519,7 @@
                 // If car 1 & car 2 specs were found
                 if (!invalidCar1 && !invalidCar2){
                     
-                    // Car Prices
+                    // Car 1 Prices
                     await fetch(`/webscraper?year=${yearInput1}&make=${makeInput1}&model=${modelInput1}`)
                     .then(response => {
                         if(response.ok) {
@@ -563,7 +566,7 @@
 
                     
                     
-                    // Car Image
+                    // Car 1 Image
                     await fetch(`/GetImageUrl?searchTerm=&year=${yearInput1}&make=${makeInput1}&model=${modelInput1}`)
                     .then(response => {
                         if(response.ok) {
@@ -584,7 +587,7 @@
                         imageElement.src = imageUrl;
                         imageElement.className = 'car-image';
                         
-                        car1SpecsContainer.appendChild(imageElement);
+                        car1SpecsContainer.insertBefore(imageElement, car1SpecsContainer.firstChild);
                          
                     })
                     .catch(error => {
@@ -594,7 +597,7 @@
 
                     
 
-                    // Safety Ratings
+                    // Safety Ratings Car 1
                     await fetch(`/SafetyRatings?year=${yearInput1}&make=${makeInput1}&model=${modelInput1}`)
                     .then(response => {
                         if(response.ok) {
@@ -771,7 +774,7 @@
                                 
                                 car1SpecsContainer.appendChild(card);
 
-                                if (!imageAppended && car1SpecsContainer.children.length <= 1) { //fix this!
+                                if (!imageAppended ) { //fix this!
                                 
                                     // image
                                     if (rating.VehiclePicture){
@@ -779,7 +782,7 @@
                                         img.src = rating.VehiclePicture;
                                         img.className = 'car-image';
                                         img.alt = "Vehicle Safety Rating Picture";
-                                        car1SpecsContainer.appendChild(img);
+                                        car1SpecsContainer.insertBefore(img, car1SpecsContainer.firstChild);
                                         imageAppended = true; 
                                     }
                                     
@@ -879,7 +882,7 @@
                         imageElement.src = imageUrl;
                         imageElement.className = 'car-image';
                         
-                        car2SpecsContainer.appendChild(imageElement);
+                        car2SpecsContainer.insertBefore(imageElement, car2SpecsContainer.firstChild);
                          
                     })
                     .catch(error => {
@@ -1066,7 +1069,7 @@
                                 
                                 car2SpecsContainer.appendChild(card);
 
-                                if (!imageAppended && car2SpecsContainer.children.length <= 1) { //Fix this!
+                                if (!imageAppended ) { //Fix this!
                                 
                                     // image
                                     if (rating.VehiclePicture){
@@ -1074,7 +1077,7 @@
                                         img.src = rating.VehiclePicture;
                                         img.className = 'car-image';
                                         img.alt = "Vehicle Safety Rating Picture";
-                                        car2SpecsContainer.appendChild(img);
+                                        car2SpecsContainer.insertBefore(img, car2SpecsContainer.firstChild);
                                         imageAppended = true; 
                                     }
                                     
