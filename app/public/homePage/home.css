@@ -39,17 +39,17 @@ h1 {
     background-color: #595a5a; /* Button background color on hover */
 }
 
-.modal {
+.popup {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
-.modal-content {
+.popup-content {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -65,6 +65,53 @@ h1 {
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+}
+
+.login-signup-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    color: #0a0808;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-signup-button:hover {
+    background-color: #595a5a;
+}
+
+.popup form {
+    text-align: center;
+}
+
+.popup form label {
+    display: block;
+    margin: 10px 0;
+}
+
+.popup form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.popup form button {
+    background-color: #f8f9fa;
+    color: #0a0808;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.popup form button:hover {
+    background-color: #595a5a;
 }
 
 

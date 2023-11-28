@@ -1,0 +1,7 @@
+{
+    "user": "itaygold",
+    "host": "localhost",
+    "database": "nodelogin",
+    "password": "password",
+    "port": 5432
+}
