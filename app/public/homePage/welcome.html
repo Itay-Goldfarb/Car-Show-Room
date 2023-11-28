@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <!-- Add any additional head content here -->
+</head>
+<body>
+    <h1>Welcome to the User Area</h1>
+    <!-- Add more content for the welcome page here -->
+
+    <!-- Logout Button -->
+    <button id="logoutButton">Logout</button>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+        fetch('/logout', {
+            method: 'POST',
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/home.html'; // Redirect to login page
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    </script>
+</body>
+</html>
