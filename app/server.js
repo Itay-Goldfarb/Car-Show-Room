@@ -38,7 +38,7 @@ app.get("/cars", (req, res) => {
   let model = req.query.model;
 
   
-  let modelUrl = `${carsUrl}?limit=2&year=${year}&make=${make}&model=${model}`;
+  let modelUrl = `${carsUrl}?limit=4&year=${year}&make=${make}&model=${model}`;
   
   axios.get(modelUrl, {
     headers: {
