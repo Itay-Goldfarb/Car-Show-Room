@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "cd app && node server.js",
-    "setup": "psql -U itaygold -d nodelogin -f setup.sql"
+    "setup": "psql -U postgres -f setup.sql"
   },
   "dependencies": {
     "argon2": "^0.31.2",
