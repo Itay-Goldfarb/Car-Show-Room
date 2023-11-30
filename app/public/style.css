@@ -206,6 +206,8 @@ h6 {
 
 
 
+
+
 label {
     font-weight: bold;
 }
@@ -224,6 +226,11 @@ button {
 
 #compareButton {
     margin-bottom: 20px;
+    max-width: 120px;
+}
+
+#compareCarsButton {
+    max-width: 200px;
 }
 
 
