@@ -38,15 +38,24 @@
 #price-container,
 #image-container, 
 #ratings-container,
-#recalls-container,
+#recalls-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
+}
+
 #complaints-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 20px; /* space between items */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
 }
 
 .download-video-link {
@@ -154,6 +163,7 @@
     margin-bottom: 8px; 
 }
 
+
 .rating-card div, .recall-card div, .complaint-card div {
     margin-bottom: 15px; 
 }
@@ -216,17 +226,23 @@ body {
     color: #333;
 }
 
-h1, h2, h3, h4, h5 {
+h2, h3, h4, h5, h6 {
+    font-size: 30px;
+    color: #0078d4;
+    text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
+}
+
+h1 {
     font-size: 24px;
     color: #0078d4;
     text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
 }
 
-h6 {
-    font-size: 24px;
-    color: black;
-    text-align: center;
-}
+
 
 
 

@@ -112,11 +112,11 @@
         <div id="price-container" class="hidden">
         </div>
 
-        <h4 id="car-images-header" class="hidden">Car Images</h4>
+        <h4 id="car-images-header" class="hidden">Images</h4>
         <div id="image-container" class="hidden">
         </div>
 
-        <h5 id="car-ratings-header" class="hidden">Ratings</h5>
+        <h5 id="car-ratings-header" class="hidden">Safety Ratings</h5>
         <div id="ratings-container" class="hidden">
         </div>
 
@@ -1763,7 +1763,7 @@
 
                                 // Summary
                                 let summaryDiv = document.createElement("div");
-                                summaryDiv.innerHTML = `<span class="bold">Summary:</span> ${recall.Summary}`;
+                                summaryDiv.innerHTML = `<span class="bold">Recall Summary:</span> ${recall.Summary}`;
                                 card.appendChild(summaryDiv);
 
                                 // Consequence
@@ -1829,14 +1829,15 @@
                         
                     })
                     .then(data => {
+                        
                         let complaintsFound = false;
 
-                        
+                        let complaintsToShow = data.results.slice(0, 50);
                             
                         if (data.results.length !== 0){
                             complaintsFound = true;
 
-                            data.results.forEach(complaint => {
+                            complaintsToShow.forEach(complaint => {
                                 
                                 let card = document.createElement("div");
                                 
@@ -1891,7 +1892,7 @@
 
                                 // Summary
                                 let summaryDiv = document.createElement("div");
-                                summaryDiv.innerHTML = `<span class="bold">Summary:</span> ${complaint.summary}`;
+                                summaryDiv.innerHTML = `<span class="bold">Complaint Summary:</span> ${complaint.summary}`;
                                 card.appendChild(summaryDiv);
 
                                 
