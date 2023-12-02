@@ -124,6 +124,36 @@
     margin-bottom: 10px;
 }
 
+.recall-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
+.complaint-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
 .rating-card-compare img {
     min-width: 250px;
     max-width: 400px;
@@ -131,8 +161,12 @@
     border-radius: 4px;
 }
 
-.spec-card-compare div, .price-card-compare div,  .rating-card-compare div {
+.spec-card-compare div, .price-card-compare div {
     margin-bottom: 8px; 
+}
+
+.rating-card-compare div, .recall-card-compare div, .complaint-card-compare div {
+    margin-bottom: 15px; 
 }
 
 
