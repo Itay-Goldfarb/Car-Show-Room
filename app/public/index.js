@@ -185,6 +185,23 @@ compareButton.addEventListener("click", async () => {
                 let card = document.createElement("div");
                 card.classList.add("spec-card-compare");
 
+                //CAR 1 COMPARE FAVORITE BUTTON
+                let favoriteButton = document.createElement("button");
+                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.className = 'favorite-button';
+                favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
+                card.appendChild(favoriteButton);
+
+                // Append the card to the container
+                car1SpecsContainer.appendChild(card);
+
+                function handleFavorite(carId) {
+                    console.log("Favoriting car with ID:", carId);
+                    // Add logic to mark the car as favorite
+                    // This could involve making a request to your server or updating local state
+                }
+
+
                 // Add make
                 let makeDiv = document.createElement("div");
                 makeDiv.innerHTML = `<span class="bold">Make:</span> ${car.make}`;
@@ -292,6 +309,23 @@ compareButton.addEventListener("click", async () => {
             
                 let card = document.createElement("div");
                 card.classList.add("spec-card-compare");
+
+                //CAR 2 COMPARE FAVORITE BUTTON
+                let favoriteButton = document.createElement("button");
+                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.className = 'favorite-button';
+                favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
+                card.appendChild(favoriteButton);
+
+                // Append the card to the container
+                car2SpecsContainer.appendChild(card);
+
+                function handleFavorite(carId) {
+                    console.log("Favoriting car with ID:", carId);
+                    // Add logic to mark the car as favorite
+                    // This could involve making a request to your server or updating local state
+                }
+
 
                 // Add make
                 let makeDiv = document.createElement("div");
@@ -1598,6 +1632,23 @@ carButton.addEventListener("click", async () => {
             
                 let card = document.createElement("div");
                 card.classList.add("spec-card");
+
+                //SINGLE SEARCH FAVORITE BUTTON
+                let favoriteButton = document.createElement("button");
+                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.className = 'favorite-button';
+                favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
+                card.appendChild(favoriteButton);
+
+                // Append the card to the container
+                specsContainer.appendChild(card);
+
+                function handleFavorite(carId) {
+                    console.log("Favoriting car with ID:", carId);
+                    // Add logic to mark the car as favorite
+                    // This could involve making a request to your server or updating local state
+                }
+
 
                 // Add make
                 let makeDiv = document.createElement("div");
