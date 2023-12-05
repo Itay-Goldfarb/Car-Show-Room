@@ -7,6 +7,8 @@ let carsUrl = apiFile["api_cars_url"];
 let carImagesUrl = apiFile["api_car_images"];
 let webscraperUrl = apiFile["api_webscrape_url"]; 
 let safetyRatingsUrl = apiFile["api_nhtsa_ratings"];
+let recallsUrl = apiFile["api_nhtsa_recalls"];
+let complaintsUrl = apiFile["api_nhtsa_complaints"];
 let port = 3000;
 let hostname = "localhost";
 app.use(express.static("public"));
@@ -190,6 +192,72 @@ app.get("/SafetyRatings/VehicleId/:vehicleId", (req, res) => {
   });
   
 });
+
+
+
+//Recalls
+app.get("/recallsByVehicle", (req, res) => {
+  let year = req.query.year;
+  let make = req.query.make;
+  let model = req.query.model;
+  
+  let fullRecallsUrl = `${recallsUrl}?make=${make}&model=${model}&modelYear=${year}`;
+  
+  console.log(fullRecallsUrl);
+
+
+  axios.get(fullRecallsUrl)
+  .then(response => {
+    console.log("Status code:", response.status);
+    console.log("Response:", response.data);
+    
+    console.log("Requesting:", fullRecallsUrl);
+      
+    res.status(200).json(response.data);
+      
+    
+    
+  })
+  .catch(error => {
+      console.error("Error during axios request:", error);
+      res.status(500).send("Internal Server Error");
+  });
+});
+
+
+
+
+//Complaints
+app.get("/complaintsByVehicle", (req, res) => {
+  let year = req.query.year;
+  let make = req.query.make;
+  let model = req.query.model;
+  
+  let fullComplaintsUrl = `${complaintsUrl}?make=${make}&model=${model}&modelYear=${year}`;
+  
+  console.log(fullComplaintsUrl);
+
+
+  axios.get(fullComplaintsUrl)
+  .then(response => {
+    console.log("Status code:", response.status);
+    console.log("Response:", response.data);
+    
+    console.log("Requesting:", fullComplaintsUrl);
+      
+    res.status(200).json(response.data);
+      
+    
+    
+  })
+  .catch(error => {
+      console.error("Error during axios request:", error);
+      res.status(500).send("Internal Server Error");
+  });
+  
+});
+
+
 
 /////DATABASE//
 ///////////////

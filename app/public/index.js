@@ -8,6 +8,8 @@ let specsContainer = document.getElementById("car-specs-container");
 let imageContainer = document.getElementById("image-container"); 
 let priceContainer = document.getElementById("price-container");
 let ratingsContainer = document.getElementById("ratings-container");
+let recallsContainer = document.getElementById("recalls-container");
+let complaintsContainer = document.getElementById("complaints-container");
 
 let car1SpecsContainer = document.getElementById("car1Data");
 let car2SpecsContainer = document.getElementById("car2Data");
@@ -29,6 +31,8 @@ compareCarsButton.addEventListener("click", async () => {
         document.getElementById("prices-header").classList.add("hidden");
         document.getElementById("car-images-header").classList.add("hidden");
         document.getElementById("car-ratings-header").classList.add("hidden");
+        document.getElementById("car-recalls-header").classList.add("hidden");
+        document.getElementById("car-complaints-header").classList.add("hidden");
 
 
         while(specsContainer.firstChild) {
@@ -48,6 +52,14 @@ compareCarsButton.addEventListener("click", async () => {
 
         while(ratingsContainer.firstChild) {
             ratingsContainer.removeChild(ratingsContainer.firstChild);
+        }
+
+        while(recallsContainer.firstChild) {
+            recallsContainer.removeChild(recallsContainer.firstChild);
+        }
+
+        while(complaintsContainer.firstChild) {
+            complaintsContainer.removeChild(complaintsContainer.firstChild);
         }
 
         
@@ -173,7 +185,6 @@ compareButton.addEventListener("click", async () => {
                 let card = document.createElement("div");
                 card.classList.add("spec-card-compare");
 
-                
                 //CAR 1 COMPARE FAVORITE BUTTON
                 let favoriteButton = document.createElement("button");
                 favoriteButton.textContent = "❤️ Favorite";
@@ -190,59 +201,60 @@ compareButton.addEventListener("click", async () => {
                     // This could involve making a request to your server or updating local state
                 }
 
+
                 // Add make
                 let makeDiv = document.createElement("div");
-                makeDiv.textContent = `Make: ${car.make}`;
+                makeDiv.innerHTML = `<span class="bold">Make:</span> ${car.make}`;
                 card.appendChild(makeDiv);
 
                 // Add model
                 let modelDiv = document.createElement("div");
-                modelDiv.textContent = `Model: ${car.model}`;
+                modelDiv.innerHTML = `<span class="bold">Model:</span> ${car.model}`;
                 card.appendChild(modelDiv);
 
                 // Add year
                 let yearDiv = document.createElement("div");
-                yearDiv.textContent = `Year: ${car.year}`;
+                yearDiv.innerHTML = `<span class="bold">Year:</span> ${car.year}`;
                 card.appendChild(yearDiv);
 
                 // Add class
                 let classDiv = document.createElement("div");
-                classDiv.textContent = `Class: ${car.class}`;
+                classDiv.innerHTML = `<span class="bold">Class:</span> ${car.class}`;
                 card.appendChild(classDiv);
 
                 // Add fuel type
                 let fuelTypeDiv = document.createElement("div");
-                fuelTypeDiv.textContent = `Fuel Type: ${car.fuel_type}`;
+                fuelTypeDiv.innerHTML = `<span class="bold">Fuel Type:</span> ${car.fuel_type}`;
                 card.appendChild(fuelTypeDiv);
 
                 // Add drivetrain
                 let driveDiv = document.createElement("div");
-                driveDiv.textContent = `Drivetrain: ${car.drive}`;
+                driveDiv.innerHTML = `<span class="bold">Drivetrain:</span> ${car.drive}`;
                 card.appendChild(driveDiv);
 
                 // Add cylinders
                 let cylinderDiv = document.createElement("div");
-                cylinderDiv.textContent = `Cylinders: ${car.cylinders}`;
+                cylinderDiv.innerHTML = `<span class="bold">Cylinders:</span> ${car.cylinders}`;
                 card.appendChild(cylinderDiv);
 
                 // Add transmission
                 let transDiv = document.createElement("div");
-                transDiv.textContent = `Transmission: ${car.transmission}`;
+                transDiv.innerHTML = `<span class="bold">Transmission:</span> ${car.transmission}`;
                 card.appendChild(transDiv);
 
                 // Add city MPG
                 let cityMPGDiv = document.createElement("div");
-                cityMPGDiv.textContent = `City MPG: ${car.city_mpg}`;
+                cityMPGDiv.innerHTML = `<span class="bold">City MPG:</span> ${car.city_mpg}`;
                 card.appendChild(cityMPGDiv);
 
                 // Add highway MPG
                 let hwyMPGDiv = document.createElement("div");
-                hwyMPGDiv.textContent = `Highway MPG: ${car.highway_mpg}`;
+                hwyMPGDiv.innerHTML = `<span class="bold">Highway MPG:</span> ${car.highway_mpg}`;
                 card.appendChild(hwyMPGDiv);
 
                 // Add combination MPG
                 let combMPGDiv = document.createElement("div");
-                combMPGDiv.textContent = `Combination MPG: ${car.combination_mpg}`;
+                combMPGDiv.innerHTML = `<span class="bold">Combination MPG:</span> ${car.combination_mpg}`;
                 card.appendChild(combMPGDiv);
 
                 // Append the card to the container
@@ -314,59 +326,60 @@ compareButton.addEventListener("click", async () => {
                     // This could involve making a request to your server or updating local state
                 }
 
+
                 // Add make
                 let makeDiv = document.createElement("div");
-                makeDiv.textContent = `Make: ${car.make}`;
+                makeDiv.innerHTML = `<span class="bold">Make:</span> ${car.make}`;
                 card.appendChild(makeDiv);
 
                 // Add model
                 let modelDiv = document.createElement("div");
-                modelDiv.textContent = `Model: ${car.model}`;
+                modelDiv.innerHTML = `<span class="bold">Model:</span> ${car.model}`;
                 card.appendChild(modelDiv);
 
                 // Add year
                 let yearDiv = document.createElement("div");
-                yearDiv.textContent = `Year: ${car.year}`;
+                yearDiv.innerHTML = `<span class="bold">Year:</span> ${car.year}`;
                 card.appendChild(yearDiv);
 
                 // Add class
                 let classDiv = document.createElement("div");
-                classDiv.textContent = `Class: ${car.class}`;
+                classDiv.innerHTML = `<span class="bold">Class:</span> ${car.class}`;
                 card.appendChild(classDiv);
 
                 // Add fuel type
                 let fuelTypeDiv = document.createElement("div");
-                fuelTypeDiv.textContent = `Fuel Type: ${car.fuel_type}`;
+                fuelTypeDiv.innerHTML = `<span class="bold">Fuel Type:</span> ${car.fuel_type}`;
                 card.appendChild(fuelTypeDiv);
 
                 // Add drivetrain
                 let driveDiv = document.createElement("div");
-                driveDiv.textContent = `Drivetrain: ${car.drive}`;
+                driveDiv.innerHTML = `<span class="bold">Drivetrain:</span> ${car.drive}`;
                 card.appendChild(driveDiv);
 
                 // Add cylinders
                 let cylinderDiv = document.createElement("div");
-                cylinderDiv.textContent = `Cylinders: ${car.cylinders}`;
+                cylinderDiv.innerHTML = `<span class="bold">Cylinders:</span> ${car.cylinders}`;
                 card.appendChild(cylinderDiv);
 
                 // Add transmission
                 let transDiv = document.createElement("div");
-                transDiv.textContent = `Transmission: ${car.transmission}`;
+                transDiv.innerHTML = `<span class="bold">Transmission:</span> ${car.transmission}`;
                 card.appendChild(transDiv);
 
                 // Add city MPG
                 let cityMPGDiv = document.createElement("div");
-                cityMPGDiv.textContent = `City MPG: ${car.city_mpg}`;
+                cityMPGDiv.innerHTML = `<span class="bold">City MPG:</span> ${car.city_mpg}`;
                 card.appendChild(cityMPGDiv);
 
                 // Add highway MPG
                 let hwyMPGDiv = document.createElement("div");
-                hwyMPGDiv.textContent = `Highway MPG: ${car.highway_mpg}`;
+                hwyMPGDiv.innerHTML = `<span class="bold">Highway MPG:</span> ${car.highway_mpg}`;
                 card.appendChild(hwyMPGDiv);
 
                 // Add combination MPG
                 let combMPGDiv = document.createElement("div");
-                combMPGDiv.textContent = `Combination MPG: ${car.combination_mpg}`;
+                combMPGDiv.innerHTML = `<span class="bold">Combination MPG:</span> ${car.combination_mpg}`;
                 card.appendChild(combMPGDiv);
 
                 // Append the card to the container
@@ -543,87 +556,87 @@ compareButton.addEventListener("click", async () => {
 
                     // description
                     let descriptionDiv = document.createElement("div");
-                    descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                    descriptionDiv.innerHTML = `<span class="bold">Description:</span> ${rating.VehicleDescription}`;
                     card.appendChild(descriptionDiv);
 
                     // investigation count
                     let investigationDiv = document.createElement("div");
-                    investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                    investigationDiv.innerHTML = `<span class="bold">Investigation Count:</span> ${rating.InvestigationCount}`;
                     card.appendChild(investigationDiv);
                     
                     // recalls count
                     let recallsDiv = document.createElement("div");
-                    recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                    recallsDiv.innerHTML = `<span class="bold">Recalls Count:</span> ${rating.RecallsCount}`;
                     card.appendChild(recallsDiv);
 
                     // complaints count
                     let complaintsDiv = document.createElement("div");
-                    complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                    complaintsDiv.innerHTML = `<span class="bold">Complaints Count:</span> ${rating.ComplaintsCount}`;
                     card.appendChild(complaintsDiv);
 
                     // lane departure warning
                     let laneDepDiv = document.createElement("div");
-                    laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
+                    laneDepDiv.innerHTML = `<span class="bold">NHTSA Lane Departure Warning:</span> ${rating.NHTSALaneDepartureWarning}`;
                     card.appendChild(laneDepDiv);
 
                     // forward collision warning
                     let forwColDiv = document.createElement("div");
-                    forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
+                    forwColDiv.innerHTML = `<span class="bold">NHTSA Forward Collision Warning</span> ${rating.NHTSAForwardCollisionWarning}`;
                     card.appendChild(forwColDiv);
 
                     // electronic stability control
                     let elecStabDiv = document.createElement("div");
-                    elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
+                    elecStabDiv.innerHTML = `<span class="bold">NHTSA Electronic Stability Control:</span> ${rating.NHTSAElectronicStabilityControl}`;
                     card.appendChild(elecStabDiv);
 
                     // side pole crash rating
                     let spRatingDiv = document.createElement("div");
-                    spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
+                    spRatingDiv.innerHTML = `<span class="bold">Side Pole Crash Rating:</span> ${rating.SidePoleCrashRating}`;
                     card.appendChild(spRatingDiv);
 
                     // rollover possibility
                     let rolloverPosDiv = document.createElement("div");
-                    rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
+                    rolloverPosDiv.innerHTML = `<span class="bold">Rollover Possibility:</span> ${rating.RolloverPossibility}`;
                     card.appendChild(rolloverPosDiv);
 
                     // rollover rating
                     let rolloverRatingDiv = document.createElement("div");
-                    rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
+                    rolloverRatingDiv.innerHTML = `<span class="bold">Rollover Rating:</span> ${rating.RolloverRating}`;
                     card.appendChild(rolloverRatingDiv);
 
                     // side crash passenger side rating
                     let sideCPSDiv = document.createElement("div");
-                    sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
+                    sideCPSDiv.innerHTML = `<span class="bold">Side Crash Passenger Side Rating:</span> ${rating.SideCrashPassengersideRating}`;
                     card.appendChild(sideCPSDiv);
 
                     // side crash driver side rating
                     let sideCDSDiv = document.createElement("div");
-                    sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
+                    sideCDSDiv.innerHTML = `<span class="bold">Side Crash Driver Side Rating:</span> ${rating.SideCrashDriversideRating}`;
                     card.appendChild(sideCDSDiv);
 
                     // overall side crash rating
                     let overallSCRDiv = document.createElement("div");
-                    overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
+                    overallSCRDiv.innerHTML = `<span class="bold">Overall Side Crash Rating:</span> ${rating.OverallSideCrashRating}`;
                     card.appendChild(overallSCRDiv);
 
                     // front crash passenger side rating
                     let frontCPSDiv = document.createElement("div");
-                    frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
+                    frontCPSDiv.innerHTML = `<span class="bold">Front Crash Passenger Side Rating:</span> ${rating.FrontCrashPassengersideRating}`;
                     card.appendChild(frontCPSDiv);
 
                     // front crash driver side rating
                     let frontCDSDiv = document.createElement("div");
-                    frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
+                    frontCDSDiv.innerHTML = `<span class="bold">Front Crash Driver Side Rating:</span> ${rating.FrontCrashDriversideRating}`;
                     card.appendChild(frontCDSDiv);
 
                     // overall front crash rating
                     let overallFCRDiv = document.createElement("div");
-                    overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
+                    overallFCRDiv.innerHTML = `<span class="bold">Overall Front Crash Rating:</span> ${rating.OverallFrontCrashRating}`;
                     card.appendChild(overallFCRDiv);
 
                     // overall rating
                     let overallRDiv = document.createElement("div");
-                    overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
+                    overallRDiv.innerHTML = `<span class="bold">Overall Rating:</span> ${rating.OverallRating}`;
                     card.appendChild(overallRDiv);
 
                     // Side Pole Picture
@@ -695,7 +708,7 @@ compareButton.addEventListener("click", async () => {
             
             if (!ratingsFound){
                 let noRatingsCard = document.createElement("div");
-                noRatingsCard.classList.add("rating-card");
+                noRatingsCard.classList.add("rating-card-compare");
 
 
                 // No ratings results
@@ -710,7 +723,236 @@ compareButton.addEventListener("click", async () => {
             errorMessageElement1.textContent = error.message || 'An error occurred while fetching the ratings data.';
         });
 
-        //put recalls etc here..
+        
+
+        //Recalls Car 1
+        await fetch(`/recallsByVehicle?make=${makeInput1}&model=${modelInput1}&year=${yearInput1}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Recalls data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            let recallsFound = false;
+
+            
+                
+            if (data.results.length !== 0){
+                recallsFound = true;
+
+                data.results.forEach(recall => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("recall-card-compare");
+
+
+                    // Manufacturer
+                    let manufacturerDiv = document.createElement('div');
+                    manufacturerDiv.innerHTML = `<span class="bold">Manufacturer:</span> ${recall.Manufacturer}`;
+                    card.appendChild(manufacturerDiv);
+
+                    // Make
+                    let makeDiv = document.createElement("div");
+                    makeDiv.innerHTML = `<span class="bold">Make:</span> ${recall.Make}`;
+                    card.appendChild(makeDiv);
+                    
+                    // Model
+                    let modelDiv = document.createElement("div");
+                    modelDiv.innerHTML = `<span class="bold">Model:</span> ${recall.Model}`;
+                    card.appendChild(modelDiv);
+
+                    // Year
+                    let yearDiv = document.createElement("div");
+                    yearDiv.innerHTML = `<span class="bold">Year:</span> ${recall.ModelYear}`;
+                    card.appendChild(yearDiv);
+
+                    // Report Received Date
+                    let reportDateDiv = document.createElement("div");
+                    reportDateDiv.innerHTML = `<span class="bold">Report Received Date:</span> ${recall.ReportReceivedDate}`;
+                    card.appendChild(reportDateDiv);
+
+                    // Component
+                    let componentDiv = document.createElement("div");
+                    componentDiv.innerHTML = `<span class="bold">Component:</span> ${recall.Component}`;
+                    card.appendChild(componentDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Recall Summary:</span> ${recall.Summary}`;
+                    card.appendChild(summaryDiv);
+
+                    // Consequence
+                    let consequenceDiv = document.createElement("div");
+                    consequenceDiv.innerHTML = `<span class="bold">Consequence:</span> ${recall.Consequence}`;
+                    card.appendChild(consequenceDiv);
+
+                    // Remedy
+                    let remedyDiv = document.createElement("div");
+                    remedyDiv.innerHTML = `<span class="bold">Remedy:</span> ${recall.Remedy}`;
+                    card.appendChild(remedyDiv);
+
+                    // Notes
+                    let notesDiv = document.createElement("div");
+                    notesDiv.innerHTML = `<span class="bold">Notes:</span> ${recall.Notes}`;
+                    card.appendChild(notesDiv);
+
+            
+                    car1SpecsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!recallsFound){
+                let noRecallsCard = document.createElement("div");
+                noRecallsCard.classList.add("recall-card-compare");
+
+
+                // No recalls results
+                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                car1SpecsContainer.appendChild(noRecallsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the recalls data.';
+        });
+
+
+
+
+
+
+        //Complaints Car 1
+        await fetch(`/complaintsByVehicle?make=${makeInput1}&model=${modelInput1}&year=${yearInput1}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Complaints data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            
+            let complaintsFound = false;
+
+            let complaintsToShow = data.results.slice(0, 50);
+                
+            if (data.results.length !== 0){
+                complaintsFound = true;
+
+                complaintsToShow.forEach(complaint => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("complaint-card-compare");
+
+                    // Date of Complaint Filed
+                    let complaintDateDiv = document.createElement("div");
+                    complaintDateDiv.innerHTML = `<span class="bold">Complaint Filed Date:</span> ${complaint.dateComplaintFiled}`;
+                    card.appendChild(complaintDateDiv);
+
+                    // Date of Incident
+                    let incidentDateDiv = document.createElement("div");
+                    incidentDateDiv.innerHTML = `<span class="bold">Date of Incident:</span> ${complaint.dateOfIncident}`;
+                    card.appendChild(incidentDateDiv);
+
+                    // Crash
+                    let crashDiv = document.createElement("div");
+                    let crashAnswer;
+                    if (complaint.crash === true){
+                        crashAnswer = "Yes";
+                    }else{
+                        crashAnswer = "No";
+                    }
+                    crashDiv.innerHTML = `<span class="bold">Crash:</span> ${crashAnswer}`;
+                    card.appendChild(crashDiv);
+
+                    // Fire
+                    let fireDiv = document.createElement("div");
+                    let fireAnswer;
+                    if (complaint.fire === true){
+                        fireAnswer = "Yes";
+                    }else{
+                        fireAnswer = "No";
+                    }
+                    fireDiv.innerHTML = `<span class="bold">Fire:</span> ${fireAnswer}`;
+                    card.appendChild(fireDiv);
+
+                    // Number of Injuries
+                    let injuriesDiv = document.createElement("div");
+                    injuriesDiv.innerHTML = `<span class="bold">Number of Injuries:</span> ${complaint.numberOfInjuries}`;
+                    card.appendChild(injuriesDiv);
+
+                    // Number of Deaths
+                    let deathsDiv = document.createElement("div");
+                    deathsDiv.innerHTML = `<span class="bold">Number of Deaths:</span> ${complaint.numberOfDeaths}`;
+                    card.appendChild(deathsDiv);
+
+                    // Components
+                    let componentsDiv = document.createElement("div");
+                    componentsDiv.innerHTML = `<span class="bold">Components:</span> ${complaint.components}`;
+                    card.appendChild(componentsDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Complaint Summary:</span> ${complaint.summary}`;
+                    card.appendChild(summaryDiv);
+
+                    
+
+            
+                    car1SpecsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!complaintsFound){
+                let noComplaintsCard = document.createElement("div");
+                noComplaintsCard.classList.add("complaint-card-compare");
+
+
+                // No complaint results
+                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                car1SpecsContainer.appendChild(noComplaintsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the complaints data.';
+        });                    
+
+
+
+
+
+
 
 
 
@@ -762,7 +1004,7 @@ compareButton.addEventListener("click", async () => {
 
         
         
-        // Car Image
+        // Car 2 Image
         await fetch(`/GetImageUrl?searchTerm=&year=${yearInput2}&make=${makeInput2}&model=${modelInput2}`)
         .then(response => {
             if(response.ok) {
@@ -793,7 +1035,7 @@ compareButton.addEventListener("click", async () => {
 
         
 
-        // Safety Ratings
+        // Car 2 Safety Ratings
         await fetch(`/SafetyRatings?year=${yearInput2}&make=${makeInput2}&model=${modelInput2}`)
         .then(response => {
             if(response.ok) {
@@ -838,87 +1080,87 @@ compareButton.addEventListener("click", async () => {
 
                     // description
                     let descriptionDiv = document.createElement("div");
-                    descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                    descriptionDiv.innerHTML = `<span class="bold">Description:</span> ${rating.VehicleDescription}`;
                     card.appendChild(descriptionDiv);
 
                     // investigation count
                     let investigationDiv = document.createElement("div");
-                    investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                    investigationDiv.innerHTML = `<span class="bold">Investigation Count:</span> ${rating.InvestigationCount}`;
                     card.appendChild(investigationDiv);
                     
                     // recalls count
                     let recallsDiv = document.createElement("div");
-                    recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                    recallsDiv.innerHTML = `<span class="bold">Recalls Count:</span> ${rating.RecallsCount}`;
                     card.appendChild(recallsDiv);
 
                     // complaints count
                     let complaintsDiv = document.createElement("div");
-                    complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                    complaintsDiv.innerHTML = `<span class="bold">Complaints Count:</span> ${rating.ComplaintsCount}`;
                     card.appendChild(complaintsDiv);
 
                     // lane departure warning
                     let laneDepDiv = document.createElement("div");
-                    laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
+                    laneDepDiv.innerHTML = `<span class="bold">NHTSA Lane Departure Warning:</span> ${rating.NHTSALaneDepartureWarning}`;
                     card.appendChild(laneDepDiv);
 
                     // forward collision warning
                     let forwColDiv = document.createElement("div");
-                    forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
+                    forwColDiv.innerHTML = `<span class="bold">NHTSA Forward Collision Warning</span> ${rating.NHTSAForwardCollisionWarning}`;
                     card.appendChild(forwColDiv);
 
                     // electronic stability control
                     let elecStabDiv = document.createElement("div");
-                    elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
+                    elecStabDiv.innerHTML = `<span class="bold">NHTSA Electronic Stability Control:</span> ${rating.NHTSAElectronicStabilityControl}`;
                     card.appendChild(elecStabDiv);
 
                     // side pole crash rating
                     let spRatingDiv = document.createElement("div");
-                    spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
+                    spRatingDiv.innerHTML = `<span class="bold">Side Pole Crash Rating:</span> ${rating.SidePoleCrashRating}`;
                     card.appendChild(spRatingDiv);
 
                     // rollover possibility
                     let rolloverPosDiv = document.createElement("div");
-                    rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
+                    rolloverPosDiv.innerHTML = `<span class="bold">Rollover Possibility:</span> ${rating.RolloverPossibility}`;
                     card.appendChild(rolloverPosDiv);
 
                     // rollover rating
                     let rolloverRatingDiv = document.createElement("div");
-                    rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
+                    rolloverRatingDiv.innerHTML = `<span class="bold">Rollover Rating:</span> ${rating.RolloverRating}`;
                     card.appendChild(rolloverRatingDiv);
 
                     // side crash passenger side rating
                     let sideCPSDiv = document.createElement("div");
-                    sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
+                    sideCPSDiv.innerHTML = `<span class="bold">Side Crash Passenger Side Rating:</span> ${rating.SideCrashPassengersideRating}`;
                     card.appendChild(sideCPSDiv);
 
                     // side crash driver side rating
                     let sideCDSDiv = document.createElement("div");
-                    sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
+                    sideCDSDiv.innerHTML = `<span class="bold">Side Crash Driver Side Rating:</span> ${rating.SideCrashDriversideRating}`;
                     card.appendChild(sideCDSDiv);
 
                     // overall side crash rating
                     let overallSCRDiv = document.createElement("div");
-                    overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
+                    overallSCRDiv.innerHTML = `<span class="bold">Overall Side Crash Rating:</span> ${rating.OverallSideCrashRating}`;
                     card.appendChild(overallSCRDiv);
 
                     // front crash passenger side rating
                     let frontCPSDiv = document.createElement("div");
-                    frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
+                    frontCPSDiv.innerHTML = `<span class="bold">Front Crash Passenger Side Rating:</span> ${rating.FrontCrashPassengersideRating}`;
                     card.appendChild(frontCPSDiv);
 
                     // front crash driver side rating
                     let frontCDSDiv = document.createElement("div");
-                    frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
+                    frontCDSDiv.innerHTML = `<span class="bold">Front Crash Driver Side Rating:</span> ${rating.FrontCrashDriversideRating}`;
                     card.appendChild(frontCDSDiv);
 
                     // overall front crash rating
                     let overallFCRDiv = document.createElement("div");
-                    overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
+                    overallFCRDiv.innerHTML = `<span class="bold">Overall Front Crash Rating:</span> ${rating.OverallFrontCrashRating}`;
                     card.appendChild(overallFCRDiv);
 
                     // overall rating
                     let overallRDiv = document.createElement("div");
-                    overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
+                    overallRDiv.innerHTML = `<span class="bold">Overall Rating:</span> ${rating.OverallRating}`;
                     card.appendChild(overallRDiv);
 
                     // Side Pole Picture
@@ -990,7 +1232,7 @@ compareButton.addEventListener("click", async () => {
             
             if (!ratingsFound){
                 let noRatingsCard = document.createElement("div");
-                noRatingsCard.classList.add("rating-card");
+                noRatingsCard.classList.add("rating-card-compare");
 
 
                 // No ratings results
@@ -1005,7 +1247,243 @@ compareButton.addEventListener("click", async () => {
             errorMessageElement2.textContent = error.message || 'An error occurred while fetching the ratings data.';
         });
 
-        //put recalls etc here..
+        
+
+
+
+
+        //Recalls Car 2
+        await fetch(`/recallsByVehicle?make=${makeInput2}&model=${modelInput2}&year=${yearInput2}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Recalls data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            let recallsFound = false;
+
+            
+                
+            if (data.results.length !== 0){
+                recallsFound = true;
+
+                data.results.forEach(recall => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("recall-card-compare");
+
+
+                    // Manufacturer
+                    let manufacturerDiv = document.createElement('div');
+                    manufacturerDiv.innerHTML = `<span class="bold">Manufacturer:</span> ${recall.Manufacturer}`;
+                    card.appendChild(manufacturerDiv);
+
+                    // Make
+                    let makeDiv = document.createElement("div");
+                    makeDiv.innerHTML = `<span class="bold">Make:</span> ${recall.Make}`;
+                    card.appendChild(makeDiv);
+                    
+                    // Model
+                    let modelDiv = document.createElement("div");
+                    modelDiv.innerHTML = `<span class="bold">Model:</span> ${recall.Model}`;
+                    card.appendChild(modelDiv);
+
+                    // Year
+                    let yearDiv = document.createElement("div");
+                    yearDiv.innerHTML = `<span class="bold">Year:</span> ${recall.ModelYear}`;
+                    card.appendChild(yearDiv);
+
+                    // Report Received Date
+                    let reportDateDiv = document.createElement("div");
+                    reportDateDiv.innerHTML = `<span class="bold">Report Received Date:</span> ${recall.ReportReceivedDate}`;
+                    card.appendChild(reportDateDiv);
+
+                    // Component
+                    let componentDiv = document.createElement("div");
+                    componentDiv.innerHTML = `<span class="bold">Component:</span> ${recall.Component}`;
+                    card.appendChild(componentDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Recall Summary:</span> ${recall.Summary}`;
+                    card.appendChild(summaryDiv);
+
+                    // Consequence
+                    let consequenceDiv = document.createElement("div");
+                    consequenceDiv.innerHTML = `<span class="bold">Consequence:</span> ${recall.Consequence}`;
+                    card.appendChild(consequenceDiv);
+
+                    // Remedy
+                    let remedyDiv = document.createElement("div");
+                    remedyDiv.innerHTML = `<span class="bold">Remedy:</span> ${recall.Remedy}`;
+                    card.appendChild(remedyDiv);
+
+                    // Notes
+                    let notesDiv = document.createElement("div");
+                    notesDiv.innerHTML = `<span class="bold">Notes:</span> ${recall.Notes}`;
+                    card.appendChild(notesDiv);
+
+            
+                    car2SpecsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!recallsFound){
+                let noRecallsCard = document.createElement("div");
+                noRecallsCard.classList.add("recall-card-compare");
+
+
+                // No recalls results
+                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                car2SpecsContainer.appendChild(noRecallsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the recalls data.';
+        });
+
+
+
+
+
+
+        //Complaints Car 2
+        await fetch(`/complaintsByVehicle?make=${makeInput2}&model=${modelInput2}&year=${yearInput2}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Complaints data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            
+            let complaintsFound = false;
+
+            let complaintsToShow = data.results.slice(0, 50);
+                
+            if (data.results.length !== 0){
+                complaintsFound = true;
+
+                complaintsToShow.forEach(complaint => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("complaint-card-compare");
+
+                    // Date of Complaint Filed
+                    let complaintDateDiv = document.createElement("div");
+                    complaintDateDiv.innerHTML = `<span class="bold">Complaint Filed Date:</span> ${complaint.dateComplaintFiled}`;
+                    card.appendChild(complaintDateDiv);
+
+                    // Date of Incident
+                    let incidentDateDiv = document.createElement("div");
+                    incidentDateDiv.innerHTML = `<span class="bold">Date of Incident:</span> ${complaint.dateOfIncident}`;
+                    card.appendChild(incidentDateDiv);
+
+                    // Crash
+                    let crashDiv = document.createElement("div");
+                    let crashAnswer;
+                    if (complaint.crash === true){
+                        crashAnswer = "Yes";
+                    }else{
+                        crashAnswer = "No";
+                    }
+                    crashDiv.innerHTML = `<span class="bold">Crash:</span> ${crashAnswer}`;
+                    card.appendChild(crashDiv);
+
+                    // Fire
+                    let fireDiv = document.createElement("div");
+                    let fireAnswer;
+                    if (complaint.fire === true){
+                        fireAnswer = "Yes";
+                    }else{
+                        fireAnswer = "No";
+                    }
+                    fireDiv.innerHTML = `<span class="bold">Fire:</span> ${fireAnswer}`;
+                    card.appendChild(fireDiv);
+
+                    // Number of Injuries
+                    let injuriesDiv = document.createElement("div");
+                    injuriesDiv.innerHTML = `<span class="bold">Number of Injuries:</span> ${complaint.numberOfInjuries}`;
+                    card.appendChild(injuriesDiv);
+
+                    // Number of Deaths
+                    let deathsDiv = document.createElement("div");
+                    deathsDiv.innerHTML = `<span class="bold">Number of Deaths:</span> ${complaint.numberOfDeaths}`;
+                    card.appendChild(deathsDiv);
+
+                    // Components
+                    let componentsDiv = document.createElement("div");
+                    componentsDiv.innerHTML = `<span class="bold">Components:</span> ${complaint.components}`;
+                    card.appendChild(componentsDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Complaint Summary:</span> ${complaint.summary}`;
+                    card.appendChild(summaryDiv);
+
+                    
+
+            
+                    car2SpecsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!complaintsFound){
+                let noComplaintsCard = document.createElement("div");
+                noComplaintsCard.classList.add("complaint-card-compare");
+
+
+                // No complaint results
+                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                car2SpecsContainer.appendChild(noComplaintsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the complaints data.';
+        });
+
+
+
+
+
+
+
+
+
+
 
 
     }else{
@@ -1025,25 +1503,7 @@ compareButton.addEventListener("click", async () => {
     // Hide Searching Message
     document.getElementById("loadingMessage").classList.add("hidden");
     
-    // Show Specs
-    /*document.getElementById("car-specs-header").classList.remove("hidden");
-    document.getElementById("car-specs-container").classList.remove("hidden");
     
-
-    // Show Prices
-    document.getElementById("prices-header").classList.remove("hidden");
-    document.getElementById("price-container").classList.remove("hidden");
-    
-
-    // Show Images
-    document.getElementById("car-images-header").classList.remove("hidden");
-    document.getElementById("image-container").classList.remove("hidden");
-
-    // Show Ratings
-    document.getElementById("car-ratings-header").classList.remove("hidden");
-    document.getElementById("ratings-container").classList.remove("hidden");
-    
-    */
     
     let year1 = yearInput1.toUpperCase();
     let make1 = makeInput1.toUpperCase();
@@ -1089,6 +1549,8 @@ carButton.addEventListener("click", async () => {
     document.getElementById("prices-header").classList.add("hidden");
     document.getElementById("car-images-header").classList.add("hidden");
     document.getElementById("car-ratings-header").classList.add("hidden");
+    document.getElementById("car-recalls-header").classList.add("hidden");
+    document.getElementById("car-complaints-header").classList.add("hidden");
 
     document.getElementById("loadingMessage").classList.remove("hidden");
     
@@ -1119,6 +1581,14 @@ carButton.addEventListener("click", async () => {
 
     while(ratingsContainer.firstChild) {
         ratingsContainer.removeChild(ratingsContainer.firstChild);
+    }
+
+    while(recallsContainer.firstChild) {
+        recallsContainer.removeChild(recallsContainer.firstChild);
+    }
+
+    while(complaintsContainer.firstChild) {
+        complaintsContainer.removeChild(complaintsContainer.firstChild);
     }
 
 
@@ -1179,59 +1649,60 @@ carButton.addEventListener("click", async () => {
                     // This could involve making a request to your server or updating local state
                 }
 
+
                 // Add make
                 let makeDiv = document.createElement("div");
-                makeDiv.textContent = `Make: ${car.make}`;
+                makeDiv.innerHTML = `<span class="bold">Make:</span> ${car.make}`;
                 card.appendChild(makeDiv);
 
                 // Add model
                 let modelDiv = document.createElement("div");
-                modelDiv.textContent = `Model: ${car.model}`;
+                modelDiv.innerHTML = `<span class="bold">Model:</span> ${car.model}`;
                 card.appendChild(modelDiv);
 
                 // Add year
                 let yearDiv = document.createElement("div");
-                yearDiv.textContent = `Year: ${car.year}`;
+                yearDiv.innerHTML = `<span class="bold">Year:</span> ${car.year}`;
                 card.appendChild(yearDiv);
 
                 // Add class
                 let classDiv = document.createElement("div");
-                classDiv.textContent = `Class: ${car.class}`;
+                classDiv.innerHTML = `<span class="bold">Class:</span> ${car.class}`;
                 card.appendChild(classDiv);
 
                 // Add fuel type
                 let fuelTypeDiv = document.createElement("div");
-                fuelTypeDiv.textContent = `Fuel Type: ${car.fuel_type}`;
+                fuelTypeDiv.innerHTML = `<span class="bold">Fuel Type:</span> ${car.fuel_type}`;
                 card.appendChild(fuelTypeDiv);
 
                 // Add drivetrain
                 let driveDiv = document.createElement("div");
-                driveDiv.textContent = `Drivetrain: ${car.drive}`;
+                driveDiv.innerHTML = `<span class="bold">Drivetrain:</span> ${car.drive}`;
                 card.appendChild(driveDiv);
 
                 // Add cylinders
                 let cylinderDiv = document.createElement("div");
-                cylinderDiv.textContent = `Cylinders: ${car.cylinders}`;
+                cylinderDiv.innerHTML = `<span class="bold">Cylinders:</span> ${car.cylinders}`;
                 card.appendChild(cylinderDiv);
 
                 // Add transmission
                 let transDiv = document.createElement("div");
-                transDiv.textContent = `Transmission: ${car.transmission}`;
+                transDiv.innerHTML = `<span class="bold">Transmission:</span> ${car.transmission}`;
                 card.appendChild(transDiv);
 
                 // Add city MPG
                 let cityMPGDiv = document.createElement("div");
-                cityMPGDiv.textContent = `City MPG: ${car.city_mpg}`;
+                cityMPGDiv.innerHTML = `<span class="bold">City MPG:</span> ${car.city_mpg}`;
                 card.appendChild(cityMPGDiv);
 
                 // Add highway MPG
                 let hwyMPGDiv = document.createElement("div");
-                hwyMPGDiv.textContent = `Highway MPG: ${car.highway_mpg}`;
+                hwyMPGDiv.innerHTML = `<span class="bold">Highway MPG:</span> ${car.highway_mpg}`;
                 card.appendChild(hwyMPGDiv);
 
                 // Add combination MPG
                 let combMPGDiv = document.createElement("div");
-                combMPGDiv.textContent = `Combination MPG: ${car.combination_mpg}`;
+                combMPGDiv.innerHTML = `<span class="bold">Combination MPG:</span> ${car.combination_mpg}`;
                 card.appendChild(combMPGDiv);
 
                 // Append the card to the container
@@ -1406,87 +1877,87 @@ carButton.addEventListener("click", async () => {
 
                     // description
                     let descriptionDiv = document.createElement("div");
-                    descriptionDiv.textContent = `Description: ${rating.VehicleDescription}`;
+                    descriptionDiv.innerHTML = `<span class="bold">Description:</span> ${rating.VehicleDescription}`;
                     card.appendChild(descriptionDiv);
 
                     // investigation count
                     let investigationDiv = document.createElement("div");
-                    investigationDiv.textContent = `Investigation Count: ${rating.InvestigationCount}`;
+                    investigationDiv.innerHTML = `<span class="bold">Investigation Count:</span> ${rating.InvestigationCount}`;
                     card.appendChild(investigationDiv);
                     
                     // recalls count
                     let recallsDiv = document.createElement("div");
-                    recallsDiv.textContent = `Recalls Count: ${rating.RecallsCount}`;
+                    recallsDiv.innerHTML = `<span class="bold">Recalls Count:</span> ${rating.RecallsCount}`;
                     card.appendChild(recallsDiv);
 
                     // complaints count
                     let complaintsDiv = document.createElement("div");
-                    complaintsDiv.textContent = `Complaints Count: ${rating.ComplaintsCount}`;
+                    complaintsDiv.innerHTML = `<span class="bold">Complaints Count:</span> ${rating.ComplaintsCount}`;
                     card.appendChild(complaintsDiv);
 
                     // lane departure warning
                     let laneDepDiv = document.createElement("div");
-                    laneDepDiv.textContent = `NHTSA Lane Departure Warning: ${rating.NHTSALaneDepartureWarning}`;
+                    laneDepDiv.innerHTML = `<span class="bold">NHTSA Lane Departure Warning:</span> ${rating.NHTSALaneDepartureWarning}`;
                     card.appendChild(laneDepDiv);
 
                     // forward collision warning
                     let forwColDiv = document.createElement("div");
-                    forwColDiv.textContent = `NHTSA Forward Collision Warning: ${rating.NHTSAForwardCollisionWarning}`;
+                    forwColDiv.innerHTML = `<span class="bold">NHTSA Forward Collision Warning</span> ${rating.NHTSAForwardCollisionWarning}`;
                     card.appendChild(forwColDiv);
 
                     // electronic stability control
                     let elecStabDiv = document.createElement("div");
-                    elecStabDiv.textContent = `NHTSA Electronic Stability Control: ${rating.NHTSAElectronicStabilityControl}`;
+                    elecStabDiv.innerHTML = `<span class="bold">NHTSA Electronic Stability Control:</span> ${rating.NHTSAElectronicStabilityControl}`;
                     card.appendChild(elecStabDiv);
 
                     // side pole crash rating
                     let spRatingDiv = document.createElement("div");
-                    spRatingDiv.textContent = `Side Pole Crash Rating: ${rating.SidePoleCrashRating}`;
+                    spRatingDiv.innerHTML = `<span class="bold">Side Pole Crash Rating:</span> ${rating.SidePoleCrashRating}`;
                     card.appendChild(spRatingDiv);
 
                     // rollover possibility
                     let rolloverPosDiv = document.createElement("div");
-                    rolloverPosDiv.textContent = `Rollover Possibility: ${rating.RolloverPossibility}`;
+                    rolloverPosDiv.innerHTML = `<span class="bold">Rollover Possibility:</span> ${rating.RolloverPossibility}`;
                     card.appendChild(rolloverPosDiv);
 
                     // rollover rating
                     let rolloverRatingDiv = document.createElement("div");
-                    rolloverRatingDiv.textContent = `Rollover Rating: ${rating.RolloverRating}`;
+                    rolloverRatingDiv.innerHTML = `<span class="bold">Rollover Rating:</span> ${rating.RolloverRating}`;
                     card.appendChild(rolloverRatingDiv);
 
                     // side crash passenger side rating
                     let sideCPSDiv = document.createElement("div");
-                    sideCPSDiv.textContent = `Side Crash Passenger Side Rating: ${rating.SideCrashPassengersideRating}`;
+                    sideCPSDiv.innerHTML = `<span class="bold">Side Crash Passenger Side Rating:</span> ${rating.SideCrashPassengersideRating}`;
                     card.appendChild(sideCPSDiv);
 
                     // side crash driver side rating
                     let sideCDSDiv = document.createElement("div");
-                    sideCDSDiv.textContent = `Side Crash Driver Side Rating: ${rating.SideCrashDriversideRating}`;
+                    sideCDSDiv.innerHTML = `<span class="bold">Side Crash Driver Side Rating:</span> ${rating.SideCrashDriversideRating}`;
                     card.appendChild(sideCDSDiv);
 
                     // overall side crash rating
                     let overallSCRDiv = document.createElement("div");
-                    overallSCRDiv.textContent = `Overall Side Crash Rating: ${rating.OverallSideCrashRating}`;
+                    overallSCRDiv.innerHTML = `<span class="bold">Overall Side Crash Rating:</span> ${rating.OverallSideCrashRating}`;
                     card.appendChild(overallSCRDiv);
 
                     // front crash passenger side rating
                     let frontCPSDiv = document.createElement("div");
-                    frontCPSDiv.textContent = `Front Crash Passenger Side Rating: ${rating.FrontCrashPassengersideRating}`;
+                    frontCPSDiv.innerHTML = `<span class="bold">Front Crash Passenger Side Rating:</span> ${rating.FrontCrashPassengersideRating}`;
                     card.appendChild(frontCPSDiv);
 
                     // front crash driver side rating
                     let frontCDSDiv = document.createElement("div");
-                    frontCDSDiv.textContent = `Front Crash Driver Side Rating: ${rating.FrontCrashDriversideRating}`;
+                    frontCDSDiv.innerHTML = `<span class="bold">Front Crash Driver Side Rating:</span> ${rating.FrontCrashDriversideRating}`;
                     card.appendChild(frontCDSDiv);
 
                     // overall front crash rating
                     let overallFCRDiv = document.createElement("div");
-                    overallFCRDiv.textContent = `Overall Front Crash Rating: ${rating.OverallFrontCrashRating}`;
+                    overallFCRDiv.innerHTML = `<span class="bold">Overall Front Crash Rating:</span> ${rating.OverallFrontCrashRating}`;
                     card.appendChild(overallFCRDiv);
 
                     // overall rating
                     let overallRDiv = document.createElement("div");
-                    overallRDiv.textContent = `Overall Rating: ${rating.OverallRating}`;
+                    overallRDiv.innerHTML = `<span class="bold">Overall Rating:</span> ${rating.OverallRating}`;
                     card.appendChild(overallRDiv);
 
                     // Side Pole Picture
@@ -1573,7 +2044,235 @@ carButton.addEventListener("click", async () => {
             errorMessageElement.textContent = error.message || 'An error occurred while fetching the ratings data.';
         });
 
-        //put recalls etc here..
+        
+        
+        
+        //Recalls
+        await fetch(`/recallsByVehicle?make=${makeInput}&model=${modelInput}&year=${yearInput}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Recalls data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            let recallsFound = false;
+
+            
+                
+            if (data.results.length !== 0){
+                recallsFound = true;
+
+                data.results.forEach(recall => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("recall-card");
+
+
+                    // Manufacturer
+                    let manufacturerDiv = document.createElement('div');
+                    manufacturerDiv.innerHTML = `<span class="bold">Manufacturer:</span> ${recall.Manufacturer}`;
+                    card.appendChild(manufacturerDiv);
+
+                    // Make
+                    let makeDiv = document.createElement("div");
+                    makeDiv.innerHTML = `<span class="bold">Make:</span> ${recall.Make}`;
+                    card.appendChild(makeDiv);
+                    
+                    // Model
+                    let modelDiv = document.createElement("div");
+                    modelDiv.innerHTML = `<span class="bold">Model:</span> ${recall.Model}`;
+                    card.appendChild(modelDiv);
+
+                    // Year
+                    let yearDiv = document.createElement("div");
+                    yearDiv.innerHTML = `<span class="bold">Year:</span> ${recall.ModelYear}`;
+                    card.appendChild(yearDiv);
+
+                    // Report Received Date
+                    let reportDateDiv = document.createElement("div");
+                    reportDateDiv.innerHTML = `<span class="bold">Report Received Date:</span> ${recall.ReportReceivedDate}`;
+                    card.appendChild(reportDateDiv);
+
+                    // Component
+                    let componentDiv = document.createElement("div");
+                    componentDiv.innerHTML = `<span class="bold">Component:</span> ${recall.Component}`;
+                    card.appendChild(componentDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Recall Summary:</span> ${recall.Summary}`;
+                    card.appendChild(summaryDiv);
+
+                    // Consequence
+                    let consequenceDiv = document.createElement("div");
+                    consequenceDiv.innerHTML = `<span class="bold">Consequence:</span> ${recall.Consequence}`;
+                    card.appendChild(consequenceDiv);
+
+                    // Remedy
+                    let remedyDiv = document.createElement("div");
+                    remedyDiv.innerHTML = `<span class="bold">Remedy:</span> ${recall.Remedy}`;
+                    card.appendChild(remedyDiv);
+
+                    // Notes
+                    let notesDiv = document.createElement("div");
+                    notesDiv.innerHTML = `<span class="bold">Notes:</span> ${recall.Notes}`;
+                    card.appendChild(notesDiv);
+
+            
+                    recallsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!recallsFound){
+                let noRecallsCard = document.createElement("div");
+                noRecallsCard.classList.add("recall-card");
+
+
+                // No recalls results
+                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                recallsContainer.appendChild(noRecallsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the recalls data.';
+        });
+
+
+
+
+
+
+        //Complaints
+        await fetch(`/complaintsByVehicle?make=${makeInput}&model=${modelInput}&year=${yearInput}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+
+            } else {
+                if(response.status === 404) {
+                    document.getElementById("loadingMessage").classList.add("hidden");
+                    throw { message: "Complaints data not found" };
+                }
+                document.getElementById("loadingMessage").classList.add("hidden");
+                return response.json().then(error => { throw error });
+            }
+            
+        })
+        .then(data => {
+            
+            let complaintsFound = false;
+
+            let complaintsToShow = data.results.slice(0, 50);
+                
+            if (data.results.length !== 0){
+                complaintsFound = true;
+
+                complaintsToShow.forEach(complaint => {
+                    
+                    let card = document.createElement("div");
+                    
+                    card.classList.add("complaint-card");
+
+                    // Date of Complaint Filed
+                    let complaintDateDiv = document.createElement("div");
+                    complaintDateDiv.innerHTML = `<span class="bold">Complaint Filed Date:</span> ${complaint.dateComplaintFiled}`;
+                    card.appendChild(complaintDateDiv);
+
+                    // Date of Incident
+                    let incidentDateDiv = document.createElement("div");
+                    incidentDateDiv.innerHTML = `<span class="bold">Date of Incident:</span> ${complaint.dateOfIncident}`;
+                    card.appendChild(incidentDateDiv);
+
+                    // Crash
+                    let crashDiv = document.createElement("div");
+                    let crashAnswer;
+                    if (complaint.crash === true){
+                        crashAnswer = "Yes";
+                    }else{
+                        crashAnswer = "No";
+                    }
+                    crashDiv.innerHTML = `<span class="bold">Crash:</span> ${crashAnswer}`;
+                    card.appendChild(crashDiv);
+
+                    // Fire
+                    let fireDiv = document.createElement("div");
+                    let fireAnswer;
+                    if (complaint.fire === true){
+                        fireAnswer = "Yes";
+                    }else{
+                        fireAnswer = "No";
+                    }
+                    fireDiv.innerHTML = `<span class="bold">Fire:</span> ${fireAnswer}`;
+                    card.appendChild(fireDiv);
+
+                    // Number of Injuries
+                    let injuriesDiv = document.createElement("div");
+                    injuriesDiv.innerHTML = `<span class="bold">Number of Injuries:</span> ${complaint.numberOfInjuries}`;
+                    card.appendChild(injuriesDiv);
+
+                    // Number of Deaths
+                    let deathsDiv = document.createElement("div");
+                    deathsDiv.innerHTML = `<span class="bold">Number of Deaths:</span> ${complaint.numberOfDeaths}`;
+                    card.appendChild(deathsDiv);
+
+                    // Components
+                    let componentsDiv = document.createElement("div");
+                    componentsDiv.innerHTML = `<span class="bold">Components:</span> ${complaint.components}`;
+                    card.appendChild(componentsDiv);
+
+                    // Summary
+                    let summaryDiv = document.createElement("div");
+                    summaryDiv.innerHTML = `<span class="bold">Complaint Summary:</span> ${complaint.summary}`;
+                    card.appendChild(summaryDiv);
+
+                    
+
+            
+                    complaintsContainer.appendChild(card);
+
+                });
+                
+                
+
+            } 
+                
+            if (!complaintsFound){
+                let noComplaintsCard = document.createElement("div");
+                noComplaintsCard.classList.add("complaint-card");
+
+
+                // No complaint results
+                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                complaintsContainer.appendChild(noComplaintsCard);
+            }
+
+        
+        })
+        .catch(error => {
+            document.getElementById("loadingMessage").classList.add("hidden");
+            errorMessageElement.textContent = error.message || 'An error occurred while fetching the complaints data.';
+        });
+
+
+
+
 
 
     }else{
@@ -1602,6 +2301,14 @@ carButton.addEventListener("click", async () => {
     // Show Ratings
     document.getElementById("car-ratings-header").classList.remove("hidden");
     document.getElementById("ratings-container").classList.remove("hidden");
+
+    // Show Recalls
+    document.getElementById("car-recalls-header").classList.remove("hidden");
+    document.getElementById("recalls-container").classList.remove("hidden");
+
+    // Show Complaints
+    document.getElementById("car-complaints-header").classList.remove("hidden");
+    document.getElementById("complaints-container").classList.remove("hidden");
     
     // Auto scroll down to specs 
     document.getElementById('car-specs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -2,6 +2,10 @@
     display: none;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 #loadingMessage{
     font-size: 14px;
     color: #0078d4;
@@ -33,14 +37,25 @@
 #car-specs-container,
 #price-container,
 #image-container, 
-#ratings-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 20px; /* space between items */
+#ratings-container,
+#recalls-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
+}
+
+#complaints-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
 }
 
 .download-video-link {
@@ -109,6 +124,36 @@
     margin-bottom: 10px;
 }
 
+.recall-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
+.complaint-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
 .rating-card-compare img {
     min-width: 250px;
     max-width: 400px;
@@ -116,8 +161,12 @@
     border-radius: 4px;
 }
 
-.spec-card-compare div, .price-card-compare div,  .rating-card-compare div {
+.spec-card-compare div, .price-card-compare div {
     margin-bottom: 8px; 
+}
+
+.rating-card-compare div, .recall-card-compare div, .complaint-card-compare div {
+    margin-bottom: 15px; 
 }
 
 
@@ -144,11 +193,30 @@
     margin: 0 auto; 
 }
 
-.spec-card div, .price-card div,  .rating-card div {
+.spec-card div, .price-card div {
     margin-bottom: 8px; 
 }
 
+
+.rating-card div, .recall-card div, .complaint-card div {
+    margin-bottom: 15px; 
+}
+
 .rating-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px); 
+    min-width: 420px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    margin: 0 auto;
+}
+
+.recall-card, .complaint-card {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
@@ -192,17 +260,23 @@ body {
     color: #333;
 }
 
-h1, h2, h3, h4, h5 {
+h2, h3, h4, h5, h6 {
+    font-size: 30px;
+    color: #0078d4;
+    text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
+}
+
+h1 {
     font-size: 24px;
     color: #0078d4;
     text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
 }
 
-h6 {
-    font-size: 24px;
-    color: black;
-    text-align: center;
-}
+
 
 
 
