@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
 
     // SIGNUP open and close popups
     document.getElementById('open-signup-popup').addEventListener('click', function() {
@@ -88,8 +88,44 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         }
     });
+
+
+    try {
+        const response = await fetch('/check-login-status');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.loggedIn) {
+                enableCarroomLink();
+            } else {
+                setupCarroomLinkLoginPrompt();
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
     
 });
+
+function enableCarroomLink() {
+    // If the user is logged in, allow the link to work normally
+    const carroomLink = document.getElementById('carroomLink');
+    carroomLink.addEventListener('click', (e) => {
+        window.location.href = 'index.html'; // Redirect to showroom page
+    });
+}
+
+function setupCarroomLinkLoginPrompt() {
+    // If the user is not logged in, show a prompt
+    const carroomLink = document.getElementById('carroomLink');
+    carroomLink.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent the default link behavior
+        alert("Please log in to access the Carroom.");
+        // Optionally, open the login popup
+        document.getElementById('login-popup').style.display = 'block';
+    });
+}
+
+
 
 function validateSignup(username, password, email) {
     const usernameRegex = /^[a-zA-Z0-9_\-]{3,15}$/;

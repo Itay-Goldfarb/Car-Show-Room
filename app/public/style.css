@@ -354,4 +354,29 @@ input[type="text"] {
 }
 
 
+.favorite-button {
+    background-color: #0078d4; /* blue/theme background */
+    color: white; /* White text */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    outline: none; /* Remove outline */
+    text-align: center; /* Center align text */
+    display: inline-block; /* Allow width and height */
+    margin: 5px; /* Margin around the button */
+    text-decoration: none; /* Remove underline from text */
+}
+
+.favorite-button:hover {
+    background-color: #ff3a0e; /* Darker shade on hover */
+}
+
+.favorite-button:active {
+    transform: scale(0.98); /* Slightly shrink when clicked */
+}
+
+
 
