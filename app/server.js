@@ -288,15 +288,61 @@ app.post("/login", async (req, res) => {
   }
 });
 
+//check status before accessning something
+app.get('/check-login-status', (req, res) => {
+  if (req.session && req.session.user) {
+      // The user is logged in
+      res.json({ loggedIn: true, user: req.session.user });
+  } else {
+      // The user is not logged in
+      res.json({ loggedIn: false });
+  }
+});
+
+
+///AUTHORIZATION MIDDLEWARE
+let authorize = (req, res, next) => {
+  if (req.session && req.session.user) {
+      next(); // User is logged in, proceed to the next middleware or route handler
+  } else {
+      res.status(403).send("Unauthorized"); // User is not logged in
+  }
+};
+
+
+app.get("/private", authorize, (req, res) => {
+  // This route is now protected and only accessible to logged-in users
+  res.send("A private message");
+});
+
+
+
+
+
+
+function isAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+      return next();
+  } else {
+      // Redirect to login page, or send an unauthorized response
+      return res.redirect('/login'); // Or res.status(401).send("Unauthorized");
+  }
+}
 
 //TEMPORARY WELCOME PAGE
-app.get("/welcome", (req, res) => {
-  // Add authentication check if needed
+app.get("/welcome", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'homePage', 'welcome.html'));
-  // console.log("Attempting to send file:", filePath);
-  // res.sendFile(filePath);
-
 });
+
+
+// Server-side: New route to get current user's name
+app.get("/current-user", (req, res) => {
+  if (!req.session.user) {
+      return res.status(401).send("Not logged in");
+  }
+  res.json({ username: req.session.user.username });
+});
+
 
 
 
