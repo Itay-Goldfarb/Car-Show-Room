@@ -219,8 +219,16 @@ app.get("/recallsByVehicle", (req, res) => {
     
   })
   .catch(error => {
-      console.error("Error during axios request:", error);
-      res.status(500).send("Internal Server Error");
+      //console.error("Error during axios request:", error);
+      //res.status(500).send("Internal Server Error");
+
+      console.error("Error during axios request:", error.response || error.message || error);
+      if (error.response && error.response.status === 400 && error.response.data && error.response.data.Count === 0) {
+          // Handle the case where a 400 status code is returned when there are no results
+          res.status(200).json({ Count: 0, results: [], Message: 'No recalls found' });
+      } else {
+          res.status(500).send("Internal Server Error");
+      }
   });
 });
 
@@ -251,8 +259,14 @@ app.get("/complaintsByVehicle", (req, res) => {
     
   })
   .catch(error => {
-      console.error("Error during axios request:", error);
-      res.status(500).send("Internal Server Error");
+
+      console.error("Error during axios request:", error.response || error.message || error);
+      if (error.response && error.response.status === 400 && error.response.data && error.response.data.count === 0) {
+          // Handle the case where a 400 status code is returned when there are no results
+          res.status(200).json({ count: 0, results: [], message: 'No complaints found' });
+      } else {
+          res.status(500).send("Internal Server Error");
+      }
   });
   
 });
