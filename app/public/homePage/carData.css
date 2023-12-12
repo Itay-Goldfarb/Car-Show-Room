@@ -1,0 +1,383 @@
+.hidden {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#loadingMessage{
+    font-size: 14px;
+    color: #0078d4;
+    text-align: center;
+}
+
+#error-message, #error-message1, #error-message2 {
+    color: red;
+    margin-top: 20px;
+}
+
+#comparisonResults {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    /*align-items: center;*/
+    align-items: flex-start;
+}
+  
+.car-data {
+    flex-basis: 48%; /* Adjust the width to fit side by side */
+    max-width: 58%; /* set a max-width if needed */
+    padding: 10px; /* Adjust padding as needed */
+    margin: 10px;
+    border-radius: 8px;
+    
+}
+
+#car-specs-container,
+#price-container,
+#image-container, 
+#ratings-container,
+#recalls-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
+}
+
+#complaints-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    gap: 20px; /* space between items */
+}
+
+.download-video-link {
+    display: inline-block;
+    margin: 5px 10px;
+    padding: 5px;
+    background-color: #0078d4;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 240px;
+    text-align: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+
+}
+  
+.download-video-link:hover {
+    background-color: #0056b3;
+}
+
+
+.spec-card-compare {
+    text-align: start;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(10% - 10px); /* Adjust width for card row */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    /*margin: 0 auto;*/
+    max-width: 450px;
+    font-size: 16px;
+}
+
+.price-card-compare {
+    text-align: center;
+    padding: 20px;
+    max-width: 450px;
+    /*margin: 0 auto;*/ 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(20% - 10px); /* Adjust width for card row */
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.rating-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
+.recall-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
+.complaint-card-compare {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    /*margin: 10px;*/
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*width: calc(33% - 20px); */
+    max-width: 450px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    /*margin: 0 auto;*/
+    margin-bottom: 10px;
+}
+
+.rating-card-compare img {
+    min-width: 250px;
+    max-width: 400px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.spec-card-compare div, .price-card-compare div {
+    margin-bottom: 8px; 
+}
+
+.rating-card-compare div, .recall-card-compare div, .complaint-card-compare div {
+    margin-bottom: 15px; 
+}
+
+
+
+.spec-card, .price-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(20% - 10px); /* Adjust width for card row */
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.spec-card {
+    text-align: start;
+    padding: 20px;
+}
+
+.price-card {
+    text-align: center;
+    padding: 10px;
+    max-width: 200px;
+    margin: 0 auto; 
+}
+
+.spec-card div, .price-card div {
+    margin-bottom: 8px; 
+}
+
+
+.rating-card div, .recall-card div, .complaint-card div {
+    margin-bottom: 15px; 
+}
+
+.rating-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px); 
+    min-width: 420px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    margin: 0 auto;
+}
+
+.recall-card, .complaint-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px); 
+    min-width: 420px;
+    flex-basis: calc(20% - 20px); 
+    text-align: left;
+    margin: 0 auto;
+}
+
+.rating-card img {
+    min-width: 250px;
+    max-width: 400px;
+    height: auto;
+    border-radius: 4px;
+}
+
+
+.car-image {
+    max-width: 500px;
+    max-height: 100%; 
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+h2, h3, h4, h5, h6 {
+    font-size: 30px;
+    color: #0078d4;
+    text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 24px;
+    color: #0078d4;
+    text-align: center;
+    text-shadow: gray 1px 1px 1px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+label {
+    font-weight: bold;
+}
+
+button {
+    background-color: #0078d4;
+    color: #fff;
+    width: 30%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+#compareButton {
+    margin-bottom: 20px;
+    max-width: 120px;
+}
+
+#compareCarsButton {
+    max-width: 200px;
+}
+
+
+button:hover {
+    background-color: #005a9e;
+}
+
+#form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    width: 80%;
+    margin: 20px auto;
+}
+
+#comparisonForms {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.car-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    width: 100%;
+    margin: 20px auto;
+}
+
+.input-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: calc(100% - 30px); /* Full width minus padding and border */
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+.favorite-button {
+    background-color: #0078d4; /* blue/theme background */
+    color: white; /* White text */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    outline: none; /* Remove outline */
+    text-align: center; /* Center align text */
+    display: inline-block; /* Allow width and height */
+    margin: 5px; /* Margin around the button */
+    text-decoration: none; /* Remove underline from text */
+}
+
+.favorite-button:hover {
+    background-color: #ff3a0e; /* Darker shade on hover */
+}
+
+.favorite-button.active {
+    background-color: red; /* Color when favorited */
+    color: white;
+}
+
+
+
