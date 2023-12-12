@@ -333,7 +333,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
       httpOnly: true, // JS can't access it
-      secure: true, // only sent over HTTPS connections
+      secure: false, // only sent over HTTPS connections
       sameSite: "strict",
     }
     // Add other session configuration as needed

@@ -1,153 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CARROOM</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Audiowide">
-        <style>
-            h7 {
-              font-family: 'Audiowide', serif;
-              font-size: 60px;
-              color: #0078d4;
-              text-align: center;
-              text-shadow: black 4px 4px 7px;
-              font-weight: bold;
-            }
-        </style>
-        
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
     </head>
-    <body class="showroom-page">
-        <h7>CARROOM</h7>
-        
-        <button id="compareCarsButton">Compare Two Cars</button>
+    <body class="home-page">
+        <h1>Welcome to CARROOM!</h1>
+         
+        <div class="center-button">
+            <a href="carData.html" class="button" id="carroomLink">CLICK HERE FOR THE SHOWROOM</a>
+        </div>
+            
+        <div class="button-container">
+            <!-- Login Button -->
+            <button id="open-login-popup" class="login-signup-button">LOG IN</button>
+    
+            <!-- Signup Button -->
+            <button id="open-signup-popup" class="login-signup-button">SIGN UP</button>
+        </div>
+    
+        <!-- Login Popup -->
+        <div id="login-popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-login-popup">&times;</span>
+                <form id="login-form">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="login-username" required>
+    
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+    
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Signup Popup -->
+        <div id="signup-popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-signup-popup">&times;</span>
+                <form id="signup-form">
+                    <label for="signup-username">Username:</label>
+                    <input type="text" id="signup-username" name="signup-username" required>
 
-        <div id="comparisonForms" style="display: none;">
-            <div id="car1Form" class="car-form">
-                <h1>Add First Car</h1>
-                <div class="input-container">      
-                <label for="year-input">Year:</label>
-                <input type="text" id="year-input1">
-                </div>
+                    <label for="signup-email">Email:</label>
+                    <input type="email" id="signup-email" name="signup-email" required>
     
-                <div class="input-container">
-                    <label for="make-input">Make:</label>
-                    <input type="text" id="make-input1">
-                </div>
-    
-                <div class="input-container">      
-                    <label for="model-input">Model:</label>
-                    <input type="text" id="model-input1">
-                </div>
-    
-                <div class="input-container">      
+                    <label for="signup-password">Password:</label>
+                    <input type="password" id="signup-password" name="signup-password" required>
                     
-                    <p id="error-message1"></p>
-                </div>
-            </div>
-            
-            
-            <div id="car2Form" class="car-form">
-                <h1>Add Second Car</h1>
-                <div class="input-container">      
-                <label for="year-input">Year:</label>
-                <input type="text" id="year-input2">
-                </div>
+                    <label for="signup-confirmpassword">Confirm password:</label>
+                    <input type="password" id="signup-confirmpassword" name="signup-confirmpassword" required>
     
-                <div class="input-container">
-                    <label for="make-input">Make:</label>
-                    <input type="text" id="make-input2">
-                </div>
-    
-                <div class="input-container">      
-                    <label for="model-input">Model:</label>
-                    <input type="text" id="model-input2">
-                </div>
-    
-                <div class="input-container">      
-                    
-                    <p id="error-message2"></p>
-                </div>
-            </div>
-            
-        </div>
-
-        <button id="compareButton" class="hidden">Compare</button>
-
-        
-        
-        
-        <div id="form-container" style="display: block;">
-            <h1>Search Car</h1>
-            
-            <div class="input-container">      
-            <label for="year-input">Year:</label>
-            <input type="text" id="year-input">
-            </div>
-
-            <div class="input-container">
-                <label for="make-input">Make:</label>
-                <input type="text" id="make-input">
-            </div>
-
-            <div class="input-container">      
-                <label for="model-input">Model:</label>
-                <input type="text" id="model-input">
-            </div>
-
-            <div class="input-container">      
-                <button id="searchButton">Get Car</button>
-                <p id="error-message"></p>
-            </div>
-        </div>
-        
-
-        <p id="loadingMessage" class="hidden">Searching...</p>
-    
-        <h2 id="car-specs-header" class="hidden">Specs</h2>
-        <div id="car-specs-container" class="hidden">
-        </div>
-
-        <h3 id="prices-header" class="hidden">Estimated Price Range</h3>
-        <div id="price-container" class="hidden">
-        </div>
-
-        <h4 id="car-images-header" class="hidden">Images</h4>
-        <div id="image-container" class="hidden">
-        </div>
-
-        <h5 id="car-ratings-header" class="hidden">Safety Ratings</h5>
-        <div id="ratings-container" class="hidden">
-        </div>
-
-        <h5 id="car-recalls-header" class="hidden">Recalls</h5>
-        <div id="recalls-container" class="hidden">
-        </div>
-
-        <h5 id="car-complaints-header" class="hidden">Complaints</h5>
-        <div id="complaints-container" class="hidden">
-        </div>
-
-
-
-
-
-
-        
-
-        <div id="comparisonResults">
-            
-            <div id="car1Data" class="car-data">
-
-            </div>
-            
-            <div id="car2Data" class="car-data">
-
+                    <button type="submit">Sign Up</button>
+                </form>
             </div>
         </div>
     
-        
-        
         <script src="index.js"></script>
+        
     </body>
 </html>
