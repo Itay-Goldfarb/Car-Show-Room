@@ -11,9 +11,11 @@ let ratingsContainer = document.getElementById("ratings-container");
 let recallsContainer = document.getElementById("recalls-container");
 let complaintsContainer = document.getElementById("complaints-container");
 
+let car1Header = document.createElement("h6");
+let car2Header = document.createElement("h6");
+
 let car1SpecsContainer = document.getElementById("car1Data");
 let car2SpecsContainer = document.getElementById("car2Data");
-
 
 let compareCarsButton = document.getElementById("compareCarsButton");
 let formContainer = document.getElementById("form-container");
@@ -71,7 +73,9 @@ compareCarsButton.addEventListener("click", async () => {
         compareButton.classList.remove("hidden");
         
     } else {
-        document.getElementById("comparison-header").classList.add("hidden");
+        car1Header.classList.add("hidden");
+        car2Header.classList.add("hidden");
+
 
         while(car1SpecsContainer.firstChild) {
             car1SpecsContainer.removeChild(car1SpecsContainer.firstChild);
@@ -104,7 +108,9 @@ compareButton.addEventListener("click", async () => {
     
     
     
-    document.getElementById("comparison-header").classList.add("hidden");
+    car1Header.classList.add("hidden");
+    car2Header.classList.add("hidden");
+
 
     document.getElementById("loadingMessage").classList.remove("hidden");
     
@@ -115,6 +121,14 @@ compareButton.addEventListener("click", async () => {
     yearInput2 = document.getElementById("year-input2").value;
     makeInput2 = document.getElementById("make-input2").value;
     modelInput2 = document.getElementById("model-input2").value;
+
+    let year1 = yearInput1.toUpperCase();
+    let make1 = makeInput1.toUpperCase();
+    let model1 = modelInput1.toUpperCase();
+
+    let year2 = yearInput2.toUpperCase();
+    let make2 = makeInput2.toUpperCase();
+    let model2 = modelInput2.toUpperCase();
 
     
 
@@ -179,6 +193,13 @@ compareButton.addEventListener("click", async () => {
 
             
             
+            //Setting up the CAR 1 Header
+            car1Header.innerText = `${year1} ${make1} ${model1}`
+            car1SpecsContainer.appendChild(car1Header);
+            
+
+            
+            
                     
             carsData.forEach(car => {
             
@@ -192,8 +213,6 @@ compareButton.addEventListener("click", async () => {
                 favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
                 card.appendChild(favoriteButton);
 
-                // Append the card to the container
-                car1SpecsContainer.appendChild(card);
 
                 function handleFavorite(carId) {
                     console.log("Favoriting car with ID:", carId);
@@ -302,6 +321,10 @@ compareButton.addEventListener("click", async () => {
                 throw new Error("Car 1 not found");
             }
 
+            //Setting up CAR 2 Header
+            car2Header.innerText = `${year2} ${make2} ${model2}`
+            car2SpecsContainer.appendChild(car2Header);
+
             
             
                     
@@ -317,8 +340,6 @@ compareButton.addEventListener("click", async () => {
                 favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
                 card.appendChild(favoriteButton);
 
-                // Append the card to the container
-                car2SpecsContainer.appendChild(card);
 
                 function handleFavorite(carId) {
                     console.log("Favoriting car with ID:", carId);
@@ -499,7 +520,7 @@ compareButton.addEventListener("click", async () => {
 
             let imageElement = document.createElement("img");
             imageElement.src = imageUrl;
-            imageElement.className = 'car-image';
+            imageElement.className = 'compare-car-image';
             
             car1SpecsContainer.insertBefore(imageElement, car1SpecsContainer.firstChild);
                 
@@ -694,7 +715,7 @@ compareButton.addEventListener("click", async () => {
                         if (rating.VehiclePicture){
                             let img = document.createElement("img");
                             img.src = rating.VehiclePicture;
-                            img.className = 'car-image';
+                            img.className = 'compare-car-image';
                             img.alt = "Vehicle Safety Rating Picture";
                             car1SpecsContainer.insertBefore(img, car1SpecsContainer.firstChild);
                             imageAppended = true; 
@@ -712,7 +733,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No ratings results
-                noRatingsCard.textContent = `No Safety Ratings Results From NHTSA`;
+                noRatingsCard.innerHTML = `<span class="bold">No Safety Ratings Results From NHTSA</span>`;
                 car1SpecsContainer.appendChild(noRatingsCard);
             }
 
@@ -732,12 +753,19 @@ compareButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Recalls data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.Count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
             }
             
         })
@@ -821,7 +849,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No recalls results
-                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                noRecallsCard.innerHTML = `<span class="bold">No Recall Results From NHTSA</span>`;
                 car1SpecsContainer.appendChild(noRecallsCard);
             }
 
@@ -844,12 +872,19 @@ compareButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Complaints data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
             }
             
         })
@@ -857,10 +892,11 @@ compareButton.addEventListener("click", async () => {
             
             let complaintsFound = false;
 
-            let complaintsToShow = data.results.slice(0, 50);
+            
                 
-            if (data.results.length !== 0){
+            if (data.count !== 0){
                 complaintsFound = true;
+                let complaintsToShow = data.results.slice(0, 50);
 
                 complaintsToShow.forEach(complaint => {
                     
@@ -937,7 +973,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No complaint results
-                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                noComplaintsCard.innerHTML = `<span class="bold">No Complaint Results From NHTSA</span>`;
                 car1SpecsContainer.appendChild(noComplaintsCard);
             }
 
@@ -1023,7 +1059,7 @@ compareButton.addEventListener("click", async () => {
 
             let imageElement = document.createElement("img");
             imageElement.src = imageUrl;
-            imageElement.className = 'car-image';
+            imageElement.className = 'compare-car-image';
             
             car2SpecsContainer.insertBefore(imageElement, car2SpecsContainer.firstChild);
                 
@@ -1218,7 +1254,7 @@ compareButton.addEventListener("click", async () => {
                         if (rating.VehiclePicture){
                             let img = document.createElement("img");
                             img.src = rating.VehiclePicture;
-                            img.className = 'car-image';
+                            img.className = 'compare-car-image';
                             img.alt = "Vehicle Safety Rating Picture";
                             car2SpecsContainer.insertBefore(img, car2SpecsContainer.firstChild);
                             imageAppended = true; 
@@ -1236,7 +1272,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No ratings results
-                noRatingsCard.textContent = `No Safety Ratings Results From NHTSA`;
+                noRatingsCard.innerHTML = `<span class="bold">No Safety Ratings Results From NHTSA</span>`;
                 car2SpecsContainer.appendChild(noRatingsCard);
             }
 
@@ -1259,12 +1295,19 @@ compareButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Recalls data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.Count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
             }
             
         })
@@ -1348,7 +1391,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No recalls results
-                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                noRecallsCard.innerHTML = `<span class="bold">No Recall Results From NHTSA</span>`;
                 car2SpecsContainer.appendChild(noRecallsCard);
             }
 
@@ -1371,12 +1414,19 @@ compareButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Complaints data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
             }
             
         })
@@ -1384,11 +1434,12 @@ compareButton.addEventListener("click", async () => {
             
             let complaintsFound = false;
 
-            let complaintsToShow = data.results.slice(0, 50);
+            
                 
-            if (data.results.length !== 0){
+            if (data.count !== 0){
                 complaintsFound = true;
-
+                let complaintsToShow = data.results.slice(0, 50);
+                
                 complaintsToShow.forEach(complaint => {
                     
                     let card = document.createElement("div");
@@ -1464,7 +1515,7 @@ compareButton.addEventListener("click", async () => {
 
 
                 // No complaint results
-                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                noComplaintsCard.innerHTML = `<span class="bold">No Complaint Results From NHTSA</span>`;
                 car2SpecsContainer.appendChild(noComplaintsCard);
             }
 
@@ -1502,21 +1553,12 @@ compareButton.addEventListener("click", async () => {
 
     // Hide Searching Message
     document.getElementById("loadingMessage").classList.add("hidden");
-    
-    
-    
-    let year1 = yearInput1.toUpperCase();
-    let make1 = makeInput1.toUpperCase();
-    let model1 = modelInput1.toUpperCase();
-
-    let year2 = yearInput2.toUpperCase();
-    let make2 = makeInput2.toUpperCase();
-    let model2 = modelInput2.toUpperCase();
 
 
     
-    document.getElementById("comparison-header").innerText = `${year1} ${make1} ${model1} & ${year2} ${make2} ${model2}`
-    document.getElementById("comparison-header").classList.remove("hidden");
+    
+    car1Header.classList.remove("hidden");
+    car2Header.classList.remove("hidden");
 
     // Auto scroll down to specs 
     comparisonResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
@@ -1640,8 +1682,6 @@ carButton.addEventListener("click", async () => {
                 favoriteButton.onclick = () => handleFavorite(rating.VehicleId); // Adjust this based on where you get the car's unique identifier
                 card.appendChild(favoriteButton);
 
-                // Append the card to the container
-                specsContainer.appendChild(card);
 
                 function handleFavorite(carId) {
                     console.log("Favoriting car with ID:", carId);
@@ -2033,7 +2073,7 @@ carButton.addEventListener("click", async () => {
 
 
                 // No ratings results
-                noRatingsCard.textContent = `No Safety Ratings Results From NHTSA`;
+                noRatingsCard.innerHTML = `<span class="bold">No Safety Ratings Results From NHTSA</span>`;
                 ratingsContainer.appendChild(noRatingsCard);
             }
 
@@ -2054,12 +2094,21 @@ carButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Recalls data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.Count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
+
+                
             }
             
         })
@@ -2143,7 +2192,7 @@ carButton.addEventListener("click", async () => {
 
 
                 // No recalls results
-                noRecallsCard.textContent = `No Recall Results From NHTSA`;
+                noRecallsCard.innerHTML = `<span class="bold">No Recall Results From NHTSA</span>`;
                 recallsContainer.appendChild(noRecallsCard);
             }
 
@@ -2166,12 +2215,21 @@ carButton.addEventListener("click", async () => {
                 return response.json();
 
             } else {
-                if(response.status === 404) {
-                    document.getElementById("loadingMessage").classList.add("hidden");
-                    throw { message: "Complaints data not found" };
-                }
-                document.getElementById("loadingMessage").classList.add("hidden");
-                return response.json().then(error => { throw error });
+                return response.json().then(data => {
+                    // Check if the response JSON has a 'count' property
+                    if (data && data.count === 0) {
+                        // Handle no results gracefully
+                        return data;
+                    } else {
+                        // Throw an error if it's not the expected 'no results' JSON structure
+                        throw new Error('Unexpected response structure from API');
+                    }
+                }).catch(error => {
+                    // Handle cases where the response is not JSON
+                    throw new Error('Response from API was not valid JSON');
+                });
+
+                
             }
             
         })
@@ -2179,11 +2237,12 @@ carButton.addEventListener("click", async () => {
             
             let complaintsFound = false;
 
-            let complaintsToShow = data.results.slice(0, 50);
+            
                 
-            if (data.results.length !== 0){
+            if (data.count !== 0){
                 complaintsFound = true;
-
+                let complaintsToShow = data.results.slice(0, 50);
+                
                 complaintsToShow.forEach(complaint => {
                     
                     let card = document.createElement("div");
@@ -2259,7 +2318,7 @@ carButton.addEventListener("click", async () => {
 
 
                 // No complaint results
-                noComplaintsCard.textContent = `No Complaint Results From NHTSA`;
+                noComplaintsCard.innerHTML = `<span class="bold">No Complaint Results From NHTSA</span>`;
                 complaintsContainer.appendChild(noComplaintsCard);
             }
 
@@ -2268,6 +2327,7 @@ carButton.addEventListener("click", async () => {
         .catch(error => {
             document.getElementById("loadingMessage").classList.add("hidden");
             errorMessageElement.textContent = error.message || 'An error occurred while fetching the complaints data.';
+            
         });
 
 
