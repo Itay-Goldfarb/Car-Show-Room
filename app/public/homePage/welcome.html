@@ -2,44 +2,43 @@
 <html>
 <head>
     <title>Welcome</title>
-    <!-- Add any additional head content here -->
+    <link rel="stylesheet" type="text/css" href="welcome.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Audiowide">
+        <style>
+            h7 {
+              font-family: 'Audiowide', serif;
+              font-size: 48px;
+              color: #f5f6f8;
+              text-align: center;
+              text-shadow: black 4px 4px 7px;
+              font-weight: bold;
+              display: flex;
+              justify-content: center;
+            }
+        </style>
 </head>
-<body>
-    <h1>Welcome, <span id="userName"></span>!</h1>
+<body class="welcome-page">
+    <h7>Welcome,&nbsp;<span id="userName"></span>!</h7>
     <!-- Add more content for the welcome page here -->
 
     <!-- Logout Button -->
     <button id="logoutButton">Logout</button>
+    <button id="showFavCarsButton">My Cars</button>
+    <div class="carroom-button">
+        <a href="carData.html" class="button" id="carroomLink2">TAKE ME TO THE SHOWROOM</a>
+    </div>
+    <div id="favoriteCarsPopup" class="popup-container" style="display: none;">
+        <div class="popup-content">
+            <span class="close-button">&times;</span>
+            <h2>My Favorite Cars</h2>
+            <div id="favoriteCarsContainer">
+                <!-- Dynamically added car elements will go here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="welcome.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                const response = await fetch('/current-user');
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById('userName').textContent = data.username;
-                } else {
-                    // Handle user not logged in
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-
-            document.getElementById('logoutButton').addEventListener('click', function() {
-        fetch('/logout', {
-            method: 'POST',
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = '/index.html'; // Redirect to login page
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-        });
-
-
-        
-    </script>
 </body>
 </html>

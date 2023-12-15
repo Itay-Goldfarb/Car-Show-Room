@@ -4,10 +4,27 @@
     background-position: center;
     background-color: black;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    
-    
+    background-attachment: fixed;    
 }
+
+#backToWelcomeButton {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    background-color: #c21e1e; /* Red background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Bold font */
+    width: 150px
+}
+
+#backToWelcomeButton:hover {
+    background-color: #c4171d; /* Slightly darker red on hover */
+}
+
 
 .hidden {
     display: none;
@@ -103,6 +120,7 @@
     /*margin: 0 auto;*/
     max-width: 450px;
     font-size: 16px;
+    position: relative;
 }
 
 .price-card-compare {
@@ -194,6 +212,7 @@
 .spec-card {
     text-align: start;
     padding: 20px;
+    position: relative;
 }
 
 .price-card {
@@ -373,19 +392,23 @@ input[type="text"] {
 
 
 .favorite-button {
-    background-color: #0078d4; /* blue/theme background */
-    color: white; /* White text */
-    padding: 10px 15px; /* Padding around the text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-    outline: none; /* Remove outline */
-    text-align: center; /* Center align text */
-    display: inline-block; /* Allow width and height */
-    margin: 5px; /* Margin around the button */
-    text-decoration: none; /* Remove underline from text */
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: #0078d4;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    text-decoration: none;
+    width: 50px;
 }
 
 .favorite-button:hover {
@@ -395,6 +418,10 @@ input[type="text"] {
 .favorite-button.active {
     background-color: red; /* Color when favorited */
     color: white;
+}
+
+#backToWelcomeButton {
+    font-size: 16px;
 }
 
 
