@@ -407,13 +407,14 @@ function isAuthenticated(req, res, next) {
       return next();
   } else {
       // Redirect to login page, or send an unauthorized response
-      return res.redirect('/login'); // Or res.status(401).send("Unauthorized");
+      return res.redirect('/index.html'); // Or res.status(401).send("Unauthorized");
   }
 }
 
 //TEMPORARY WELCOME PAGE
 app.get("/welcome", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'homePage', 'welcome.html'));
+  // console.log(req.session.user.username); DEBUG
 });
 
 
@@ -445,6 +446,104 @@ app.post("/logout", (req, res) => {
       res.status(200).send("No session to log out from");
   }
 });
+
+
+
+
+//FAVORITE A CAR
+app.post('/add-favorite-car', async (req, res) => {
+  let carData = req.body;
+  let username = req.session.user.username; // Assuming the username is stored in the session
+
+  pool.query('SELECT id FROM users WHERE username = $1', [username])
+      .then(async result => {
+          if (result.rows.length > 0) {
+              let userId = result.rows[0].id;
+
+              try {
+                  await pool.query('INSERT INTO FavoriteCars (UserID, CarMake, CarModel, CarYear, CarClass, FuelType, Drivetrain, Cylinders, Transmission, CityMPG, HighwayMPG, CombinationMPG) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)', [userId, carData.make, carData.model, carData.year, carData.class, carData.fuel_type, carData.drive, carData.cylinders, carData.transmission, carData.city_mpg, carData.highway_mpg, carData.combination_mpg]);
+                  return res.status(200).send("Car favorited successfully");
+              } catch (error) {
+                  console.error("INSERT FAILED", error);
+                  return res.status(500).send("Error favoriting car");
+              }
+
+          } else {
+              return res.status(404).send("User not found");
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching user ID:', error);
+          return res.status(500).send("Error fetching user ID");
+      });
+  
+});
+
+
+
+// GET the user's favorited cars
+app.get('/get-favorite-cars', async (req, res) => {
+  let username = req.session.user.username; // Assuming the username is stored in the session
+
+  pool.query('SELECT id FROM users WHERE username = $1', [username])
+      .then(async result => {
+          if (result.rows.length > 0) {
+              let userId = result.rows[0].id;
+
+              try {
+                  const favoriteCars = await pool.query('SELECT * FROM FavoriteCars WHERE UserID = $1', [userId]);
+                  res.status(200).json(favoriteCars.rows);
+              } catch (error) {
+                  console.error("Error fetching favorite cars", error);
+                  res.status(500).send("Error fetching favorite cars");
+              }
+          } else {
+              res.status(404).send("User not found");
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching user ID:', error);
+          res.status(500).send("Error fetching user ID");
+      });
+});
+
+
+//DELETE THE FAVORITE CAR
+app.delete('/delete-favorite-car/:carId', async (req, res) => {
+  let username = req.session.user.username; // Assuming the username is stored in the session
+  let carId = req.params.carId; // Get the car ID from the request parameters
+
+  pool.query('SELECT id FROM users WHERE username = $1', [username])
+      .then(async result => {
+          if (result.rows.length > 0) {
+              let userId = result.rows[0].id;
+
+              try {
+                  // Delete the car from FavoriteCars where the UserID matches and the car ID matches
+                  await pool.query('DELETE FROM FavoriteCars WHERE UserID = $1 AND FavoriteCarID = $2', [userId, carId]);
+                  res.status(200).send("Favorite car deleted successfully");
+              } catch (error) {
+                  console.error("Error deleting favorite car", error);
+                  res.status(500).send("Error deleting favorite car");
+              }
+          } else {
+              res.status(404).send("User not found");
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching user ID:', error);
+          res.status(500).send("Error fetching user ID");
+      });
+});
+
+
+
+
+
+
+
+
+
 
 
 

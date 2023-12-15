@@ -23,6 +23,11 @@ let comparisonForms = document.getElementById("comparisonForms");
 let comparisonResults = document.getElementById("comparisonResults");
 let isComparingTwoCars = false; // State flag
 
+document.getElementById('backToWelcomeButton').addEventListener('click', function() {
+    window.location.href = '/welcome'; // Redirects to the /welcome endpoint
+});
+
+
 // User Clicks Comparison/Single Car Search Button Toggle
 compareCarsButton.addEventListener("click", async () => {
     
@@ -199,7 +204,13 @@ compareButton.addEventListener("click", async () => {
             
             
 
-            //TO HANDLE FAVORITING
+             
+            
+            
+                    
+            carsData.forEach(car => {
+
+                //TO HANDLE FAVORITING
             async function handleFavorite(carId, buttonElement) {
                 console.log('made it here after favorite click!!!');
                 const loggedIn = await checkLoginStatus();
@@ -210,10 +221,46 @@ compareButton.addEventListener("click", async () => {
                 } else {
                     console.log("Favoriting car with ID:", carId);
                     buttonElement.classList.toggle('active');
-                    // Code to favorite the car
+
+                    let carData = {
+                        // Extract car details from the DOM or a JavaScript object
+                        vehicleId: carId,
+                        make: car.make,
+                        model: car.model,
+                        year: car.year,
+                        class: car.class,
+                        fuel_type: car.fuel_type,
+                        drive: car.drive,
+                        cylinders: car.cylinders,
+                        transmission: car.transmission,
+                        city_mpg: car.city_mpg,
+                        highway_mpg: car.highway_mpg,
+                        combination_mpg: car.combination_mpg
+                    };
+
+                    // Send this data to the server
+                    fetch('/add-favorite-car', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(carData)
+                    }).then(response => {
+                        if (response.ok) {
+                            // Update the UI to reflect that the car is now a favorite
+                            buttonElement.classList.add('favorited'); // Example of changing the button style
+                            alert("Car added to favorites!"); // Or use a more sophisticated notification system
+                        } else {
+                            // Handle non-successful responses
+                            alert("Failed to add car to favorites. Please try again.");
+                        }
+                    }).catch(error => {
+                        console.error("Error adding favorite car:", error);
+                        alert("An error occurred while trying to add the car to favorites. Please check your internet connection and try again.");
+                    });
                 }
             }
-            
+        
             async function checkLoginStatus() {
                 try {
                     const response = await fetch('/check-login-status');
@@ -230,16 +277,11 @@ compareButton.addEventListener("click", async () => {
             //////END FAVORITNG HANDLING
 
             
-            
-                    
-            carsData.forEach(car => {
-            
                 let card = document.createElement("div");
                 card.classList.add("spec-card-compare");
 
-                //CAR 1 COMPARE FAVORITE BUTTON
                 let favoriteButton = document.createElement("button");
-                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.textContent = "❤️";
                 favoriteButton.className = 'favorite-button';
                 favoriteButton.onclick = function() { 
                     handleFavorite(car.vehicleId, this); // Pass the car's unique ID and the button element
@@ -352,7 +394,10 @@ compareButton.addEventListener("click", async () => {
             car2SpecsContainer.appendChild(car2Header);
 
             
-            //TO HANDLE FAVORITING
+                    
+            carsData.forEach(car => {
+
+                //TO HANDLE FAVORITING
             async function handleFavorite(carId, buttonElement) {
                 console.log('made it here after favorite click!!!');
                 const loggedIn = await checkLoginStatus();
@@ -363,10 +408,46 @@ compareButton.addEventListener("click", async () => {
                 } else {
                     console.log("Favoriting car with ID:", carId);
                     buttonElement.classList.toggle('active');
-                    // Code to favorite the car
+
+                    let carData = {
+                        // Extract car details from the DOM or a JavaScript object
+                        vehicleId: carId,
+                        make: car.make,
+                        model: car.model,
+                        year: car.year,
+                        class: car.class,
+                        fuel_type: car.fuel_type,
+                        drive: car.drive,
+                        cylinders: car.cylinders,
+                        transmission: car.transmission,
+                        city_mpg: car.city_mpg,
+                        highway_mpg: car.highway_mpg,
+                        combination_mpg: car.combination_mpg
+                    };
+
+                    // Send this data to the server
+                    fetch('/add-favorite-car', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(carData)
+                    }).then(response => {
+                        if (response.ok) {
+                            // Update the UI to reflect that the car is now a favorite
+                            buttonElement.classList.add('favorited'); // Example of changing the button style
+                            alert("Car added to favorites!"); // Or use a more sophisticated notification system
+                        } else {
+                            // Handle non-successful responses
+                            alert("Failed to add car to favorites. Please try again.");
+                        }
+                    }).catch(error => {
+                        console.error("Error adding favorite car:", error);
+                        alert("An error occurred while trying to add the car to favorites. Please check your internet connection and try again.");
+                    });
                 }
             }
-            
+        
             async function checkLoginStatus() {
                 try {
                     const response = await fetch('/check-login-status');
@@ -382,15 +463,12 @@ compareButton.addEventListener("click", async () => {
             }
             //////END FAVORITNG HANDLING
             
-                    
-            carsData.forEach(car => {
-            
                 let card = document.createElement("div");
                 card.classList.add("spec-card-compare");
 
                 //CAR 2 COMPARE FAVORITE BUTTON
                 let favoriteButton = document.createElement("button");
-                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.textContent = "❤️";
                 favoriteButton.className = 'favorite-button';
                 favoriteButton.onclick = function() { 
                     handleFavorite(car.vehicleId, this); // Pass the car's unique ID and the button element
@@ -1718,35 +1796,7 @@ carButton.addEventListener("click", async () => {
             }
 
 
-             //TO HANDLE FAVORITING
-            async function handleFavorite(carId, buttonElement) {
-                console.log('made it here after favorite click!!!');
-                const loggedIn = await checkLoginStatus();
-                if (!loggedIn) {
-                    alert("Please log in to favorite cars.");
-                    window.location.href = "index.html";
-                    // Here you can open the login popup or redirect to the login page
-                } else {
-                    console.log("Favoriting car with ID:", carId);
-                    buttonElement.classList.toggle('active');
-                    // Code to favorite the car
-                }
-            }
             
-            async function checkLoginStatus() {
-                try {
-                    const response = await fetch('/check-login-status');
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.loggedIn;
-                    }
-                    throw new Error('Failed to check login status');
-                } catch (error) {
-                    console.error('Error:', error);
-                    return false;
-                }
-            }
-            //////END FAVORITNG HANDLING
             
             
                     
@@ -1755,9 +1805,75 @@ carButton.addEventListener("click", async () => {
                 let card = document.createElement("div");
                 card.classList.add("spec-card");
 
+                 //TO HANDLE FAVORITING
+                async function handleFavorite(carId, buttonElement) {
+                    console.log('made it here after favorite click!!!');
+                    const loggedIn = await checkLoginStatus();
+                    if (!loggedIn) {
+                        alert("Please log in to favorite cars.");
+                        window.location.href = "index.html";
+                        // Here you can open the login popup or redirect to the login page
+                    } else {
+                        console.log("Favoriting car with ID:", carId);
+                        buttonElement.classList.toggle('active');
+
+                        let carData = {
+                            // Extract car details from the DOM or a JavaScript object
+                            vehicleId: carId,
+                            make: car.make,
+                            model: car.model,
+                            year: car.year,
+                            class: car.class,
+                            fuel_type: car.fuel_type,
+                            drive: car.drive,
+                            cylinders: car.cylinders,
+                            transmission: car.transmission,
+                            city_mpg: car.city_mpg,
+                            highway_mpg: car.highway_mpg,
+                            combination_mpg: car.combination_mpg
+                        };
+
+                        // Send this data to the server
+                        fetch('/add-favorite-car', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(carData)
+                        }).then(response => {
+                            if (response.ok) {
+                                // Update the UI to reflect that the car is now a favorite
+                                buttonElement.classList.add('favorited'); // Example of changing the button style
+                                alert("Car added to favorites!"); // Or use a more sophisticated notification system
+                            } else {
+                                // Handle non-successful responses
+                                alert("Failed to add car to favorites. Please try again.");
+                            }
+                        }).catch(error => {
+                            console.error("Error adding favorite car:", error);
+                            alert("An error occurred while trying to add the car to favorites. Please check your internet connection and try again.");
+                        });
+                    }
+                }
+            
+                async function checkLoginStatus() {
+                    try {
+                        const response = await fetch('/check-login-status');
+                        if (response.ok) {
+                            const data = await response.json();
+                            return data.loggedIn;
+                        }
+                        throw new Error('Failed to check login status');
+                    } catch (error) {
+                        console.error('Error:', error);
+                        return false;
+                    }
+                }
+                //////END FAVORITNG HANDLING
+
                 //SINGLE SEARCH FAVORITE BUTTON
                 let favoriteButton = document.createElement("button");
-                favoriteButton.textContent = "❤️ Favorite";
+                favoriteButton.textContent = "❤️";
                 favoriteButton.className = 'favorite-button';
                 favoriteButton.onclick = function() { 
                     handleFavorite(car.vehicleId, this); // Pass the car's unique ID and the button element
@@ -1789,6 +1905,8 @@ carButton.addEventListener("click", async () => {
                 let fuelTypeDiv = document.createElement("div");
                 fuelTypeDiv.innerHTML = `<span class="bold">Fuel Type:</span> ${car.fuel_type}`;
                 card.appendChild(fuelTypeDiv);
+
+                
 
                 // Add drivetrain
                 let driveDiv = document.createElement("div");

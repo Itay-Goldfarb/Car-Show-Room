@@ -1,7 +1,6 @@
 .home-page {
-    background-image: url('ville-kaisla-HNCSCpWrVJA-unsplash.jpg');
+    background-image: url('homewp9086128-toyota-supra-mk5-wallpapers.jpg');
     background-size: cover; 
-    background-position: center;
     background-color: black;
     background-repeat: no-repeat;
     position: relative;
@@ -15,20 +14,21 @@ h1 {
 
 .button {
     display: inline-block;
-    padding: 10px 20px; /* Adjust the padding for your desired button size */
-    background-color: #f8f9fa; /* Button background color */
-    color: #0a0808; /* Text color */
+    padding: 10px 20px;
+    background-color: #f8f9fa; 
+    color: #0a0808; 
     text-decoration: none;
     border: none;
-    border-radius: 4px; /* Rounded corners */
+    border-radius: 4px; 
     cursor: pointer;
     font-size: 16px;
-
 }
 
 .center-button{
+    font-family: 'Audiowide', serif;
+    font-size: 20px;
     position: absolute;
-    top: calc(50% + 150px);
+    top: calc(50% + 80px);
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -36,7 +36,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #595a5a; /* Button background color on hover */
+    background-color: #595a5a; 
 }
 
 .popup {
@@ -67,9 +67,18 @@ h1 {
     cursor: pointer;
 }
 
+.button-container {
+    position: absolute; /* or 'fixed' if you want it to stay in place on scroll */
+    top: 10px; /* Adjust this value as needed */
+    right: 10px; /* Adjust this value as needed */
+    text-align: right;
+}
+
 .login-signup-button {
-    display: block;
-    margin: 10px auto;
+    font-family: 'Audiowide', serif;
+    font-size: 20px;
+    display: inline-block;
+    margin-left: 10px;
     padding: 10px 20px;
     background-color: #f8f9fa;
     color: #0a0808;
