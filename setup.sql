@@ -33,10 +33,10 @@ CREATE TABLE FavoriteCars (
     CityMPG INT,
     HighwayMPG INT,
     CombinationMPG INT,
-    FOREIGN KEY (UserID) REFERENCES users(username)
+    FOREIGN KEY (userid) REFERENCES users(id)
 );
 
 
-GRANT ALL PRIVILEGES ON TABLE favoriteCars TO itaygold;
+GRANT ALL PRIVILEGES ON TABLE favoritecars TO itaygold;
 
-GRANT USAGE, SELECT ON SEQUENCE favoriteCars_FavoriteCarID_seq TO itaygold;
+GRANT USAGE, SELECT ON SEQUENCE favoritecars_favoritecarid_seq TO itaygold;
