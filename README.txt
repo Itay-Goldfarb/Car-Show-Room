@@ -12,5 +12,5 @@ HOW TO LOAD WEBSITE
 
 6) Run "npm run setup" and enter your postgres password when prompted. (This will execute the setup.sql script that sets up the user, database and permissions)
 
-7) Run "npm run start" and then visit localhost:3000/home.html on the browser
+7) Run "npm run start" and then visit localhost:3000 on the browser
 
